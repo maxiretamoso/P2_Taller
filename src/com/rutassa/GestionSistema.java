@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.rutassa.tipoVehiculo.Colectivo;
 import com.rutassa.tipoVehiculo.Minibus;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Clase GestionSistema que lleva a cabo todos los metodos de gestion de rutassa
@@ -587,17 +589,27 @@ public class GestionSistema {
     /**
      * Metodo para mostrar un informe detallado de viajes que tiene para realizar un colectivo determinado.
      */
-    public static void informeViajesARealizarColectivo(String patente) {
+    public static void informeViajesARealizarColectivo() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese la patente del colectivo: ");
+        String patente = sc.nextLine();
         System.out.println("\n" + "-".repeat(45) + "\nInforme de viajes de un colectivo determinado\n" + "-".repeat(45));
+        boolean encontrado= false;
         for(Viaje viaje:viajes){
             if(viaje.getVehiculo() instanceof Colectivo){
-                
+                Colectivo colectivo = (Colectivo) viaje.getVehiculo();
+                if(colectivo.getPatente().equalsIgnoreCase(patente)){
+                    System.out.println(viaje);
+                    encontrado=true;
+                }
             }
 
         }
-        
-        
-        
+        if(!encontrado){
+            System.out.println("No se han encontrado viajes asociados a la patente: "+patente);
+            System.out.println("Volviendo al menu principal..");
+        }
+        return;
     }
 
     /**
@@ -605,5 +617,38 @@ public class GestionSistema {
      */
     public static void informeViajesRealizadosColectivo() {
         System.out.println("\n" + "-".repeat(45) + "\nInforme de cantidad de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
+        
+    // Mapa para contar los viajes por chofer
+    Map<Chofer, Integer> viajesPorChofer = new HashMap<>();
+
+    for (Viaje viaje : viajes) {
+        Vehiculo vehiculo = viaje.getVehiculo();
+        Chofer chofer = viaje.getChofer();
+
+        if (vehiculo instanceof Colectivo) {
+            viajesPorChofer.put(chofer, viajesPorChofer.getOrDefault(chofer, 0) + 1);
+        }
     }
+
+    if (viajesPorChofer.isEmpty()) {
+        System.out.println("No hay viajes realizados por choferes de colectivos.");
+    } else {
+        for (Map.Entry<Chofer, Integer> entry : viajesPorChofer.entrySet()) {
+            Chofer chofer = entry.getKey();
+            int cantidad = entry.getValue();
+            System.out.println("Chofer: " + chofer.getNombre() + " - Viajes realizados: " + cantidad);
+        }
+    }
+    }
+
+    public static void MarcarComoRealizado(){
+        System.out.println("\n" + "-".repeat(45) + "\nViajes\n" + "-".repeat(45));
+        return;
+    }
+
+
+
+
+
+
 }
