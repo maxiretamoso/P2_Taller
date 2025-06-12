@@ -159,6 +159,15 @@ public class Viaje {
     }
 
     /**
+     * Metodo atributosNulos() para saber si los atributos de viaje son o no nulos
+     * @return true si al menos uno de los atributos es null (nulo)
+     * @return false si todos los atributos no son null (nulo)
+     */
+    public boolean atributosNulos() {
+        return chofer == null || vehiculo == null || fecha == null || horarioSalida == null || horarioLlegada == null || origen == null || destino == null;
+    }
+
+    /**
      * Metodo toString() que retorna un string de la clase Viaje.
      * @return String
      */

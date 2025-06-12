@@ -15,8 +15,9 @@ public class GestionSistema {
     private static List<Vehiculo> vehiculos = new ArrayList<>();
     private static List<Viaje> viajes = new ArrayList<>();
     private static List<Ciudad> ciudades = new ArrayList<>();
+    private static List<Viaje> viajesRealizados = new ArrayList<>();
     private static final Scanner sc = new Scanner(System.in);
-    
+
     /** 
      * metodo main para correr el programa rutassa.
      */
@@ -603,7 +604,6 @@ public class GestionSistema {
                     encontrado=true;
                 }
             }
-
         }
         if(!encontrado){
             System.out.println("No se han encontrado viajes asociados a la patente: "+patente);
@@ -617,38 +617,50 @@ public class GestionSistema {
      */
     public static void informeViajesRealizadosColectivo() {
         System.out.println("\n" + "-".repeat(45) + "\nInforme de cantidad de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
-        
-    // Mapa para contar los viajes por chofer
-    Map<Chofer, Integer> viajesPorChofer = new HashMap<>();
+        // Mapa para contar los viajes por chofer
+        Map<Chofer, Integer> viajesPorChofer = new HashMap<>();
 
-    for (Viaje viaje : viajes) {
-        Vehiculo vehiculo = viaje.getVehiculo();
-        Chofer chofer = viaje.getChofer();
+        for (Viaje viaje : viajes) {
+            Vehiculo vehiculo = viaje.getVehiculo();
+            Chofer chofer = viaje.getChofer();
 
-        if (vehiculo instanceof Colectivo) {
-            viajesPorChofer.put(chofer, viajesPorChofer.getOrDefault(chofer, 0) + 1);
+            if (vehiculo instanceof Colectivo) {
+                viajesPorChofer.put(chofer, viajesPorChofer.getOrDefault(chofer, 0) + 1);
+            }
         }
-    }
 
-    if (viajesPorChofer.isEmpty()) {
-        System.out.println("No hay viajes realizados por choferes de colectivos.");
-    } else {
-        for (Map.Entry<Chofer, Integer> entry : viajesPorChofer.entrySet()) {
-            Chofer chofer = entry.getKey();
-            int cantidad = entry.getValue();
-            System.out.println("Chofer: " + chofer.getNombre() + " - Viajes realizados: " + cantidad);
+        if (viajesPorChofer.isEmpty()) {
+            System.out.println("No hay viajes realizados por choferes de colectivos.");
+        } else {
+            for (Map.Entry<Chofer, Integer> entry : viajesPorChofer.entrySet()) {
+                Chofer chofer = entry.getKey();
+                int cantidad = entry.getValue();
+                System.out.println("Chofer: " + chofer.getNombre() + " - Viajes realizados: " + cantidad);
+            }
         }
-    }
     }
 
     public static void MarcarComoRealizado(){
-        System.out.println("\n" + "-".repeat(45) + "\nViajes\n" + "-".repeat(45));
-        return;
-    }
+        System.out.println("\n" + "-".repeat(45) + "\nViajes \n" + "-".repeat(45));
+        Viaje viajeListo = null;
+        for (Viaje viaje : viajes) {
+            if (viaje.atributosNulos()) {
+                continue;
+            } else {
+                viajesRealizados.add(viaje);
+            }
+        }
+        System.out.println("Viajes disponibles:");
+        for(int i=0;i<viajesRealizados.size();i++){
+            String choferViajeDisponible = viajesRealizados.get(i).getChofer().getNombre();
+            long dniViajeDisponible = viajesRealizados.get(i).getChofer().getDni();
+            Categoria categoriaViajeDisponible = viajesRealizados.get(i).getChofer().getCategoria().getCategoria();
 
-
-
-
-
-
+            System.out.println(choferViajeDisponible);
+            System.out.println("=".repeat(30));
+            
+            long dni = sc.nextLong();
+            
+        }
+    } 
 }
