@@ -168,9 +168,10 @@ public class Viaje {
            "  • Fecha: " + fecha + "\n" +
            "  • Horario de salida: " + horarioSalida + "\n" +
            "  • Horario de llegada: " + horarioLlegada + "\n" +
-           "  • Origen: " + origen + "\n" +
-           "  • Destino: " + destino + "\n" +
-           "  • Vehículo: " + vehiculo + "\n" +
-           "  • Chofer: " + chofer;
+           "  • Origen: " + origen.getNombre() + "\n" +
+           "  • Destino: " + destino.getNombre() + "\n" +
+           "  • Vehículo(patente): " + vehiculo.getPatente() + "\n" +
+           "  • Chofer: " + chofer.getNombre();
     }
+    
 }

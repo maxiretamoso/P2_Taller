@@ -348,7 +348,7 @@ public class GestionSistema {
             }
 
             while (provincia == null) {
-                System.out.print("Ingrese la provincia(Tal cual se muestra en la lista!): ");
+                System.out.print("Ingrese la provincia (como se encuentra en la lista): ");
                 try {
                     provincia = Provincia.valueOf(sc.nextLine().toUpperCase());
                 } catch (IllegalArgumentException e) {
@@ -394,13 +394,10 @@ public class GestionSistema {
 
             List<Ciudad> ciudadesDestinoDisponibles = new ArrayList<>();
             for (Ciudad ciudad : ciudades) {
-                boolean esIgualOrigen = ciudad.getNombre().equalsIgnoreCase(ciudadOrigen.getNombre()) &&
-                                        ciudad.getProvincia() == ciudadOrigen.getProvincia();
-
+                boolean esIgualOrigen = ciudad.getNombre().equalsIgnoreCase(ciudadOrigen.getNombre()) && ciudad.getProvincia() == ciudadOrigen.getProvincia();
                 boolean yaUsadaComoDestino = false;
                 for (Viaje viaje : viajes) {
-                    if (ciudad.getNombre().equalsIgnoreCase(viaje.getDestino().getNombre()) &&
-                        ciudad.getProvincia() == viaje.getDestino().getProvincia()) {
+                    if (ciudad.getNombre().equalsIgnoreCase(viaje.getDestino().getNombre()) && ciudad.getProvincia() == viaje.getDestino().getProvincia()) {
                         yaUsadaComoDestino = true;
                         break;
                     }
@@ -438,13 +435,13 @@ public class GestionSistema {
             System.out.println("Viaje planificado.");
         }
     }
-//SEGUIR ACA ABAJO, REGISTRAR CHOFERES Y VEHICULOS TERMINADO, REVISAR PLANIFICAR VIAJES
 
     /**
      * Metodo para asociar un vehiculo y un chofer a cada viaje.
      */
     public static void asociarVehiculoYChofer() {
         System.out.println("\n" + "-".repeat(45) + "\nAsociar vehículo y chofer a cada viaje\n" + "-".repeat(45));
+        
         if (choferes.isEmpty()) {
             System.out.println("No hay choferes registrados.");
             int opcion = 0;
@@ -554,21 +551,53 @@ public class GestionSistema {
      */
     public static void viajesProgramados() {
         System.out.println("\n" + "-".repeat(45) + "\nViajes programados\n" + "-".repeat(45));
-        if(!viajes.isEmpty()){
-            for(int i=0;i<viajes.size();i++){
-            System.out.println(viajes.get(i));
+
+        if (viajes.isEmpty()) {
+            System.out.println("No hay viajes programados.");
+            int opcion = 0;
+
+            while (opcion != 1 && opcion != 2) {
+                System.out.println("Seleccione una opción:\n1. Volver al menu principal\n2. Ir a registrar viajes");
+
+                if (sc.hasNextInt()) {
+                    opcion = sc.nextInt();
+                    sc.nextLine(); 
+
+                    if (opcion == 1) {
+                        return; 
+                    } else if (opcion == 2) {
+                        planificarViajes(); 
+                        return;
+                    } else {
+                        System.out.println("Opción invalida. Debe ser '1' o '2'. Intente de nuevo.");
+                    }
+                } else {
+                    System.out.println("Entrada invalida. Debe ingresar 1 o 2.");
+                    sc.nextLine();
+                }
             }
+            return;
         }
-        else{
-            System.out.println("No hay viajes programados!");
+
+        for (int i = 0; i < viajes.size(); i++) {
+            System.out.println(viajes.get(i));
         }
     }
 
     /**
      * Metodo para mostrar un informe detallado de viajes que tiene para realizar un colectivo determinado.
      */
-    public static void informeViajesARealizarColectivo() {
+    public static void informeViajesARealizarColectivo(String patente) {
         System.out.println("\n" + "-".repeat(45) + "\nInforme de viajes de un colectivo determinado\n" + "-".repeat(45));
+        for(Viaje viaje:viajes){
+            if(viaje.getVehiculo() instanceof Colectivo){
+                
+            }
+
+        }
+        
+        
+        
     }
 
     /**
