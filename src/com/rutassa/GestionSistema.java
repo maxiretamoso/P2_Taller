@@ -523,11 +523,11 @@ public class GestionSistema {
             }
         }
 
-        System.out.println("Lista de choferes disponibles:");
-        System.out.println(choferes);
+        System.out.println("Lista de choferes disponibles:\n" + choferes);
         System.out.println("Ingrese el numero numero de DNI:");
         long dni = sc.nextLong();
         sc.nextLine();
+
         Chofer chofer=null;
         for (int i = 0; i < choferes.size(); i++){
             if(choferes.get(i).getDni()==dni){
@@ -535,8 +535,8 @@ public class GestionSistema {
                 System.out.println("Chofer guardado,continue.");
             }
         }
-        System.out.println("Lista de Vehiculos:");
-        System.out.println(vehiculos);
+
+        System.out.println("Lista de Vehiculos:\n" + vehiculos);
         System.out.println("Ingrese el numero de patente");  
         String patente = sc.nextLine();
         Vehiculo vehiculo = null;
@@ -656,10 +656,10 @@ public class GestionSistema {
             long dniViajeDisponible = viajesRealizados.get(i).getChofer().getDni();
             Categoria categoriaViajeDisponible = viajesRealizados.get(i).getChofer().getCategoria().getCategoria();
 
-            System.out.println(choferViajeDisponible);
-            System.out.println("=".repeat(30));
-            
+            System.out.println(choferViajeDisponible + "\n" + "=".repeat(30) + "\nViajes para marcar como realizados:\n" + "=".repeat(30));
+            System.out.println("");
             long dni = sc.nextLong();
+
             
         }
     } 
