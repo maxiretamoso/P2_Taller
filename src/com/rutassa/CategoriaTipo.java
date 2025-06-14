@@ -5,7 +5,7 @@ package com.rutassa;
  * 1 Categoria puede tener muchos {@link ChoferCategoria}.
  * @author MaximoRetamoso, MartinZanandrea
  */
-public enum Categoria {
+public enum CategoriaTipo {
     /**
      * Categorias 
      */

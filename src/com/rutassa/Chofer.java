@@ -1,28 +1,29 @@
 package com.rutassa;
-
 import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  * Clase Chofer con atributos nroLicencia y categoria.
  * Esta clase hereda de {@link Persona}.
  * 1 chofer puede tener varios {@link Viaje}.
- * 1 chofer tiene 1 {@link Categoria}.
+ * 1 chofer tiene 1 {@link CategoriaTipo}.
  * 1 chofer puede tener varias {@link ChoferCategoria}.
  * @author MaximoRetamoso, MartinZanandrea
  * @version 1.0
  */
 public class Chofer extends Persona{
     private String nroLicencia;
-    private List<ChoferCategoria> categoria;
+    private List<ChoferCategoria> categorias;
 
     /**
      * Constructor por defecto de Chofer.
-     * Inicializa dni, nombre, apellido, y nroLicencia como una cadena vacia, y categoria como null.
+     * Inicializa dni, nombre, apellido, y nroLicencia como una cadena vacia, y se instancia la lista de categorias.
      */
     public Chofer() {
         super(0, "", "");
         this.nroLicencia = "";
-        this.categoria = null;
+        categorias = new ArrayList<>();
     }
 
     /**
@@ -31,12 +32,12 @@ public class Chofer extends Persona{
      * @param nombre El nombre del chofer
      * @param apellido El apellido del chofer
      * @param nroLicencia El numero de licencia del chofer
-     * @param categoria La categoria del chofer
+     * @param categorias Las categorias del chofer
      */
-    public Chofer(long dni, String nombre, String apellido, String nroLicencia, List<ChoferCategoria> categoria){
+    public Chofer(long dni, String nombre, String apellido, String nroLicencia, List<ChoferCategoria> categorias){
         super(dni, nombre, apellido);
         this.nroLicencia = nroLicencia;
-        this.categoria = categoria;
+        this.categorias = categorias;
     }
 
     /**
@@ -57,18 +58,18 @@ public class Chofer extends Persona{
 
     /**
      * Getter que devuelve la categoria del chofer.
-     * @return categoria
+     * @return categorias
      */
-    public ChoferCategoria getCategoria() {
-        return (ChoferCategoria) categoria;
+    public List<ChoferCategoria> getCategorias() {
+        return categorias;
     }
     
     /**
      * Setter que establece la categoria del chofer.
-     * @param categoria La nueva categoria
+     * @param categorias Las nuevas categorias
      */
-    public void setCategoria(List<ChoferCategoria> categoria) {
-        this.categoria = categoria;
+    public void setCategorias(List<ChoferCategoria> categorias) {
+        this.categorias = categorias;
     }
     
     /**
@@ -77,6 +78,6 @@ public class Chofer extends Persona{
      */
     @Override
     public String toString() {
-        return "[" + super.toString() + ", Nº de Licencia: " + nroLicencia + ", Categoría: " + categoria + "]";
+        return "[" + super.toString() + ", Nº de Licencia: " + nroLicencia + ", Categoría: " + categorias + "]";
     }
 }

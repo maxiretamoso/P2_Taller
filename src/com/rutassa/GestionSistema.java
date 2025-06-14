@@ -17,7 +17,6 @@ public class GestionSistema {
     private static List<Ciudad> ciudades = new ArrayList<>();
     private static List<Viaje> viajesRealizados = new ArrayList<>();
     private static final Scanner sc = new Scanner(System.in);
-
     /** 
      * metodo main para correr el programa rutassa.
      */
@@ -165,9 +164,9 @@ public class GestionSistema {
                 String fecha = sc.nextLine();
 
                 if (d == 1) {
-                    categorias.add(new ChoferCategoria(fecha, Categoria.COLECTIVO));
+                    categorias.add(new ChoferCategoria(fecha, CategoriaTipo.COLECTIVO));
                 } else {
-                    categorias.add(new ChoferCategoria(fecha, Categoria.MICROBUS));
+                    categorias.add(new ChoferCategoria(fecha, CategoriaTipo.MICROBUS));
                 }
             }
             choferes.add(new Chofer(dni, nombre, apellido, nroLicencia, categorias));
@@ -654,7 +653,7 @@ public class GestionSistema {
         for(int i=0;i<viajesRealizados.size();i++){
             String choferViajeDisponible = viajesRealizados.get(i).getChofer().getNombre();
             long dniViajeDisponible = viajesRealizados.get(i).getChofer().getDni();
-            Categoria categoriaViajeDisponible = viajesRealizados.get(i).getChofer().getCategoria().getCategoria();
+            CategoriaTipo categoriaViajeDisponible = viajesRealizados.get(i).getChofer().getCategorias().getCategoria();
 
             System.out.println(choferViajeDisponible + "\n" + "=".repeat(30) + "\nViajes para marcar como realizados:\n" + "=".repeat(30));
             System.out.println("");

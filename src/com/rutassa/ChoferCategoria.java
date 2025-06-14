@@ -2,13 +2,13 @@ package com.rutassa;
 
 /**
  * Clase ChoferCategoria con el atributo fechaVencimiento y categoria.
- * Cada ChoferCategoria tiene 1 {@link Categoria}.
+ * Cada ChoferCategoria tiene 1 {@link CategoriaTipo}.
  * @author MaximoRetamoso, MartinZanandrea
  * @version 1.0
  */
 public class ChoferCategoria {
     private String fechaVencimiento;
-    private Categoria categoria;
+    private CategoriaTipo categorias;
 
     /**
      * Constructor por defecto de ChoferCategoria.
@@ -16,7 +16,7 @@ public class ChoferCategoria {
      */
     public ChoferCategoria(){
         this.fechaVencimiento = "";
-        this.categoria = null;
+        this.categorias = null;
     }
 
     /**
@@ -24,9 +24,9 @@ public class ChoferCategoria {
      * @param fechaVencimiento La fecha de vencimiento de la categoria del chofer
      * @param categoria La categoria del chofer
      */
-    public ChoferCategoria(String fechaVencimiento,Categoria categoria) {
+    public ChoferCategoria(String fechaVencimiento,CategoriaTipo categoria) {
         this.fechaVencimiento = fechaVencimiento;
-        this.categoria=categoria;
+        this.categorias=categoria;
     }
     
     /**
@@ -49,16 +49,16 @@ public class ChoferCategoria {
      * Getter que devuelve la categoria del chofer.
      * @return categoria
      */
-    public Categoria getCategoria() {
-        return categoria;
+    public CategoriaTipo getCategoria() {
+        return categorias;
     }
 
     /**
      * Setter que establece la categoria del chofer.
      * @param categoria la nueva categoria
      */
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategoria(CategoriaTipo categoria) {
+        this.categorias = categoria;
     }
 
     /**
@@ -67,6 +67,6 @@ public class ChoferCategoria {
      */
     @Override
     public String toString() {
-        return "[FechaVencimiento: " + fechaVencimiento + ", Categoria: " + categoria + "]";
+        return "[FechaVencimiento: " + fechaVencimiento + ", Categoria: " + categorias + "]";
     }
 }
