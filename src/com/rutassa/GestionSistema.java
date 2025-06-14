@@ -432,7 +432,7 @@ public class GestionSistema {
                 }
             }
 
-            Viaje nuevoViaje = new Viaje(fecha, horarioSalida, horarioLlegada, ciudadOrigen, ciudadDestino);
+            Viaje nuevoViaje = new Viaje(fecha, horarioSalida, horarioLlegada, ciudadOrigen, ciudadDestino,null,null);
             viajes.add(nuevoViaje);
             System.out.println("Viaje planificado.");
         }
