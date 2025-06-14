@@ -27,6 +27,8 @@ public class Viaje {
         this.horarioLlegada = "";
         this.origen = null;
         this.destino = null;
+        this.vehiculo = null;
+        this.chofer = null;
     }
 
     /**
@@ -36,13 +38,17 @@ public class Viaje {
      * @param horarioLlegada El horario de llegada del viaje 
      * @param origen El origen del viaje
      * @param destino El destino del viaje 
+     * @param vehiculo El vehiculo del viaje
+     * @param chofer El chofer del viaje
      */
-    public Viaje(String fecha, String horarioSalida, String horarioLlegada, Ciudad origen, Ciudad destino){
+    public Viaje(String fecha, String horarioSalida, String horarioLlegada, Ciudad origen, Ciudad destino, Vehiculo vehiculo, Chofer chofer){
         this.fecha = fecha;
         this.horarioSalida = horarioSalida;
         this.horarioLlegada = horarioLlegada;
         this.origen = origen;
         this.destino = destino;
+        this.vehiculo = vehiculo;
+        this.chofer = chofer;
 
     }
 
