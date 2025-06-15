@@ -1,0 +1,11 @@
+# Ignorar la carpeta de VS Code y la de IntelliJ
+.vscode/
+.idea/
+out/
+
+# Ignorar archivos temporales del sistema
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
