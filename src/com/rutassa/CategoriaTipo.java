@@ -1,13 +1,12 @@
 package com.rutassa;
 
 /**
- * Enumeracion Categoria con los valores MICROBUS y COLECTIVO.
- * 1 Categoria puede tener muchos {@link ChoferCategoria}.
+ * Enumeracion CategoriaTipo con los valores MICROBUS y COLECTIVO.
  * @author MaximoRetamoso, MartinZanandrea
  */
 public enum CategoriaTipo {
     /**
-     * Categorias 
+     * Tipos de categorias
      */
     MICROBUS,
     COLECTIVO

@@ -11,16 +11,26 @@ import java.util.Map;
  * Clase GestionSistema que lleva a cabo todos los metodos de gestion de rutassa
  */
 public class GestionSistema {
-    private static List<Chofer> choferes = new ArrayList<>();
-    private static List<Vehiculo> vehiculos = new ArrayList<>();
-    private static List<Viaje> viajes = new ArrayList<>();
-    private static List<Ciudad> ciudades = new ArrayList<>();
-    private static List<Viaje> viajesRealizados = new ArrayList<>();
-    private static final Scanner sc = new Scanner(System.in);
+    private List<Chofer> choferes;
+    private List<Vehiculo> vehiculos;
+    private List<Viaje> viajes;
+    private List<Ciudad> ciudades;
+    private List<Viaje> viajesRealizados;
+    private Scanner sc;
+
+    public GestionSistema() {
+        this.choferes = new ArrayList<>();
+        this.vehiculos = new ArrayList<>();
+        this.viajes = new ArrayList<>();
+        this.ciudades = new ArrayList<>();
+        this.viajesRealizados = new ArrayList<>();
+        this.sc = new Scanner(System.in);
+    }
     /** 
      * metodo main para correr el programa rutassa.
      */
     public static void main(String[] args) {
+        GestionSistema sistema = new GestionSistema();
         boolean salir = false;
         while (!salir) {
             System.out.println("\n" + "-".repeat(45) + "\n\tSistema de gestion Rutas SA\n" + "-".repeat(45));
@@ -39,9 +49,9 @@ public class GestionSistema {
 
             while (!opcionValida) {
                 System.out.print("\nSeleccione una opcion: ");
-                if (sc.hasNextInt()) {
-                    opcion = sc.nextInt();
-                    sc.nextLine();
+                if (sistema.sc.hasNextInt()) {
+                    opcion = sistema.sc.nextInt();
+                    sistema.sc.nextLine();
 
                     if (opcion >= 0 && opcion <= 7) {
                         opcionValida = true;
@@ -50,7 +60,7 @@ public class GestionSistema {
                     }
                 } else {
                     System.out.println("Ingreso invalido. debe ser un numero.");
-                    sc.nextLine(); 
+                    sistema.sc.nextLine(); 
                 }
             }
 
@@ -60,35 +70,35 @@ public class GestionSistema {
                     System.out.println("\n" + "-".repeat(45) + "\n\tSaliendo del sistema de gestion\n" + "-".repeat(45));
                     break;
                 case 1:
-                    registrarChoferes();
+                    sistema.registrarChoferes();
                     break;
                 case 2:
-                    registrarVehiculos();
+                    sistema.registrarVehiculos();
                     break;
                 case 3:
-                    planificarViajes();
+                    sistema.planificarViajes();
                     break;
                 case 4:
-                    asociarVehiculoYChofer();
+                    sistema.asociarVehiculoYChofer();
                     break;
                 case 5:
-                    viajesProgramados();
+                    sistema.viajesProgramados();
                     break;
                 case 6:
-                    informeViajesARealizarColectivo();
+                    sistema.informeViajesARealizarColectivo();
                     break;
                 case 7:
-                    informeViajesRealizadosColectivo();
+                    sistema.informeViajesRealizadosColectivo();
                     break;
             }
         }
-        sc.close();
+        sistema.sc.close();
     }
     
     /**
      * Metodo para registrar los choferes.
      */
-    public static void registrarChoferes() {
+    public void registrarChoferes() {
         System.out.println("\n" + "-".repeat(45) + "\nRegistrar choferes\n" + "-".repeat(45));
         if (!choferes.isEmpty()) {
             System.out.println("Ya hay choferes registrados.");
@@ -164,9 +174,9 @@ public class GestionSistema {
                 String fecha = sc.nextLine();
 
                 if (d == 1) {
-                    categorias.add(new ChoferCategoria(fecha, CategoriaTipo.COLECTIVO));
+                    categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.COLECTIVO)));
                 } else {
-                    categorias.add(new ChoferCategoria(fecha, CategoriaTipo.MICROBUS));
+                    categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.MICROBUS)));
                 }
             }
             choferes.add(new Chofer(dni, nombre, apellido, nroLicencia, categorias));
@@ -177,7 +187,7 @@ public class GestionSistema {
     /**
      * Metodo para registrar los vehiculos.
      */
-    public static void registrarVehiculos() {
+    public void registrarVehiculos() {
         System.out.println("\n" + "-".repeat(45) + "\nRegistrar vehiculos\n" + "-".repeat(45));
         if (!vehiculos.isEmpty()) {
             System.out.println("Ya hay vehiculos registrados.");
@@ -277,7 +287,6 @@ public class GestionSistema {
                         System.out.println("Respuesta invalida. Debe ingresar 'si' o 'no'. Vuelva a intentar.");
                     }
                 }
-
                 vehiculos.add(new Minibus(patente, capacidad, tieneBodega, aireAcondicionado));
             }
         }
@@ -286,7 +295,7 @@ public class GestionSistema {
     /**
      * Metodo para planificar viajes entre ciudades.
      */
-    public static void planificarViajes() {
+    public void planificarViajes() {
         System.out.println("\n" + "-".repeat(45) + "\nPlanificar viajes\n" + "-".repeat(45));
 
         if (!viajes.isEmpty()) {
@@ -441,7 +450,7 @@ public class GestionSistema {
     /**
      * Metodo para asociar un vehiculo y un chofer a cada viaje.
      */
-    public static void asociarVehiculoYChofer() {
+    public void asociarVehiculoYChofer() {
         System.out.println("\n" + "-".repeat(45) + "\nAsociar vehículo y chofer a cada viaje\n" + "-".repeat(45));
         
         if (choferes.isEmpty()) {
@@ -551,7 +560,7 @@ public class GestionSistema {
     /**
      * Metodo para mostrar los viajes programados con informacion detallada.
      */
-    public static void viajesProgramados() {
+    public void viajesProgramados() {
         System.out.println("\n" + "-".repeat(45) + "\nViajes programados\n" + "-".repeat(45));
 
         if (viajes.isEmpty()) {
@@ -589,7 +598,7 @@ public class GestionSistema {
     /**
      * Metodo para mostrar un informe detallado de viajes que tiene para realizar un colectivo determinado.
      */
-    public static void informeViajesARealizarColectivo() {
+    public void informeViajesARealizarColectivo() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese la patente del colectivo: ");
         String patente = sc.nextLine();
@@ -614,7 +623,7 @@ public class GestionSistema {
     /**
      * Metodo para mostrar un informe de cantidad de viajes ya realizados por cada chofer de colectivos
      */
-    public static void informeViajesRealizadosColectivo() {
+    public void informeViajesRealizadosColectivo() {
         System.out.println("\n" + "-".repeat(45) + "\nInforme de cantidad de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
         // Mapa para contar los viajes por chofer
         Map<Chofer, Integer> viajesPorChofer = new HashMap<>();
@@ -639,7 +648,7 @@ public class GestionSistema {
         }
     }
 
-    public static void MarcarComoRealizado(){
+    public void MarcarComoRealizado(){
         System.out.println("\n" + "-".repeat(45) + "\nViajes \n" + "-".repeat(45));
         Viaje viajeListo = null;
         for (Viaje viaje : viajes) {

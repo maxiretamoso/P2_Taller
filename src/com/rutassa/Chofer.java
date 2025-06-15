@@ -2,7 +2,6 @@ package com.rutassa;
 import java.util.List;
 import java.util.ArrayList;
 
-
 /**
  * Clase Chofer con atributos nroLicencia y categoria.
  * Esta clase hereda de {@link Persona}.

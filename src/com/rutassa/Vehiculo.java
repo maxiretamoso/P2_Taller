@@ -1,6 +1,4 @@
 package com.rutassa;
-import com.rutassa.tipoVehiculo.Colectivo;
-import com.rutassa.tipoVehiculo.Minibus;
 
 /**
  * Clase Vehiculo con atributos patente y capacidad.
