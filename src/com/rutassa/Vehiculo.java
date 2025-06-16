@@ -1,7 +1,9 @@
 package com.rutassa;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Clase Vehiculo con atributos patente y capacidad.
+ * Clase Vehiculo con atributos patente, capacidad y vehiculoViajes.
  * Es la clase padre de {@link Colectivo} y {@link Minibus}.
  * 1 vehiculo puede tener varios {@link Viaje}.
  * @author MaximoRetamoso, MartinZanandrea
@@ -10,24 +12,28 @@ package com.rutassa;
 public class Vehiculo {
     private String patente;
     private int capacidad;
+    private List<Viaje> vehiculoViajes;
 
     /**
      * Constructor por defecto de Vehiculo.
-     * Inicializa patente como una cadena vacia, y capacidad en 0.
+     * Inicializa patente como una cadena vacia, y capacidad en 0, e instancia VehiculoViajes.
      */
     public Vehiculo() {
         this.patente="";
         this.capacidad=0;
+        vehiculoViajes = new ArrayList<>();
     }
 
     /**
      * Constructor parametrizado de Vehiculo.
      * @param patente La patente del vehiculo
      * @param capacidad La capacidad del vehiculo 
+     * @param vehiculoViajes El Vehiculo de viajes
      */
-    public Vehiculo(String patente, int capacidad) {
+    public Vehiculo(String patente, int capacidad, List<Viaje> vehiculoViajes) {
         this.patente = patente;
         this.capacidad = capacidad;
+        this.vehiculoViajes = vehiculoViajes;
     }
 
     /**
@@ -63,11 +69,28 @@ public class Vehiculo {
     }
 
     /**
+     * Getter que devuelve el vehiculo de viajes.
+     * @return vehiculoViajes
+     */
+    public List<Viaje> getVehiculoViajes() {
+        return vehiculoViajes;
+    }
+
+    /**
+     * Setter que establece el vehiculo de viajes.
+     * @param vehiculoViajes El nuevo vehiculoViajes
+     */
+    public void setVehiculoViajes(List<Viaje> vehiculoViajes) {
+        this.vehiculoViajes = vehiculoViajes;
+    }
+
+    /**
      * Metodo toString() que retorna un string de la clase Vehiculo.
      * @return String
      */
     @Override
     public String toString() {
-        return "[Patente: " + patente + ", Capacidad: " + capacidad + "]";
+        return "[Patente: " + patente + ", Capacidad: " + capacidad + "vehiculo viajes: " + vehiculoViajes + "]";
     }
+
 }

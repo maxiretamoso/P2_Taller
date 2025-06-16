@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Clase Chofer con atributos nroLicencia y categoria.
+ * Clase Chofer con atributos nroLicencia, categorias, y viajesChofer.
  * Esta clase hereda de {@link Persona}.
  * 1 chofer puede tener varios {@link Viaje}.
  * 1 chofer tiene 1 {@link CategoriaTipo}.
@@ -14,15 +14,17 @@ import java.util.ArrayList;
 public class Chofer extends Persona{
     private String nroLicencia;
     private List<ChoferCategoria> categorias;
+    private List<Viaje> viajesChofer;
 
     /**
      * Constructor por defecto de Chofer.
-     * Inicializa dni, nombre, apellido, y nroLicencia como una cadena vacia, y se instancia la lista de categorias.
+     * Inicializa dni, nombre, apellido, y nroLicencia como una cadena vacia, y se instancia la lista de categorias, y viajesChofer.
      */
     public Chofer() {
         super(0, "", "");
         this.nroLicencia = "";
         categorias = new ArrayList<>();
+        viajesChofer = new ArrayList<>();
     }
 
     /**
@@ -32,11 +34,13 @@ public class Chofer extends Persona{
      * @param apellido El apellido del chofer
      * @param nroLicencia El numero de licencia del chofer
      * @param categorias Las categorias del chofer
+     * @param viajesChofer Los viajes del chofer
      */
-    public Chofer(long dni, String nombre, String apellido, String nroLicencia, List<ChoferCategoria> categorias){
+    public Chofer(long dni, String nombre, String apellido, String nroLicencia, List<ChoferCategoria> categorias, List<Viaje> viajesChofer){
         super(dni, nombre, apellido);
         this.nroLicencia = nroLicencia;
         this.categorias = categorias;
+        this.viajesChofer = viajesChofer;
     }
 
     /**
@@ -72,11 +76,27 @@ public class Chofer extends Persona{
     }
     
     /**
+     * Getter que devuelve los viajes del chofer.
+     * @return viajesChofer
+     */
+    public List<Viaje> getViajesChofer() {
+        return viajesChofer;
+    }
+
+    /**
+     * Setter que establece los viajes del chofer.
+     * @param viajesChofer los nuevos viajesChofer
+     */
+    public void setViajeChofer(Viaje viaje) {
+        this.viajesChofer.add(viaje);
+    }
+
+    /**
      * Metodo toString() que retorna un string de la clase Chofer.
      * @return String
      */
     @Override
     public String toString() {
-        return "[" + super.toString() + ", Nº de Licencia: " + nroLicencia + ", Categoría: " + categorias + "]";
+        return "[" + super.toString() + ", Nº de Licencia: " + nroLicencia + ", Categoría: " + categorias + "Viajes Chofer: " + viajesChofer + "]";
     }
 }

@@ -6,6 +6,9 @@ import com.rutassa.tipoVehiculo.Colectivo;
 import com.rutassa.tipoVehiculo.Minibus;
 import java.util.HashMap;
 import java.util.Map;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Clase GestionSistema que lleva a cabo todos los metodos de gestion de rutassa
@@ -26,6 +29,7 @@ public class GestionSistema {
         this.viajesRealizados = new ArrayList<>();
         this.sc = new Scanner(System.in);
     }
+
     /** 
      * metodo main para correr el programa rutassa.
      */
@@ -174,12 +178,12 @@ public class GestionSistema {
                 String fecha = sc.nextLine();
 
                 if (d == 1) {
-                    categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.COLECTIVO)));
+                    categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.COLECTIVO, null)));
                 } else {
-                    categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.MICROBUS)));
+                    categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.MICROBUS, null)));
                 }
             }
-            choferes.add(new Chofer(dni, nombre, apellido, nroLicencia, categorias));
+            choferes.add(new Chofer(dni, nombre, apellido, nroLicencia, categorias, null));
             System.out.println("Chofer agregado correctamente.");
         }
     }
@@ -289,7 +293,7 @@ public class GestionSistema {
                 }
                 vehiculos.add(new Minibus(patente, capacidad, tieneBodega, aireAcondicionado));
             }
-        }
+        } 
     }
 
     /**
@@ -367,18 +371,27 @@ public class GestionSistema {
                 }
             }
 
-            ciudades.add(new Ciudad(nombreCiudad, provincia));
+            ciudades.add(new Ciudad(nombreCiudad, provincia, null, null));
         }
 
         System.out.print("Ingrese la cantidad de viajes a planificar: ");
         int v = sc.nextInt();
         sc.nextLine();
 
-        for (int i = 0; i < v; i++) {
-            System.out.println("\nPlanificar viaje N°" + (i + 1) + "/" + v + ":");
+            for (int i = 0; i < v; i++) {
+                System.out.println("\nPlanificar viaje N°" + (i + 1) + "/" + v + ":");
+                String fecha;
+                do {
+                System.out.print("Ingrese una fecha (DD/MM/AA): ");
+                fecha = sc.nextLine();
 
-            System.out.print("Ingrese la fecha: ");
-            String fecha = sc.nextLine();
+                if (!esFechaValida(fecha)) {
+                    System.out.println("Formato o fecha inválida. Intente nuevamente.");
+                }
+
+            } while (!esFechaValida(fecha));
+
+
 
             System.out.print("Ingrese el horario de salida: ");
             String horarioSalida = sc.nextLine();
@@ -555,6 +568,69 @@ public class GestionSistema {
                 System.out.println("Vehiculo guardado,continue.");
             }
         }
+        System.out.println("-".repeat(20) + "\nLista de viajes disponibles:\n" + "-".repeat(20));
+        boolean encontrados=false;
+        ArrayList viajesdisponibles = new ArrayList<>();
+        for (Viaje i:viajes){
+            if(i.getVehiculo()==null&&i.getChofer()==null){
+                System.out.println(i);
+                encontrados=true;
+            }
+        }
+        if(!encontrados){
+            System.out.println("No hay viajes disponibles.");
+            return;
+        }
+        Provincia provincia = null;
+        while (provincia == null) {
+            System.out.println("Ingrese el nombre de la provincia de destino a la cual quiere asociarle su vehiculo y chofer:");
+            String entrada = sc.nextLine().trim().toUpperCase().replace(" ", "_");
+
+            try {
+                provincia = Provincia.valueOf(entrada);
+            } catch (IllegalArgumentException e) {
+                // Sugerencias por si escribió mal
+                List<String> sugerencias = new ArrayList<>();
+                for (Provincia p : Provincia.values()) {
+                    if (p.name().contains(entrada) || entrada.contains(p.name())) {
+                        sugerencias.add(p.name().replace("_", " "));
+                    }
+                }
+
+                if (!sugerencias.isEmpty()) {
+                    System.out.println("¿Quiso decir alguna de estas?");
+                    for (String sugerida : sugerencias) {
+                        System.out.println("- " + sugerida);
+                    }
+                } else {
+                    System.out.println("Provincia no válida. Intente nuevamente.");
+                }
+            }
+        }
+
+        // Buscar viaje sin chofer ni vehículo con ese destino
+        boolean asignado = false;
+        for (Viaje viaje : viajes) {
+            if (viaje.getVehiculo() == null && viaje.getChofer() == null && viaje.getDestino().getProvincia() == provincia) {
+                viaje.setChofer(chofer);
+                viaje.setVehiculo(vehiculo);
+                System.out.println("✅ Se asignó chofer y vehículo al viaje con destino a " + provincia.name().replace("_", " "));
+                asignado = true;
+                break;
+            }
+        }
+
+        if (!asignado) {
+            System.out.println("No se encontró ningún viaje disponible con destino a esa provincia.");
+        }
+
+
+
+        
+
+
+
+
     }
 
     /**
@@ -589,7 +665,6 @@ public class GestionSistema {
             }
             return;
         }
-
         for (int i = 0; i < viajes.size(); i++) {
             System.out.println(viajes.get(i));
         }
@@ -625,50 +700,54 @@ public class GestionSistema {
      */
     public void informeViajesRealizadosColectivo() {
         System.out.println("\n" + "-".repeat(45) + "\nInforme de cantidad de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
-        // Mapa para contar los viajes por chofer
-        Map<Chofer, Integer> viajesPorChofer = new HashMap<>();
-
-        for (Viaje viaje : viajes) {
-            Vehiculo vehiculo = viaje.getVehiculo();
-            Chofer chofer = viaje.getChofer();
-
-            if (vehiculo instanceof Colectivo) {
-                viajesPorChofer.put(chofer, viajesPorChofer.getOrDefault(chofer, 0) + 1);
-            }
+        String date="15/06/25";
+        for(Viaje i: viajes){
+            if(i.getChofer().)
         }
 
-        if (viajesPorChofer.isEmpty()) {
-            System.out.println("No hay viajes realizados por choferes de colectivos.");
-        } else {
-            for (Map.Entry<Chofer, Integer> entry : viajesPorChofer.entrySet()) {
-                Chofer chofer = entry.getKey();
-                int cantidad = entry.getValue();
-                System.out.println("Chofer: " + chofer.getNombre() + " - Viajes realizados: " + cantidad);
-            }
-        }
     }
 
-    public void MarcarComoRealizado(){
-        System.out.println("\n" + "-".repeat(45) + "\nViajes \n" + "-".repeat(45));
-        Viaje viajeListo = null;
-        for (Viaje viaje : viajes) {
-            if (viaje.atributosNulos()) {
-                continue;
-            } else {
-                viajesRealizados.add(viaje);
+    
+
+
+    public static void viajesDisponibles(ArrayList<Viaje> viajes){
+        boolean encontrado=false;
+        for(Viaje i: viajes){
+            if(i.getVehiculo()==null&&i.getChofer()==null){
+                System.out.println(i);
+                encontrado=true;
             }
         }
-        System.out.println("Viajes disponibles:");
-        for(int i=0;i<viajesRealizados.size();i++){
-            String choferViajeDisponible = viajesRealizados.get(i).getChofer().getNombre();
-            long dniViajeDisponible = viajesRealizados.get(i).getChofer().getDni();
-            CategoriaTipo categoriaViajeDisponible = viajesRealizados.get(i).getChofer().getCategorias().getCategoria();
-
-            System.out.println(choferViajeDisponible + "\n" + "=".repeat(30) + "\nViajes para marcar como realizados:\n" + "=".repeat(30));
-            System.out.println("");
-            long dni = sc.nextLong();
-
-            
+        if(!encontrado){
+            System.out.println("No hay viajes disponibles.");
         }
-    } 
+
+    }
+
+
+
+
+
+
+
+
+
+
+    
+    
+    //Validaciones de fecha.
+    public static boolean esFechaValida(String fecha) {
+    if (!esFormatoFechaValido(fecha)) return false;
+
+    try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        LocalDate.parse(fecha, formatter);
+        return true;
+    } catch (DateTimeParseException e) {
+        return false;
+        }
+    }
+    public static boolean esFormatoFechaValido(String fecha) {
+    return fecha.matches("\\d{2}/\\d{2}/\\d{2}");
+    }
 }
