@@ -20,7 +20,25 @@ public class GestionSistema {
     private List<Ciudad> ciudades;
     private List<Viaje> viajesRealizados;
     private Scanner sc;
+    /**
+     * Esta es la fecha que usamos como "hoy" para probar.
+     * Nos sirve para ver si las licencias están vencidas o si los viajes ya pasaron.
+     */
+    public static final String FECHA_ACTUAL_SIMULADA = "12/06/25";
 
+    /**
+     * Nos da la fecha de "hoy" que estamos usando para simular.
+     * Es la misma fecha que está definida arriba.
+     *
+     * @return La fecha simulada en formato "DD/MM/AA".
+     */
+    public static String getFechaActualSimulada() {
+        return FECHA_ACTUAL_SIMULADA;
+    }
+    
+    
+    
+    
     public GestionSistema() {
         this.choferes = new ArrayList<>();
         this.vehiculos = new ArrayList<>();
@@ -44,7 +62,7 @@ public class GestionSistema {
         Provincia tucuman = Provincia.TUCUMAN;
 
         // Crear instancias de Ciudades
-        Ciudad bsAs = new Ciudad("Buenos Aires", buenosAires);
+        Ciudad bsAs = new Ciudad("Buenos Aires", buenosAires,null,null);
         Ciudad rosario = new Ciudad("Rosario", santaFe);
         Ciudad cordobaCapital = new Ciudad("Córdoba", cordoba);
         Ciudad mendozaCapital = new Ciudad("Mendoza", mendoza);
@@ -73,10 +91,10 @@ public class GestionSistema {
         sistema.choferes.add(chofer3);
 
         // Crear instancias de Vehículos
-        Colectivo colectivo1 = new Colectivo("ABC123", 45, true);  // Con piso doble
-        Colectivo colectivo2 = new Colectivo("DEF456", 30, false); // Sin piso doble
-        Minibus minibus1 = new Minibus("GHI789", 20, true, true);  // Con bodega y aire acondicionado
-        Minibus minibus2 = new Minibus("JKL012", 15, false, true); // Sin bodega, con aire acondicionado
+        Colectivo colectivo1 = new Colectivo("ABC123", 45, null,true);  // Con piso doble
+        Colectivo colectivo2 = new Colectivo("DEF456", 30, null,false); // Sin piso doble
+        Minibus minibus1 = new Minibus("GHI789", 20,null,true,true);  // Con bodega y aire acondicionado
+        Minibus minibus2 = new Minibus("JKL012", 15,null,false,true); // Sin bodega, con aire acondicionado
 
         // Agregar vehículos al sistema
         sistema.vehiculos.add(colectivo1);
@@ -88,7 +106,7 @@ public class GestionSistema {
         LocalDate fecha1 = LocalDate.now().plusDays(7);
         LocalDate fecha2 = LocalDate.now().plusDays(14);
         
-        Viaje viaje1 = new Viaje(bsAs, cordobaCapital, fecha1, 1200.0);
+        Viaje viaje1 = new Viaje(bsAs, cordobaCapital, fecha1, 1200.0,);
         Viaje viaje2 = new Viaje(rosario, mendozaCapital, fecha1, 1500.0);
         Viaje viaje3 = new Viaje(tucumanCapital, bsAs, fecha2, 2000.0);
 

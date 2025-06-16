@@ -71,8 +71,12 @@ public class Chofer extends Persona{
      * Setter que establece la categoria del chofer.
      * @param categorias Las nuevas categorias
      */
-    public void setCategorias(List<ChoferCategoria> categorias) {
-        this.categorias = categorias;
+    public void setCategorias(ChoferCategoria categoria) {
+        if (this.categorias==null) {
+            this.categorias= new ArrayList<>();
+            
+        }
+        this.categorias.add(categoria);
     }
     
     /**
@@ -80,6 +84,9 @@ public class Chofer extends Persona{
      * @return viajesChofer
      */
     public List<Viaje> getViajesChofer() {
+        if(this.categorias==null){
+        return new ArrayList<>();
+        }
         return viajesChofer;
     }
 
