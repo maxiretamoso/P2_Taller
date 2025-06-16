@@ -80,8 +80,8 @@ public class Vehiculo {
      * Setter que establece el vehiculo de viajes.
      * @param vehiculoViajes El nuevo vehiculoViajes
      */
-    public void setVehiculoViajes(List<Viaje> vehiculoViajes) {
-        this.vehiculoViajes = vehiculoViajes;
+    public void setVehiculoViajes(Viaje vehiculo) {
+        this.vehiculoViajes.add(vehiculo);
     }
 
     /**

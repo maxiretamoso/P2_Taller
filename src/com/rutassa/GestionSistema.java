@@ -613,6 +613,10 @@ public class GestionSistema {
         for (Viaje viaje : viajes) {
             if (viaje.getVehiculo() == null && viaje.getChofer() == null && viaje.getDestino().getProvincia() == provincia) {
                 viaje.setChofer(chofer);
+                vehiculos.add(vehiculo);
+                choferes.add(chofer);
+                //viaje.getChofer().setViajeChofer(viaje);
+                //viaje.getVehiculo().setVehiculoViajes(viaje);
                 viaje.setVehiculo(vehiculo);
                 System.out.println("✅ Se asignó chofer y vehículo al viaje con destino a " + provincia.name().replace("_", " "));
                 asignado = true;
@@ -623,14 +627,6 @@ public class GestionSistema {
         if (!asignado) {
             System.out.println("No se encontró ningún viaje disponible con destino a esa provincia.");
         }
-
-
-
-        
-
-
-
-
     }
 
     /**
@@ -701,28 +697,12 @@ public class GestionSistema {
     public void informeViajesRealizadosColectivo() {
         System.out.println("\n" + "-".repeat(45) + "\nInforme de cantidad de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
         String date="15/06/25";
-        for(Viaje i: viajes){
-            if(i.getChofer().)
-        }
+        
 
     }
 
     
 
-
-    public static void viajesDisponibles(ArrayList<Viaje> viajes){
-        boolean encontrado=false;
-        for(Viaje i: viajes){
-            if(i.getVehiculo()==null&&i.getChofer()==null){
-                System.out.println(i);
-                encontrado=true;
-            }
-        }
-        if(!encontrado){
-            System.out.println("No hay viajes disponibles.");
-        }
-
-    }
 
 
 
