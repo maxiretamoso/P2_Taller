@@ -1,5 +1,8 @@
 package com.rutassa.tipoVehiculo;
+import java.util.List;
+
 import com.rutassa.Vehiculo;
+import com.rutassa.Viaje;
 
 /**
  * Clase Minibus con el atributo tieneBodega y aireAcondicionado.
@@ -19,7 +22,7 @@ public class Minibus extends Vehiculo{
      * @param aireAcondicionado El aire acondicionado por defecto del minibus
      */
     public Minibus() {
-        super("", 0);
+        super("", 0, null);
         this.tieneBodega = false;
         this.aireAcondicionado = false;
     }
@@ -28,11 +31,12 @@ public class Minibus extends Vehiculo{
      * constructor parametrizado de Minibus.
      * @param patente La patente del minibus
      * @param capacidad La capacidad del minibus
+     * @param vehiculoViajes Los viajes del minibus
      * @param tieneBodega La bodega del minibus
      * @param aireAcondicionado El aire acondicionado del minibus
      */
-    public Minibus(String patente, int capacidad, boolean tieneBodega, boolean aireAcondicionado) {
-        super(patente, capacidad);
+    public Minibus(String patente, int capacidad, List<Viaje> vehiculoViajes, boolean tieneBodega, boolean aireAcondicionado) {
+        super(patente, capacidad, vehiculoViajes);
         this.tieneBodega = tieneBodega;
         this.aireAcondicionado = aireAcondicionado;
     }

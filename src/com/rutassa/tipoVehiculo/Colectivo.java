@@ -1,5 +1,8 @@
 package com.rutassa.tipoVehiculo;
+import java.util.List;
+
 import com.rutassa.Vehiculo;
+import com.rutassa.Viaje;
 
 /**
  * Clase Colectivo con el atributo pisoDoble.
@@ -17,7 +20,7 @@ public class Colectivo extends Vehiculo {
      * @param pisoDoble El piso doble por defecto del colectivo
      */
     public Colectivo() {
-        super("", 0);
+        super("", 0, null);
         this.pisoDoble = false;
     }
 
@@ -27,8 +30,8 @@ public class Colectivo extends Vehiculo {
      * @param capacidad La capacidad del colectivo
      * @param pisoDoble El piso doble del colectivo
      */
-    public Colectivo(String patente, int capacidad, boolean pisoDoble) {
-        super(patente, capacidad);
+    public Colectivo(String patente, int capacidad, List<Viaje> vehiculoViajes, boolean pisoDoble) {
+        super(patente, capacidad, vehiculoViajes);
         this.pisoDoble = pisoDoble;
     }
 
