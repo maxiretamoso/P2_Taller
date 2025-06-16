@@ -35,6 +35,67 @@ public class GestionSistema {
      */
     public static void main(String[] args) {
         GestionSistema sistema = new GestionSistema();
+
+        // Crear instancias de Provincias
+        Provincia buenosAires = Provincia.BUENOS_AIRES;
+        Provincia cordoba = Provincia.CORDOBA;
+        Provincia santaFe = Provincia.SANTA_FE;
+        Provincia mendoza = Provincia.MENDOZA;
+        Provincia tucuman = Provincia.TUCUMAN;
+
+        // Crear instancias de Ciudades
+        Ciudad bsAs = new Ciudad("Buenos Aires", buenosAires);
+        Ciudad rosario = new Ciudad("Rosario", santaFe);
+        Ciudad cordobaCapital = new Ciudad("Córdoba", cordoba);
+        Ciudad mendozaCapital = new Ciudad("Mendoza", mendoza);
+        Ciudad tucumanCapital = new Ciudad("San Miguel de Tucumán", tucuman);
+
+        // Agregar ciudades al sistema
+        sistema.ciudades.add(bsAs);
+        sistema.ciudades.add(rosario);
+        sistema.ciudades.add(cordobaCapital);
+        sistema.ciudades.add(mendozaCapital);
+        sistema.ciudades.add(tucumanCapital);
+
+        // Crear instancias de Categorías
+        Categoria categoriaA = new Categoria("A", "Autobús de larga distancia");
+        Categoria categoriaB = new Categoria("B", "Autobús interurbano");
+        Categoria categoriaC = new Categoria("C", "Autobús urbano");
+
+        // Crear instancias de Choferes
+        Chofer chofer1 = new Chofer(12345678L, "Juan Pérez", categoriaA);
+        Chofer chofer2 = new Chofer(23456789L, "María García", categoriaB);
+        Chofer chofer3 = new Chofer(34567890L, "Carlos López", categoriaC);
+
+        // Agregar choferes al sistema
+        sistema.choferes.add(chofer1);
+        sistema.choferes.add(chofer2);
+        sistema.choferes.add(chofer3);
+
+        // Crear instancias de Vehículos
+        Colectivo colectivo1 = new Colectivo("ABC123", 45, true);  // Con piso doble
+        Colectivo colectivo2 = new Colectivo("DEF456", 30, false); // Sin piso doble
+        Minibus minibus1 = new Minibus("GHI789", 20, true, true);  // Con bodega y aire acondicionado
+        Minibus minibus2 = new Minibus("JKL012", 15, false, true); // Sin bodega, con aire acondicionado
+
+        // Agregar vehículos al sistema
+        sistema.vehiculos.add(colectivo1);
+        sistema.vehiculos.add(colectivo2);
+        sistema.vehiculos.add(minibus1);
+        sistema.vehiculos.add(minibus2);
+
+        // Crear instancias de Viajes
+        LocalDate fecha1 = LocalDate.now().plusDays(7);
+        LocalDate fecha2 = LocalDate.now().plusDays(14);
+        
+        Viaje viaje1 = new Viaje(bsAs, cordobaCapital, fecha1, 1200.0);
+        Viaje viaje2 = new Viaje(rosario, mendozaCapital, fecha1, 1500.0);
+        Viaje viaje3 = new Viaje(tucumanCapital, bsAs, fecha2, 2000.0);
+
+        // Agregar viajes al sistema
+        sistema.viajes.add(viaje1);
+        sistema.viajes.add(viaje2);
+        sistema.viajes.add(viaje3);
         boolean salir = false;
         while (!salir) {
             System.out.println("\n" + "-".repeat(45) + "\n\tSistema de gestion Rutas SA\n" + "-".repeat(45));
