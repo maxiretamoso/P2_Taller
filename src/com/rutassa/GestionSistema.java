@@ -601,7 +601,7 @@ public void viajesProgramados() {
                 System.out.println("Fecha: " + viaje.getFecha());
                 System.out.println("Origen: " + viaje.getOrigen().getNombre() + " (" + viaje.getOrigen().getProvincia() + ")");
                 System.out.println("Destino: " + viaje.getDestino().getNombre() + " (" + viaje.getDestino().getProvincia() + ")");
-                System.out.println("Chofer: " + viaje.getChofer().getNombre() + " " + viaje.getChofer().getApellido());
+                System.out.println("Chofer: " + viaje.getChofer().getNombre() + " " + viaje.getChofer().getApellido()); 
             }
         }
     }
@@ -653,60 +653,60 @@ public void viajesProgramados() {
 
 
     public  void registrarCiudades(){
-    Scanner sc = new Scanner(System.in);
-    System.out.println("\n" + "-".repeat(45));
-    System.out.println("Registro de Ciudades");
-    System.out.println("-".repeat(45));
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n" + "-".repeat(45));
+        System.out.println("Registro de Ciudades");
+        System.out.println("-".repeat(45));
 
-    System.out.print("¿Cuántas ciudades desea registrar?: ");
-    int cantidad = Integer.parseInt(sc.nextLine());
+        System.out.print("¿Cuántas ciudades desea registrar?: ");
+        int cantidad = Integer.parseInt(sc.nextLine());
 
-    for (int i = 0; i < cantidad; i++) {
-        System.out.println("\nCiudad #" + (i + 1));
+        for (int i = 0; i < cantidad; i++) {
+            System.out.println("\nCiudad #" + (i + 1));
 
-        System.out.print("Nombre de la ciudad: ");
-        String nombreCiudad = sc.nextLine();
+            System.out.print("Nombre de la ciudad: ");
+            String nombreCiudad = sc.nextLine();
 
-        // Mostrar todas las provincias disponibles
-        System.out.println("Provincias disponibles:");
-        for (Provincia p : Provincia.values()) {
-            System.out.println(" - " + p.name());
-        }
-
-        Provincia provincia = null;
-        while (provincia == null) {
-            System.out.print("Ingrese el nombre exacto de la provincia (mayúsculas y guiones bajos como se muestra): ");
-            String nombreProvincia = sc.nextLine().toUpperCase();
-            try {
-                provincia = Provincia.valueOf(nombreProvincia);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Provincia no válida. Intente nuevamente.");
+            // Mostrar todas las provincias disponibles
+            System.out.println("Provincias disponibles:");
+            for (Provincia p : Provincia.values()) {
+                System.out.println(" - " + p.name());
             }
-        }
 
-        // Verificar si ya existe ciudad con el mismo nombre y provincia
-        boolean yaExiste = false;
-        for (Ciudad c : ciudades) {
-            if (c.getNombre().equalsIgnoreCase(nombreCiudad) && c.getProvincia() == provincia) {
-                yaExiste = true;
-                break;
+            Provincia provincia = null;
+            while (provincia == null) {
+                System.out.print("Ingrese el nombre exacto de la provincia (mayúsculas y guiones bajos como se muestra): ");
+                String nombreProvincia = sc.nextLine().toUpperCase();
+                try {
+                    provincia = Provincia.valueOf(nombreProvincia);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Provincia no válida. Intente nuevamente.");
+                }
             }
+
+            // Verificar si ya existe ciudad con el mismo nombre y provincia
+            boolean yaExiste = false;
+            for (Ciudad c : ciudades) {
+                if (c.getNombre().equalsIgnoreCase(nombreCiudad) && c.getProvincia() == provincia) {
+                    yaExiste = true;
+                    break;
+                }
+            }
+
+            if (yaExiste) {
+                System.out.println("La ciudad '" + nombreCiudad + "' ya está registrada en la provincia '" + provincia + "'. No se agregará.");
+                i--; // Para que vuelva a intentar esta ciudad
+                continue;
+            }
+
+            Ciudad ciudad = new Ciudad();
+            ciudad.setNombre(nombreCiudad);
+            ciudad.setProvincia(provincia);
+            ciudades.add(ciudad);
+
+            System.out.println("Ciudad registrada con éxito.");
         }
-
-        if (yaExiste) {
-            System.out.println("La ciudad '" + nombreCiudad + "' ya está registrada en la provincia '" + provincia + "'. No se agregará.");
-            i--; // Para que vuelva a intentar esta ciudad
-            continue;
-        }
-
-        Ciudad ciudad = new Ciudad();
-        ciudad.setNombre(nombreCiudad);
-        ciudad.setProvincia(provincia);
-        ciudades.add(ciudad);
-
-        System.out.println("Ciudad registrada con éxito.");
     }
-}
     
     
 
