@@ -493,7 +493,6 @@ public class GestionSistema {
  * Metodo para mostrar los viajes programados con informacion detallada.
  */
 public void viajesProgramados() {
-    System.out.println("\n" + "-".repeat(45) + "\nViajes programados\n" + "-".repeat(45));
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
     boolean hayViajesIncompletos = false;
 
@@ -560,66 +559,95 @@ public void viajesProgramados() {
     
 
     /**
-     * Metodo para mostrar un informe detallado de viajes que tiene para realizar un colectivo determinado.
-     */
+ * Metodo para mostrar un informe detallado de viajes que tiene para realizar un colectivo determinado.
+ */
     public void informeViajesARealizarColectivo() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese la patente del colectivo: ");
-        String patente = sc.nextLine();
-        System.out.println("\n" + "-".repeat(45) + "\nInforme de viajes de un colectivo determinado\n" + "-".repeat(45));
-        boolean encontrado= false;
-        for(Viaje viaje:viajes){
-            if(viaje.getVehiculo() instanceof Colectivo){
-                Colectivo colectivo = (Colectivo) viaje.getVehiculo();
-                if(colectivo.getPatente().equalsIgnoreCase(patente)){
-                    System.out.println(viaje);
-                    encontrado=true;
-                }
-            }
+    System.out.println("\n" + "-".repeat(45) + "\nInforme de viajes pendientes de un colectivo\n" + "-".repeat(45));
+
+    System.out.print("Ingrese la patente del colectivo: ");
+    String patenteBuscada = sc.nextLine().trim();
+
+    Vehiculo vehiculoEncontrado = null;
+
+    // Buscar vehículo por patente y validar que sea un Colectivo
+    for (Vehiculo v : vehiculos) {
+        if (v.getPatente().equalsIgnoreCase(patenteBuscada) && v instanceof Colectivo) {
+            vehiculoEncontrado = v;
+            break;
         }
-        if(!encontrado){
-            System.out.println("No se han encontrado viajes asociados a la patente: "+patente);
-            System.out.println("Volviendo al menu principal..");
-        }
+    }
+
+    if (vehiculoEncontrado == null) {
+        System.out.println("No se encontró un colectivo con esa patente.");
         return;
     }
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+    LocalDate fechaSimulada = LocalDate.parse(FECHA_ACTUAL_SIMULADA, formatter);
+    boolean hayViajesPendientes = false;
+
+    for (Viaje viaje : viajes) {
+        if (viaje.getVehiculo() != null && viaje.getVehiculo().equals(vehiculoEncontrado)) {
+            if (!esFechaValida(viaje.getFecha())) {
+                System.out.println("Viaje con fecha inválida: " + viaje.getFecha());
+                continue;
+            }
+
+            LocalDate fechaViaje = LocalDate.parse(viaje.getFecha(), formatter);
+
+            if (!fechaViaje.isBefore(fechaSimulada)) {
+                hayViajesPendientes = true;
+                System.out.println("\nViaje programado:");
+                System.out.println("Fecha: " + viaje.getFecha());
+                System.out.println("Origen: " + viaje.getOrigen().getNombre() + " (" + viaje.getOrigen().getProvincia() + ")");
+                System.out.println("Destino: " + viaje.getDestino().getNombre() + " (" + viaje.getDestino().getProvincia() + ")");
+                System.out.println("Chofer: " + viaje.getChofer().getNombre() + " " + viaje.getChofer().getApellido());
+            }
+        }
+    }
+
+    if (!hayViajesPendientes) {
+        System.out.println("No hay viajes pendientes para ese colectivo.");
+    }
+    }
+
 
     
     /**
     * Metodo para mostrar un informe de cantidad de viajes ya realizados por cada chofer de colectivos
     */
     public void informeViajesRealizadosColectivo() {
-    System.out.println("\n" + "-".repeat(45) + "\nInforme de cantidad de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
+        System.out.println("\n" + "-".repeat(45) + "\nInforme de cantidad de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-    LocalDate fechaSimulada = LocalDate.parse(FECHA_ACTUAL_SIMULADA, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        LocalDate fechaSimulada = LocalDate.parse(FECHA_ACTUAL_SIMULADA, formatter);
 
-    Map<Chofer, Integer> viajesPorChofer = new HashMap<>();
+        Map<Chofer, Integer> viajesPorChofer = new HashMap<>();
 
-    for (Viaje viaje : viajes) {
-        if (viaje.getVehiculo() instanceof Colectivo && viaje.getChofer() != null) {
-            try {
-                LocalDate fechaViaje = LocalDate.parse(viaje.getFecha(), formatter);
-                if (fechaViaje.isBefore(fechaSimulada)) {
-                    Chofer chofer = viaje.getChofer();
-                    viajesPorChofer.put(chofer, viajesPorChofer.getOrDefault(chofer, 0) + 1);
+        for (Viaje viaje : viajes) {
+            if (viaje.getVehiculo() instanceof Colectivo && viaje.getChofer() != null) {
+                try {
+                    LocalDate fechaViaje = LocalDate.parse(viaje.getFecha(), formatter);
+                    if (fechaViaje.isBefore(fechaSimulada)) {
+                        Chofer chofer = viaje.getChofer();
+                        viajesPorChofer.put(chofer, viajesPorChofer.getOrDefault(chofer, 0) + 1);
+                    }
+                } catch (DateTimeParseException e) {
+                    System.out.println("Fecha inválida en viaje: " + viaje.getFecha());
                 }
-            } catch (DateTimeParseException e) {
-                System.out.println("Fecha inválida en viaje: " + viaje.getFecha());
             }
         }
-    }
 
-    if (viajesPorChofer.isEmpty()) {
-        System.out.println("No hay viajes realizados por choferes de colectivos.");
-    } else {
-        for (Map.Entry<Chofer, Integer> entry : viajesPorChofer.entrySet()) {
-            Chofer chofer = entry.getKey();
-            int cantidad = entry.getValue();
-            System.out.println("Chofer: " + chofer.getNombre()+","+chofer.getApellido() +"\n" + "- Cantidad de viajes: " + cantidad);
-    }
+        if (viajesPorChofer.isEmpty()) {
+            System.out.println("No hay viajes realizados por choferes de colectivos.");
+        } else {
+            for (Map.Entry<Chofer, Integer> entry : viajesPorChofer.entrySet()) {
+                Chofer chofer = entry.getKey();
+                int cantidad = entry.getValue();
+                System.out.println("Chofer: " + chofer.getNombre()+","+chofer.getApellido() +"\n" + "- Cantidad de viajes: " + cantidad);
+            }
         }
-        
+            
     }
 
 
