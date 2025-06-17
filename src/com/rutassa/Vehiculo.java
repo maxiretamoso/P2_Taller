@@ -2,6 +2,9 @@ package com.rutassa;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rutassa.tipoVehiculo.Colectivo;
+import com.rutassa.tipoVehiculo.Minibus;
+
 /**
  * Clase Vehiculo con atributos patente, capacidad y vehiculoViajes.
  * Es la clase padre de {@link Colectivo} y {@link Minibus}.
@@ -92,5 +95,6 @@ public class Vehiculo {
     public String toString() {
         return "[Patente: " + patente + ", Capacidad: " + capacidad + "vehiculo viajes: " + vehiculoViajes + "]";
     }
+
 
 }

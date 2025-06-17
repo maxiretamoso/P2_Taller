@@ -83,8 +83,8 @@ public class Ciudad {
      * Setter que establece los origenes de los viajes.
      * @param origenesViajes Los nuevos origenes de viajes
      */
-    public void setOrigenesViajes(List<Viaje> origenesViajes) {
-        this.origenesViajes = origenesViajes;
+    public void setOrigenesViajes(Viaje origenesViajes) {
+        this.origenesViajes.add(origenesViajes);
     }
 
     /**
@@ -99,8 +99,8 @@ public class Ciudad {
      * Setter que establece el destino de los viajes.
      * @param destinosViajes Los nuevos destinos de viajes
      */
-    public void setDestinosViajes(List<Viaje> destinosViajes) {
-        this.destinosViajes = destinosViajes;
+    public void setDestinosViajes(Viaje destinosViajes) {
+        this.destinosViajes.add(destinosViajes);
     }
 
     /**

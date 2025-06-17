@@ -8,6 +8,6 @@ public enum CategoriaTipo {
     /**
      * Tipos de categorias
      */
-    MICROBUS,
+    MINIBUS,
     COLECTIVO
 }

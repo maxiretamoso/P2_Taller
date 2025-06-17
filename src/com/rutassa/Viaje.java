@@ -188,5 +188,6 @@ public class Viaje {
            "  • Vehículo(patente): " + vehiculo.getPatente() + "\n" +
            "  • Chofer: " + chofer.getNombre();
     }
+    public boolean estaAsignado() { return this.chofer != null && this.vehiculo != null; }
     
 }

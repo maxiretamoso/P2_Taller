@@ -18,7 +18,6 @@ public class GestionSistema {
     private List<Vehiculo> vehiculos;
     private List<Viaje> viajes;
     private List<Ciudad> ciudades;
-    private List<Viaje> viajesRealizados;
     private Scanner sc;
     /**
      * Esta es la fecha que usamos como "hoy" para probar.
@@ -44,7 +43,6 @@ public class GestionSistema {
         this.vehiculos = new ArrayList<>();
         this.viajes = new ArrayList<>();
         this.ciudades = new ArrayList<>();
-        this.viajesRealizados = new ArrayList<>();
         this.sc = new Scanner(System.in);
     }
 
@@ -54,66 +52,7 @@ public class GestionSistema {
     public static void main(String[] args) {
         GestionSistema sistema = new GestionSistema();
 
-        // Crear instancias de Provincias
-        Provincia buenosAires = Provincia.BUENOS_AIRES;
-        Provincia cordoba = Provincia.CORDOBA;
-        Provincia santaFe = Provincia.SANTA_FE;
-        Provincia mendoza = Provincia.MENDOZA;
-        Provincia tucuman = Provincia.TUCUMAN;
-
-        // Crear instancias de Ciudades
-        Ciudad bsAs = new Ciudad("Buenos Aires", buenosAires,null,null);
-        Ciudad rosario = new Ciudad("Rosario", santaFe);
-        Ciudad cordobaCapital = new Ciudad("Córdoba", cordoba);
-        Ciudad mendozaCapital = new Ciudad("Mendoza", mendoza);
-        Ciudad tucumanCapital = new Ciudad("San Miguel de Tucumán", tucuman);
-
-        // Agregar ciudades al sistema
-        sistema.ciudades.add(bsAs);
-        sistema.ciudades.add(rosario);
-        sistema.ciudades.add(cordobaCapital);
-        sistema.ciudades.add(mendozaCapital);
-        sistema.ciudades.add(tucumanCapital);
-
-        // Crear instancias de Categorías
-        Categoria categoriaA = new Categoria("A", "Autobús de larga distancia");
-        Categoria categoriaB = new Categoria("B", "Autobús interurbano");
-        Categoria categoriaC = new Categoria("C", "Autobús urbano");
-
-        // Crear instancias de Choferes
-        Chofer chofer1 = new Chofer(12345678L, "Juan Pérez", categoriaA);
-        Chofer chofer2 = new Chofer(23456789L, "María García", categoriaB);
-        Chofer chofer3 = new Chofer(34567890L, "Carlos López", categoriaC);
-
-        // Agregar choferes al sistema
-        sistema.choferes.add(chofer1);
-        sistema.choferes.add(chofer2);
-        sistema.choferes.add(chofer3);
-
-        // Crear instancias de Vehículos
-        Colectivo colectivo1 = new Colectivo("ABC123", 45, null,true);  // Con piso doble
-        Colectivo colectivo2 = new Colectivo("DEF456", 30, null,false); // Sin piso doble
-        Minibus minibus1 = new Minibus("GHI789", 20,null,true,true);  // Con bodega y aire acondicionado
-        Minibus minibus2 = new Minibus("JKL012", 15,null,false,true); // Sin bodega, con aire acondicionado
-
-        // Agregar vehículos al sistema
-        sistema.vehiculos.add(colectivo1);
-        sistema.vehiculos.add(colectivo2);
-        sistema.vehiculos.add(minibus1);
-        sistema.vehiculos.add(minibus2);
-
-        // Crear instancias de Viajes
-        LocalDate fecha1 = LocalDate.now().plusDays(7);
-        LocalDate fecha2 = LocalDate.now().plusDays(14);
         
-        Viaje viaje1 = new Viaje(bsAs, cordobaCapital, fecha1, 1200.0,);
-        Viaje viaje2 = new Viaje(rosario, mendozaCapital, fecha1, 1500.0);
-        Viaje viaje3 = new Viaje(tucumanCapital, bsAs, fecha2, 2000.0);
-
-        // Agregar viajes al sistema
-        sistema.viajes.add(viaje1);
-        sistema.viajes.add(viaje2);
-        sistema.viajes.add(viaje3);
         boolean salir = false;
         while (!salir) {
             System.out.println("\n" + "-".repeat(45) + "\n\tSistema de gestion Rutas SA\n" + "-".repeat(45));
@@ -121,11 +60,12 @@ public class GestionSistema {
             System.out.println("0. Para salir ingrese 0");            
             System.out.println("1. Registrar choferes");
             System.out.println("2. Registrar vehiculos");
-            System.out.println("3. Planificar viajes entre ciudades");
-            System.out.println("4. Asociar un vehiculo y un chofer a cada viaje");
-            System.out.println("5. Mostrar los viajes programados con información detallada");
-            System.out.println("6. Informe detallado de viajes que tiene para realizar un colectivo determinado");
-            System.out.println("7. Informe de cantidad de viajes ya realizados por cada chofer de colectivos");
+            System.out.println("3. Registrar ciudades");
+            System.out.println("4. Planificar viajes entre ciudades");
+            System.out.println("5. Asociar un vehiculo y un chofer a cada viaje");
+            System.out.println("6. Mostrar los viajes programados con información detallada");
+            System.out.println("7. Informe detallado de viajes que tiene para realizar un colectivo determinado");
+            System.out.println("8. Informe de cantidad de viajes ya realizados por cada chofer de colectivos");
             
             int opcion = -1;
             boolean opcionValida = false;
@@ -136,7 +76,7 @@ public class GestionSistema {
                     opcion = sistema.sc.nextInt();
                     sistema.sc.nextLine();
 
-                    if (opcion >= 0 && opcion <= 7) {
+                    if (opcion >= 0 && opcion <= 8) {
                         opcionValida = true;
                     } else {
                         System.out.println("Opcion invalida. Por favor ingrese un numero entre 0 y 7. Vuelva a intentar.");
@@ -153,24 +93,27 @@ public class GestionSistema {
                     System.out.println("\n" + "-".repeat(45) + "\n\tSaliendo del sistema de gestion\n" + "-".repeat(45));
                     break;
                 case 1:
-                    sistema.registrarChoferes();
+                    sistema.registrarChoferes(); //añadir a la lista de choferes un chofer
                     break;
                 case 2:
                     sistema.registrarVehiculos();
                     break;
-                case 3:
-                    sistema.planificarViajes();
-                    break;
                 case 4:
-                    sistema.asociarVehiculoYChofer();
+                    sistema.planificarViajes(); //array de viajes
+                    break;
+                case 3:
+                    sistema.registrarCiudades();
                     break;
                 case 5:
-                    sistema.viajesProgramados();
+                    sistema.asociarVehiculoYChofer();
                     break;
                 case 6:
-                    sistema.informeViajesARealizarColectivo();
+                    sistema.viajesProgramados();
                     break;
                 case 7:
+                    sistema.informeViajesARealizarColectivo();
+                    break;
+                case 8:
                     sistema.informeViajesRealizadosColectivo();
                     break;
             }
@@ -242,7 +185,7 @@ public class GestionSistema {
 
                 if (d == 0) {
                     if (categorias.isEmpty()) {
-                        System.out.println("Debe ingresar al menos una categoraa para registrar el chofer.");
+                        System.out.println("Debe ingresar al menos una categoria para registrar el chofer.");
                         continue;
                     } else {
                         break; 
@@ -259,7 +202,7 @@ public class GestionSistema {
                 if (d == 1) {
                     categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.COLECTIVO, null)));
                 } else {
-                    categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.MICROBUS, null)));
+                    categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.MINIBUS, null)));
                 }
             }
             choferes.add(new Chofer(dni, nombre, apellido, nroLicencia, categorias, null));
@@ -337,7 +280,12 @@ public class GestionSistema {
                         System.out.println("Respuesta invalida. Debe ingresar 'si' o 'no'. Vuelva a intentar.");
                     }
                 }
-                vehiculos.add(new Colectivo(patente, capacidad, pisoDoble));
+                //ASI SE INSTANCIA Y CREA UN OBJETO PARA LUEGO AGREGARLO A LAS LISTAS Y NO GENERE PROBLEMAS EN LOS CONSTRUCTORES.
+                Colectivo colectivo = new Colectivo();
+                colectivo.setPatente(patente);
+                colectivo.setCapacidad(capacidad);
+                colectivo.setPisoDoble(pisoDoble);
+                vehiculos.add(colectivo);
             } else {
                 boolean tieneBodega = false;
                 boolean respuestaValida = false;
@@ -370,343 +318,175 @@ public class GestionSistema {
                         System.out.println("Respuesta invalida. Debe ingresar 'si' o 'no'. Vuelva a intentar.");
                     }
                 }
-                vehiculos.add(new Minibus(patente, capacidad, tieneBodega, aireAcondicionado));
+                Minibus minibus = new Minibus();
+                minibus.setAireAcondicionado(aireAcondicionado);
+                minibus.setCapacidad(capacidad);
+                minibus.setPatente(patente);
+                minibus.setTieneBodega(tieneBodega);
+                vehiculos.add(minibus);
             }
         } 
     }
-
     /**
      * Metodo para planificar viajes entre ciudades.
      */
     public void planificarViajes() {
-        System.out.println("\n" + "-".repeat(45) + "\nPlanificar viajes\n" + "-".repeat(45));
+    System.out.println("\n" + "-".repeat(45));
+    System.out.println("Planificar viajes");
+    System.out.println("-".repeat(45));
 
-        if (!viajes.isEmpty()) {
-            System.out.println("Ya hay viajes planificados.");
-            int opcion = -1;
-            while (opcion != 0 && opcion != 1 && opcion != 2) {
-                System.out.print("¿Desea agregar mas viajes (1), limpiar y empezar de nuevo (2) o volver al menú (0)? ");
-                if (sc.hasNextInt()) {
-                    opcion = sc.nextInt();
-                    sc.nextLine();
-                    if (opcion == 0) {
-                        return;
-                    } else if (opcion == 1 || opcion == 2) {
-                        break;
-                    } else {
-                        System.out.println("Opcion invalida. Intente nuevamente.");
-                    }
-                } else {
-                    System.out.println("Ingreso inválido. Debe ser '1'/'2'/'0'. Vuelva a intentar.");
-                    sc.nextLine();
-                }
+    if (ciudades.size() < 2) {
+        System.out.println("Debe haber al menos dos ciudades registradas para planificar un viaje.");
+        return;
+    }
+
+    // Mostrar ciudades disponibles con índice
+    System.out.println("\nCiudades registradas:");
+    for (int i = 0; i < ciudades.size(); i++) {
+        Ciudad c = ciudades.get(i);
+        System.out.println(i + " - " + c.getNombre() + " (" + c.getProvincia() + ")");
+    }
+
+    // Seleccionar ciudad origen
+    Ciudad origen = null;
+    while (origen == null) {
+        System.out.print("Seleccione el número de la ciudad de origen: ");
+        try {
+            int indiceOrigen = Integer.parseInt(sc.nextLine());
+            if (indiceOrigen >= 0 && indiceOrigen < ciudades.size()) {
+                origen = ciudades.get(indiceOrigen);
+            } else {
+                System.out.println("Índice inválido.");
             }
-            if (opcion == 2) {
-                viajes.clear();
-                System.out.println("Viajes anteriores eliminados.");
-            }
-        }
-
-        System.out.print("Ingrese la cantidad de ciudades a registrar: ");
-        int numCiudades = sc.nextInt();
-        sc.nextLine();
-
-        for (int i = 0; i < numCiudades; i++) {
-            System.out.println("\nRegistro de ciudad N°" + (i + 1) + "/" + numCiudades);
-
-            String nombreCiudad;
-            Provincia provincia = null;
-
-            while (true) {
-                System.out.print("Nombre de la ciudad: ");
-                nombreCiudad = sc.nextLine();
-
-                boolean existe = false;
-                for (Ciudad c : ciudades) {
-                    if (c.getNombre().equalsIgnoreCase(nombreCiudad)) {
-                        existe = true;
-                        break;
-                    }
-                }
-
-                if (existe) {
-                    System.out.println("Esta ciudad ya fue registrada. Ingrese otra.");
-                } else {
-                    break;
-                }
-            }
-
-            System.out.println("Provincias disponibles:");
-            for (Provincia p : Provincia.values()) {
-                System.out.println("- " + p);
-            }
-
-            while (provincia == null) {
-                System.out.print("Ingrese la provincia (como se encuentra en la lista): ");
-                try {
-                    provincia = Provincia.valueOf(sc.nextLine().toUpperCase());
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Provincia invalida. Intente de nuevo.");
-                }
-            }
-
-            ciudades.add(new Ciudad(nombreCiudad, provincia, null, null));
-        }
-
-        System.out.print("Ingrese la cantidad de viajes a planificar: ");
-        int v = sc.nextInt();
-        sc.nextLine();
-
-            for (int i = 0; i < v; i++) {
-                System.out.println("\nPlanificar viaje N°" + (i + 1) + "/" + v + ":");
-                String fecha;
-                do {
-                System.out.print("Ingrese una fecha (DD/MM/AA): ");
-                fecha = sc.nextLine();
-
-                if (!esFechaValida(fecha)) {
-                    System.out.println("Formato o fecha inválida. Intente nuevamente.");
-                }
-
-            } while (!esFechaValida(fecha));
-
-
-
-            System.out.print("Ingrese el horario de salida: ");
-            String horarioSalida = sc.nextLine();
-
-            System.out.print("Ingrese el horario de llegada: ");
-            String horarioLlegada = sc.nextLine();
-
-            Ciudad ciudadOrigen = null;
-            while (ciudadOrigen == null) {
-                System.out.println("Ciudades disponibles para origen:");
-                for (int j = 0; j < ciudades.size(); j++) {
-                    System.out.println((j + 1) + ". " + ciudades.get(j).getNombre() + ", " + ciudades.get(j).getProvincia());
-                }
-                System.out.print("Seleccione el numero de la ciudad de origen: ");
-                int indiceOrigen = sc.nextInt();
-                sc.nextLine();
-
-                if (indiceOrigen >= 1 && indiceOrigen <= ciudades.size()) {
-                    ciudadOrigen = ciudades.get(indiceOrigen - 1);
-                } else {
-                    System.out.println("Numero invalido. Intente nuevamente.");
-                }
-            }
-
-            List<Ciudad> ciudadesDestinoDisponibles = new ArrayList<>();
-            for (Ciudad ciudad : ciudades) {
-                boolean esIgualOrigen = ciudad.getNombre().equalsIgnoreCase(ciudadOrigen.getNombre()) && ciudad.getProvincia() == ciudadOrigen.getProvincia();
-                boolean yaUsadaComoDestino = false;
-                for (Viaje viaje : viajes) {
-                    if (ciudad.getNombre().equalsIgnoreCase(viaje.getDestino().getNombre()) && ciudad.getProvincia() == viaje.getDestino().getProvincia()) {
-                        yaUsadaComoDestino = true;
-                        break;
-                    }
-                }
-
-                if (!esIgualOrigen && !yaUsadaComoDestino) {
-                    ciudadesDestinoDisponibles.add(ciudad);
-                }
-            }
-
-            if (ciudadesDestinoDisponibles.isEmpty()) {
-                System.out.println("No hay mas ciudades registradas para planificar viajes.");
-                return;
-            }
-
-            Ciudad ciudadDestino = null;
-            while (ciudadDestino == null) {
-                System.out.println("Ciudades disponibles para destino:");
-                for (int j = 0; j < ciudadesDestinoDisponibles.size(); j++) {
-                    System.out.println((j + 1) + ". " + ciudadesDestinoDisponibles.get(j).getNombre() + ", " + ciudadesDestinoDisponibles.get(j).getProvincia());
-                }
-                System.out.print("Seleccione el numero de la ciudad de destino: ");
-                int indiceDestino = sc.nextInt();
-                sc.nextLine();
-
-                if (indiceDestino >= 1 && indiceDestino <= ciudadesDestinoDisponibles.size()) {
-                    ciudadDestino = ciudadesDestinoDisponibles.get(indiceDestino - 1);
-                } else {
-                    System.out.println("Numero invalido. Intente nuevamente.");
-                }
-            }
-
-            Viaje nuevoViaje = new Viaje(fecha, horarioSalida, horarioLlegada, ciudadOrigen, ciudadDestino,null,null);
-            viajes.add(nuevoViaje);
-            System.out.println("Viaje planificado.");
+        } catch (NumberFormatException e) {
+            System.out.println("Ingrese un número válido.");
         }
     }
+
+    // Seleccionar ciudad destino (diferente a origen)
+    Ciudad destino = null;
+    while (destino == null) {
+        System.out.print("Seleccione el número de la ciudad de destino: ");
+        try {
+            int indiceDestino = Integer.parseInt(sc.nextLine());
+            if (indiceDestino >= 0 && indiceDestino < ciudades.size()) {
+                Ciudad seleccionada = ciudades.get(indiceDestino);
+                if (seleccionada.getNombre().equalsIgnoreCase(origen.getNombre()) &&
+                    seleccionada.getProvincia() == origen.getProvincia()) {
+                    System.out.println("La ciudad destino no puede ser igual a la ciudad origen.");
+                } else {
+                    destino = seleccionada;
+                }
+            } else {
+                System.out.println("Índice inválido.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Ingrese un número válido.");
+        }
+    }
+
+    // Solicitar fecha del viaje
+    System.out.print("Ingrese la fecha del viaje (formato DD-MM-AAAA): ");
+    String fecha = sc.nextLine(); // Validación de formato puede hacerse luego
+
+    // Crear viaje sin chofer ni vehículo aún
+    Viaje viaje = new Viaje();
+    viaje.setOrigen(origen);
+    viaje.setDestino(destino);
+    viaje.setFecha(fecha);
+
+    // Agregar a listas correspondientes
+    origen.setOrigenesViajes(viaje);
+    destino.setDestinosViajes(viaje);
+    viajes.add(viaje);
+
+    System.out.println("Viaje planificado exitosamente.");
+    }
+
+      
 
     /**
      * Metodo para asociar un vehiculo y un chofer a cada viaje.
      */
-    public void asociarVehiculoYChofer() {
-        System.out.println("\n" + "-".repeat(45) + "\nAsociar vehículo y chofer a cada viaje\n" + "-".repeat(45));
-        
-        if (choferes.isEmpty()) {
-            System.out.println("No hay choferes registrados.");
-            int opcion = 0;
+        public void asociarVehiculoYChofer() {
+    System.out.println("\n" + "-".repeat(45) + "\nAsociar vehículo y chofer a cada viaje\n" + "-".repeat(45));
 
-            while (opcion != 1 && opcion != 2) {
-                System.out.println("Seleccione una opcion:\n1. Volver al menu principal\n2. Ir a registrar choferes");
+    if (viajes.isEmpty()) {
+        System.out.println("No hay viajes registrados.");
+        return;
+    }
 
-                if (sc.hasNextInt()) {
-                    opcion = sc.nextInt();
-                    sc.nextLine(); 
+    for (Viaje viaje : viajes) {
+        if (viaje.getChofer() != null && viaje.getVehiculo() != null) continue;
 
-                    if (opcion == 1) {
-                        return; 
-                    } else if (opcion == 2) {
-                        registrarChoferes();
-                        return; 
-                    } else {
-                        System.out.println("Opción invalida. Debe ser '1'/'2'. Vuelva a intentar.");
-                    }
-                } else {
-                    System.out.println("Ingreso invalido. Debe ser 1 o 2. Vuelve a intentar.");
-                    sc.nextLine(); 
+        System.out.println("\nViaje de " + viaje.getOrigen().getNombre() + " a " + viaje.getDestino().getNombre());
+
+        // Mostrar vehículos disponibles
+        System.out.println("Vehículos disponibles:");
+        for (int i = 0; i < vehiculos.size(); i++) {
+            System.out.println((i + 1) + ". " + vehiculos.get(i));
+        }
+
+        System.out.print("Seleccione el número del vehículo: ");
+        int indiceVehiculo = Integer.parseInt(sc.nextLine()) - 1;
+        Vehiculo vehiculoSeleccionado = vehiculos.get(indiceVehiculo);
+
+        // Determinar la categoría requerida
+        CategoriaTipo categoriaRequerida;
+        if (vehiculoSeleccionado instanceof Colectivo) {
+            categoriaRequerida = CategoriaTipo.COLECTIVO;
+        } else if (vehiculoSeleccionado instanceof Minibus) {
+            categoriaRequerida = (CategoriaTipo.MINIBUS); ;
+        } else {
+            System.out.println("Tipo de vehículo desconocido.");
+            continue;
+        }
+
+        // Mostrar choferes disponibles
+        System.out.println("Choferes disponibles:");
+        for (int i = 0; i < choferes.size(); i++) {
+            System.out.println((i + 1) + ". " + choferes.get(i));
+        }
+
+        System.out.print("Seleccione el número del chofer: ");
+        int indiceChofer = Integer.parseInt(sc.nextLine()) - 1;
+        Chofer choferSeleccionado = choferes.get(indiceChofer);
+
+        // Validar si tiene la categoría requerida vigente
+        boolean tieneLicenciaValida = false;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+
+        for (ChoferCategoria cc : choferSeleccionado.getCategorias()) {
+            if (cc.getCategoria().getTipo() == categoriaRequerida) {
+                if (esFechaValida(cc.getFechaVencimiento())) {
+                    System.out.println("ERROR: Fecha inválida en licencia del chofer.");
+                    continue;
                 }
-            }
-        }
-
-        if (vehiculos.isEmpty()) {
-            System.out.println("No hay vehiculos registrados.");
-            int opcion = 0;
-
-            while (opcion != 1 && opcion != 2) {
-                System.out.println("Seleccione una opcion:\n1. Volver al menu principal\n2. Ir a registrar vehiculos");
-
-                if (sc.hasNextInt()) {
-                    opcion = sc.nextInt();
-                    sc.nextLine(); 
-
-                    if (opcion == 1) {
-                        return; 
-                    } else if (opcion == 2) {
-                        registrarVehiculos();
-                        return; 
-                    } else {
-                        System.out.println("Opción invalida. Debe ser '1'/'2'. Vuelva a intentar.");
-                    }
-                } else {
-                    System.out.println("Ingreso invalido. Debe ser 1 o 2. Vuelve a intentar.");
-                    sc.nextLine(); 
+                LocalDate vencimiento = LocalDate.parse(cc.getFechaVencimiento(), DateTimeFormatter.ofPattern("dd/MM/yy"));
+                if (!vencimiento.isBefore(LocalDate.now())) {
+                    tieneLicenciaValida = true;
+                    break;
                 }
-            }
-        }
-
-        if (viajes.isEmpty()) {
-            System.out.println("No hay viajes planificados.");
-            int opcion = 0;
-
-            while (opcion != 1 && opcion != 2) {
-                System.out.println("Seleccione una opcion:\n1. Volver al menú principal\n2. Ir a planificar viajes");
-
-                if (sc.hasNextInt()) {
-                    opcion = sc.nextInt();
-                    sc.nextLine(); 
-
-                    if (opcion == 1) {
-                        return; 
-                    } else if (opcion == 2) {
-                        planificarViajes();
-                        return; 
-                    } else {
-                        System.out.println("Opción invalida. Debe ser '1'/'2'. Vuelva a intentar.");
-                    }
-                } else {
-                    System.out.println("Ingreso invalido. Debe ser 1 o 2. Vuelve a intentar.");
-                    sc.nextLine(); 
-                }
-            }
-        }
-
-        System.out.println("Lista de choferes disponibles:\n" + choferes);
-        System.out.println("Ingrese el numero numero de DNI:");
-        long dni = sc.nextLong();
-        sc.nextLine();
-
-        Chofer chofer=null;
-        for (int i = 0; i < choferes.size(); i++){
-            if(choferes.get(i).getDni()==dni){
-                chofer = choferes.get(i);
-                System.out.println("Chofer guardado,continue.");
-            }
-        }
-
-        System.out.println("Lista de Vehiculos:\n" + vehiculos);
-        System.out.println("Ingrese el numero de patente");  
-        String patente = sc.nextLine();
-        Vehiculo vehiculo = null;
-        patente= patente.replaceAll("[\\s\\-]", "");
-        for (int i=0;i<vehiculos.size();i++){
-            if(patente.equalsIgnoreCase(vehiculos.get(i).getPatente().toLowerCase().trim())){
-                vehiculo = vehiculos.get(i);
-                System.out.println("Vehiculo guardado,continue.");
-            }
-        }
-        System.out.println("-".repeat(20) + "\nLista de viajes disponibles:\n" + "-".repeat(20));
-        boolean encontrados=false;
-        ArrayList viajesdisponibles = new ArrayList<>();
-        for (Viaje i:viajes){
-            if(i.getVehiculo()==null&&i.getChofer()==null){
-                System.out.println(i);
-                encontrados=true;
-            }
-        }
-        if(!encontrados){
-            System.out.println("No hay viajes disponibles.");
-            return;
-        }
-        Provincia provincia = null;
-        while (provincia == null) {
-            System.out.println("Ingrese el nombre de la provincia de destino a la cual quiere asociarle su vehiculo y chofer:");
-            String entrada = sc.nextLine().trim().toUpperCase().replace(" ", "_");
-
-            try {
-                provincia = Provincia.valueOf(entrada);
-            } catch (IllegalArgumentException e) {
-                // Sugerencias por si escribió mal
-                List<String> sugerencias = new ArrayList<>();
-                for (Provincia p : Provincia.values()) {
-                    if (p.name().contains(entrada) || entrada.contains(p.name())) {
-                        sugerencias.add(p.name().replace("_", " "));
-                    }
-                }
-
-                if (!sugerencias.isEmpty()) {
-                    System.out.println("¿Quiso decir alguna de estas?");
-                    for (String sugerida : sugerencias) {
-                        System.out.println("- " + sugerida);
-                    }
-                } else {
-                    System.out.println("Provincia no válida. Intente nuevamente.");
-                }
-            }
-        }
-
-        // Buscar viaje sin chofer ni vehículo con ese destino
-        boolean asignado = false;
-        for (Viaje viaje : viajes) {
-            if (viaje.getVehiculo() == null && viaje.getChofer() == null && viaje.getDestino().getProvincia() == provincia) {
-                viaje.setChofer(chofer);
-                vehiculos.add(vehiculo);
-                choferes.add(chofer);
-                //viaje.getChofer().setViajeChofer(viaje);
-                //viaje.getVehiculo().setVehiculoViajes(viaje);
-                viaje.setVehiculo(vehiculo);
-                System.out.println("✅ Se asignó chofer y vehículo al viaje con destino a " + provincia.name().replace("_", " "));
-                asignado = true;
-                break;
-            }
-        }
-
-        if (!asignado) {
-            System.out.println("No se encontró ningún viaje disponible con destino a esa provincia.");
         }
     }
+
+
+        if (!tieneLicenciaValida) {
+            System.out.println("ERROR: El chofer no tiene una licencia vigente para manejar un " + categoriaRequerida);
+            continue;
+        }
+
+        // Asignar
+        viaje.setVehiculo(vehiculoSeleccionado);
+        viaje.setChofer(choferSeleccionado);
+        vehiculoSeleccionado.setVehiculoViajes(viaje);
+        choferSeleccionado.getViajesChofer().add(viaje);
+
+        System.out.println("Vehículo y chofer asignados correctamente.");
+    }
+}
+
+
 
     /**
      * Metodo para mostrar los viajes programados con informacion detallada.
@@ -779,7 +559,62 @@ public class GestionSistema {
         
 
     }
+    public  void registrarCiudades(){
+    Scanner sc = new Scanner(System.in);
+    System.out.println("\n" + "-".repeat(45));
+    System.out.println("Registro de Ciudades");
+    System.out.println("-".repeat(45));
 
+    System.out.print("¿Cuántas ciudades desea registrar?: ");
+    int cantidad = Integer.parseInt(sc.nextLine());
+
+    for (int i = 0; i < cantidad; i++) {
+        System.out.println("\nCiudad #" + (i + 1));
+
+        System.out.print("Nombre de la ciudad: ");
+        String nombreCiudad = sc.nextLine();
+
+        // Mostrar todas las provincias disponibles
+        System.out.println("Provincias disponibles:");
+        for (Provincia p : Provincia.values()) {
+            System.out.println(" - " + p.name());
+        }
+
+        Provincia provincia = null;
+        while (provincia == null) {
+            System.out.print("Ingrese el nombre exacto de la provincia (mayúsculas y guiones bajos como se muestra): ");
+            String nombreProvincia = sc.nextLine().toUpperCase();
+            try {
+                provincia = Provincia.valueOf(nombreProvincia);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Provincia no válida. Intente nuevamente.");
+            }
+        }
+
+        // Verificar si ya existe ciudad con el mismo nombre y provincia
+        boolean yaExiste = false;
+        for (Ciudad c : ciudades) {
+            if (c.getNombre().equalsIgnoreCase(nombreCiudad) && c.getProvincia() == provincia) {
+                yaExiste = true;
+                break;
+            }
+        }
+
+        if (yaExiste) {
+            System.out.println("La ciudad '" + nombreCiudad + "' ya está registrada en la provincia '" + provincia + "'. No se agregará.");
+            i--; // Para que vuelva a intentar esta ciudad
+            continue;
+        }
+
+        Ciudad ciudad = new Ciudad();
+        ciudad.setNombre(nombreCiudad);
+        ciudad.setProvincia(provincia);
+        ciudades.add(ciudad);
+
+        System.out.println("Ciudad registrada con éxito.");
+    }
+}
+    
     
 
 
