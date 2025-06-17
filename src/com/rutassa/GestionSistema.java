@@ -460,7 +460,7 @@ public class GestionSistema {
 
         for (ChoferCategoria cc : choferSeleccionado.getCategorias()) {
             if (cc.getCategoria().getTipo() == categoriaRequerida) {
-                if (esFechaValida(cc.getFechaVencimiento())) {
+                if (!esFechaValida(cc.getFechaVencimiento())) {
                     System.out.println("ERROR: Fecha inválida en licencia del chofer.");
                     continue;
                 }
@@ -486,46 +486,78 @@ public class GestionSistema {
 
         System.out.println("Vehículo y chofer asignados correctamente.");
     }
-}
+    }
 
 
+        /**
+ * Metodo para mostrar los viajes programados con informacion detallada.
+ */
+public void viajesProgramados() {
+    System.out.println("\n" + "-".repeat(45) + "\nViajes programados\n" + "-".repeat(45));
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+    boolean hayViajesIncompletos = false;
 
-    /**
-     * Metodo para mostrar los viajes programados con informacion detallada.
-     */
-    public void viajesProgramados() {
-        System.out.println("\n" + "-".repeat(45) + "\nViajes programados\n" + "-".repeat(45));
+    for (Viaje viaje : viajes) {
+        boolean datosCompletos = true;
 
-        if (viajes.isEmpty()) {
-            System.out.println("No hay viajes programados.");
-            int opcion = 0;
-
-            while (opcion != 1 && opcion != 2) {
-                System.out.println("Seleccione una opción:\n1. Volver al menu principal\n2. Ir a registrar viajes");
-
-                if (sc.hasNextInt()) {
-                    opcion = sc.nextInt();
-                    sc.nextLine(); 
-
-                    if (opcion == 1) {
-                        return; 
-                    } else if (opcion == 2) {
-                        planificarViajes(); 
-                        return;
-                    } else {
-                        System.out.println("Opción invalida. Debe ser '1' o '2'. Intente de nuevo.");
-                    }
-                } else {
-                    System.out.println("Entrada invalida. Debe ingresar 1 o 2.");
-                    sc.nextLine();
-                }
-            }
-            return;
+        // Validar fecha
+        if (!esFechaValida(viaje.getFecha())) {
+            System.out.println("Viaje con fecha inválida: " + viaje.getFecha());
+            datosCompletos = false;
         }
-        for (int i = 0; i < viajes.size(); i++) {
-            System.out.println(viajes.get(i));
+
+        // Validar otros datos
+        if (viaje.getChofer() == null || viaje.getVehiculo() == null || viaje.getOrigen() == null || viaje.getDestino() == null) {
+            datosCompletos = false;
+        }
+
+        if (datosCompletos) {
+            System.out.println("\nViaje:");
+            System.out.println("Fecha: " + viaje.getFecha());
+            System.out.println("Origen: " + viaje.getOrigen().getNombre() + " (" + viaje.getOrigen().getProvincia() + ")");
+            System.out.println("Destino: " + viaje.getDestino().getNombre() + " (" + viaje.getDestino().getProvincia() + ")");
+            System.out.println("Chofer: " + viaje.getChofer().getNombre() + " " + viaje.getChofer().getApellido());
+            System.out.println("Vehículo: " + viaje.getVehiculo().getPatente() + " - Capacidad: " + viaje.getVehiculo().getCapacidad());
+        } else {
+            hayViajesIncompletos = true;
         }
     }
+
+    if (viajes.isEmpty()) {
+        System.out.println("No hay viajes programados.");
+    }
+
+    if (hayViajesIncompletos) {
+        System.out.println("\nHay viajes incompletos que no se pueden mostrar con detalle.");
+        System.out.println("¿Qué desea hacer?");
+        System.out.println("1. Volver al menú principal");
+        System.out.println("2. Planificar un nuevo viaje");
+
+        int opcion;
+        do {
+            System.out.print("Ingrese una opción: ");
+            while (!sc.hasNextInt()) {
+                System.out.print("Ingrese un número válido: ");
+                sc.next();
+            }
+            opcion = sc.nextInt();
+            sc.nextLine(); // limpiar buffer
+
+            switch (opcion) {
+                case 1:
+                    System.out.println("Volviendo al menú principal...");
+                    return;
+                case 2:
+                    this.planificarViajes();
+                    return;
+                default:
+                    System.out.println("Opción inválida. Intente nuevamente.");
+            }
+        } while (true);
+    }
+    }
+
+    
 
     /**
      * Metodo para mostrar un informe detallado de viajes que tiene para realizar un colectivo determinado.
