@@ -23,6 +23,7 @@ public class GestionSistema {
      * Esta es la fecha que usamos como "hoy" para probar.
      * Nos sirve para ver si las licencias están vencidas o si los viajes ya pasaron.
      */
+
     public static final String FECHA_ACTUAL_SIMULADA = "12/06/25";
 
     /**
@@ -455,6 +456,7 @@ public class GestionSistema {
         // Validar si tiene la categoría requerida vigente
         boolean tieneLicenciaValida = false;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        LocalDate fechasimulada = LocalDate.parse(FECHA_ACTUAL_SIMULADA,formatter);
 
         for (ChoferCategoria cc : choferSeleccionado.getCategorias()) {
             if (cc.getCategoria().getTipo() == categoriaRequerida) {
@@ -463,7 +465,7 @@ public class GestionSistema {
                     continue;
                 }
                 LocalDate vencimiento = LocalDate.parse(cc.getFechaVencimiento(), DateTimeFormatter.ofPattern("dd/MM/yy"));
-                if (!vencimiento.isBefore(LocalDate.now())) {
+                if (!vencimiento.isBefore(fechasimulada)) {
                     tieneLicenciaValida = true;
                     break;
                 }
@@ -550,15 +552,46 @@ public class GestionSistema {
         return;
     }
 
+    
     /**
-     * Metodo para mostrar un informe de cantidad de viajes ya realizados por cada chofer de colectivos
-     */
+    * Metodo para mostrar un informe de cantidad de viajes ya realizados por cada chofer de colectivos
+    */
     public void informeViajesRealizadosColectivo() {
-        System.out.println("\n" + "-".repeat(45) + "\nInforme de cantidad de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
-        String date="15/06/25";
-        
+    System.out.println("\n" + "-".repeat(45) + "\nInforme de cantidad de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+    LocalDate fechaSimulada = LocalDate.parse(FECHA_ACTUAL_SIMULADA, formatter);
+
+    Map<Chofer, Integer> viajesPorChofer = new HashMap<>();
+
+    for (Viaje viaje : viajes) {
+        if (viaje.getVehiculo() instanceof Colectivo && viaje.getChofer() != null) {
+            try {
+                LocalDate fechaViaje = LocalDate.parse(viaje.getFecha(), formatter);
+                if (fechaViaje.isBefore(fechaSimulada)) {
+                    Chofer chofer = viaje.getChofer();
+                    viajesPorChofer.put(chofer, viajesPorChofer.getOrDefault(chofer, 0) + 1);
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Fecha inválida en viaje: " + viaje.getFecha());
+            }
+        }
     }
+
+    if (viajesPorChofer.isEmpty()) {
+        System.out.println("No hay viajes realizados por choferes de colectivos.");
+    } else {
+        for (Map.Entry<Chofer, Integer> entry : viajesPorChofer.entrySet()) {
+            Chofer chofer = entry.getKey();
+            int cantidad = entry.getValue();
+            System.out.println("Chofer: " + chofer.getNombre()+","+chofer.getApellido() +"\n" + "- Cantidad de viajes: " + cantidad);
+    }
+        }
+        
+    }
+
+
+
     public  void registrarCiudades(){
     Scanner sc = new Scanner(System.in);
     System.out.println("\n" + "-".repeat(45));
