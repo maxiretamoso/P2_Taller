@@ -15,11 +15,8 @@ public class Minibus extends Vehiculo{
     private boolean aireAcondicionado;
 
     /**
-     * Constructor por defecto de Minibus
-     * @param patente La patente por defecto del minibus
-     * @param capacidad La capacidad por defecto del minibus
-     * @param tieneBodega La bodega por defecto del minibus
-     * @param aireAcondicionado El aire acondicionado por defecto del minibus
+     * Constructor por defecto de Minibus.
+     * Inicializa la patente como cadena vacia, la capacidad en 0, vehiculoViajes como null, y tieneBodega y aireAcondicionado como false.
      */
     public Minibus() {
         super("", 0, null);
@@ -71,5 +68,10 @@ public class Minibus extends Vehiculo{
      */
     public void setAireAcondicionado(boolean aireAcondicionado) {
         this.aireAcondicionado = aireAcondicionado;
+    }
+
+    @Override
+    public String toString() {
+        return "[Tiene bodega: " + tieneBodega + ", Aire condicionado: " + aireAcondicionado + "]";
     }   
 }

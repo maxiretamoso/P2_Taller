@@ -15,9 +15,7 @@ public class Colectivo extends Vehiculo {
 
     /**
      * Constructor por defecto de Colectivo.
-     * @param patente La patente por defecto del colectivo
-     * @param capacidad La capacidad por defecto del colectivo
-     * @param pisoDoble El piso doble por defecto del colectivo
+     * Inicializa la patente como una cadena vacia, la capacidad en 0, vehiculoViajes como null, y pisoDoble como false.
      */
     public Colectivo() {
         super("", 0, null);
@@ -50,5 +48,9 @@ public class Colectivo extends Vehiculo {
     public void setPisoDoble(boolean pisoDoble) {
         this.pisoDoble = pisoDoble;
     }
-    
+
+    @Override
+    public String toString() {
+        return "[Piso doble: " + pisoDoble + "]";
+    }
 }

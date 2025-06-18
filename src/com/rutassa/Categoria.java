@@ -68,6 +68,6 @@ public class Categoria {
      */
     @Override
     public String toString() {
-        return "tipo: " + tipo + ", categoriasChoferes: " + categoriasChoferes;
+        return "[Tipo: " + tipo + ", Categorias choferes: " + categoriasChoferes + "]";
     }
 }

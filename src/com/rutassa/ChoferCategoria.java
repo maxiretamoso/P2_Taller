@@ -67,23 +67,26 @@ public class ChoferCategoria {
      */
     @Override
     public String toString() {
-        return "[FechaVencimiento: " + fechaVencimiento + ", Categoria: " + categoria + "]";
+        return "[Fecha de vencimiento: " + fechaVencimiento + ", Categoria: " + categoria + "]";
     }
 
+    /**
+     * Metodo estaVencida() para verificar si la categoria vencio comparando la fecha de vencimiento con la actual
+     * @return true si la fecha es null, vacia, o si la fecha de vencimiento es menor (mas vieja) a la fecha actual
+     * @return false si no tiene un tipo, ya que no es una licencia valida, o si la fecha es mayor (mas reciente) a la fecha actual
+     */
     public boolean estaVencida() {
-        // Obtenemos la fecha actual que la aplicación está usando para simular el "hoy".
+        //Obtenemos la fecha actual que la aplicación está usando para simular la fecha actual.
         String fechaActual = GestionSistema.getFechaActualSimulada();
 
-        // Si no hay una fecha de vencimiento o si el tipo es null, ¡se considera vencida!
         if (fechaVencimiento == null || fechaVencimiento.isEmpty()) {
             return true;
         }
         if (categoria == null) {
-            return true; // Si no tiene un tipo, no es una licencia válida.
+            return true; 
         }
 
-        // Comparamos las fechas como si fueran palabras para ver cuál va antes en el calendario.
-        // Si la fecha de vencimiento es "menor" (más vieja) que la actual, está vencida.
+        // Comparamos las fechas como si fueran palabras para ver cual va antes en el calendario.
         return this.fechaVencimiento.compareTo(fechaActual) < 0;
     }
 }   

@@ -14,6 +14,7 @@ public class Ciudad {
     private Provincia provincia;
     private List<Viaje> origenesViajes;
     private List<Viaje> destinosViajes;
+
     /**
      * Constructor por defecto de Ciudad.
      * Inicializa nombre como una cadena vacia, provincia como null, e instancia origenesViajes y destinosViajes.
@@ -109,6 +110,6 @@ public class Ciudad {
      */
     @Override
     public String toString() {
-        return "[Nombre: " + nombre + ", Provincia: " + provincia + ", origenes viajes: " + origenesViajes + "destinos viajes: " + destinosViajes + "]";
+        return "[Nombre: " + nombre + ", Provincia: " + provincia + ", Origenes viajes: " + origenesViajes + "Destinos viajes: " + destinosViajes + "]";
     }
 }

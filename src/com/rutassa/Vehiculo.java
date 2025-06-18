@@ -19,7 +19,7 @@ public class Vehiculo {
 
     /**
      * Constructor por defecto de Vehiculo.
-     * Inicializa patente como una cadena vacia, y capacidad en 0, e instancia VehiculoViajes.
+     * Inicializa patente como una cadena vacia, y capacidad en 0, e instancia vehiculoViajes.
      */
     public Vehiculo() {
         this.patente="";
@@ -31,7 +31,7 @@ public class Vehiculo {
      * Constructor parametrizado de Vehiculo.
      * @param patente La patente del vehiculo
      * @param capacidad La capacidad del vehiculo 
-     * @param vehiculoViajes El Vehiculo de viajes
+     * @param vehiculoViajes El Vehiculo del viaje/s
      */
     public Vehiculo(String patente, int capacidad, List<Viaje> vehiculoViajes) {
         this.patente = patente;
@@ -72,7 +72,7 @@ public class Vehiculo {
     }
 
     /**
-     * Getter que devuelve el vehiculo de viajes.
+     * Getter que devuelve el vehiculo del viaje/s.
      * @return vehiculoViajes
      */
     public List<Viaje> getVehiculoViajes() {
@@ -80,7 +80,7 @@ public class Vehiculo {
     }
 
     /**
-     * Setter que establece el vehiculo de viajes.
+     * Setter que establece el vehiculo del viaje/s.
      * @param vehiculoViajes El nuevo vehiculoViajes
      */
     public void setVehiculoViajes(Viaje vehiculo) {
@@ -93,8 +93,6 @@ public class Vehiculo {
      */
     @Override
     public String toString() {
-        return "[Patente: " + patente + ", Capacidad: " + capacidad + "vehiculo viajes: " + vehiculoViajes + "]";
+        return "[Patente: " + patente + ", Capacidad: " + capacidad + "Vehiculo viajes: " + vehiculoViajes + "]";
     }
-
-
 }

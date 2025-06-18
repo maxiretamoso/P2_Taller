@@ -92,7 +92,7 @@ public class Chofer extends Persona{
 
     /**
      * Setter que establece los viajes del chofer.
-     * @param viajesChofer los nuevos viajesChofer
+     * @param viajesChofer Los nuevos viajesChofer
      */
     public void setViajeChofer(Viaje viaje) {
         this.viajesChofer.add(viaje);

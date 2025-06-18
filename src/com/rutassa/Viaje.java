@@ -19,7 +19,7 @@ public class Viaje {
 
     /**
      * Constructor por defecto de viaje.
-     * Inicializa fecha, horarioSalida, y horarioLlegada como una cadena vacia, y origen y destino como null.
+     * Inicializa fecha, horarioSalida, y horarioLlegada como una cadena vacia, y origen, destino, vehiculo, y chofer como null.
      */
     public Viaje() {
         this.fecha = "";
@@ -165,9 +165,9 @@ public class Viaje {
     }
 
     /**
-     * Metodo atributosNulos() para saber si los atributos de viaje son o no nulos
-     * @return true si al menos uno de los atributos es null (nulo)
-     * @return false si todos los atributos no son null (nulo)
+     * Metodo atributosNulos() para saber si los atributos de viaje son o no nulos.
+     * @return true si al menos uno de los atributos es null 
+     * @return false si todos los atributos no son null 
      */
     public boolean atributosNulos() {
         return chofer == null || vehiculo == null || fecha == null || horarioSalida == null || horarioLlegada == null || origen == null || destino == null;
@@ -185,9 +185,16 @@ public class Viaje {
            "  • Horario de llegada: " + horarioLlegada + "\n" +
            "  • Origen: " + origen.getNombre() + "\n" +
            "  • Destino: " + destino.getNombre() + "\n" +
-           "  • Vehículo(patente): " + vehiculo.getPatente() + "\n" +
+           "  • Vehiculo(patente): " + vehiculo.getPatente() + "\n" +
            "  • Chofer: " + chofer.getNombre();
     }
-    public boolean estaAsignado() { return this.chofer != null && this.vehiculo != null; }
+
+    /**
+     * Metodo estaAsignado() para saber si el chofer y vehiculo estan asignados.
+     * @return true si chofer y vehiculo no son null
+     * @return false si chofer y vehiculo son null
+     */
+    public boolean estaAsignado() { 
+        return this.chofer != null && this.vehiculo != null; }
     
 }
