@@ -91,7 +91,7 @@ public class Chofer extends Persona{
      */
     public List<Viaje> getViajesChofer() {
         if(this.categorias==null){
-        return new ArrayList<>();
+            return new ArrayList<>();
         }
         return viajesChofer;
     }
@@ -101,7 +101,12 @@ public class Chofer extends Persona{
      * @param viajesChofer Los nuevos viajesChofer
      */
     public void setViajeChofer(Viaje viaje) {
-        this.viajesChofer.add(viaje);
+        if(viaje==null){
+            throw new  IllegalArgumentException("Error! ingreso de argumentos invalidos");
+        }
+        else{
+            this.viajesChofer.add(viaje);
+        }
     }
 
     /**
