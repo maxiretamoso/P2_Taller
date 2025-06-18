@@ -169,24 +169,72 @@ public class GestionSistema {
 
         //Ingreso de datos del chofer
         System.out.print("Ingrese el numero de choferes a registrar: ");
-        int c = sc.nextInt();
-        sc.nextLine();
+        int c = 0;
+        while (true) {
+            System.out.print("Ingrese el número de choferes a registrar: ");
+            try {
+                c = Integer.parseInt(sc.nextLine());
+                if (c > 0) break;
+                else System.out.println("Debe ingresar un número mayor a 0.");
+            } catch (NumberFormatException e) {
+                System.out.println("¡Error! Ingrese un número entero válido.");
+            }
+        }
 
         for (int i = 0; i < c; i++) {
             System.out.println("\nChofer N°" + (i+1) + "/" + c);
 
-            System.out.print("- Ingrese el Dni: ");
-            long dni = sc.nextLong();
-            sc.nextLine();
+            long dni = 0;
+            while (true) {
+                System.out.print("- Ingrese el DNI: ");
+                try {
+                    dni = Long.parseLong(sc.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("¡Error! Ingrese un número válido para el DNI.");
+                }
+            }
 
-            System.out.print("- Ingrese el Nombre: ");
-            String nombre = sc.nextLine();
+            String nombre = "";
+            while (true) {
+                System.out.print("- Ingrese el Nombre: ");
+                nombre = sc.nextLine().trim();
+                if (!nombre.isEmpty()){
+                    System.out.println("¡Error! El apellido no puede estar vacío.");
+                }
+                else if(!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]+")){
+                    System.out.println("¡Error! El apellido solo debe contener letras y espacios.");
+                }else{
+                    break;
+                }
+            }
 
-            System.out.print("- Ingrese el Apellido: ");
-            String apellido = sc.nextLine();
+            String apellido = "";
+            while (true) {
+                System.out.print("- Ingrese el Apellido: ");
+                apellido = sc.nextLine().trim();
+                if (!apellido.isEmpty()){
+                    System.out.println("¡Error! El apellido no puede estar vacío.");
+                }
+                else if(!apellido.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]+")){
+                    System.out.println("¡Error! El apellido solo debe contener letras y espacios.");
+                }else{
+                    break;
+                }
+            }
 
-            System.out.print("- Ingrese el Numero de licencia: ");
-            String nroLicencia = sc.nextLine();
+            String nroLicencia = "";
+            while (true) {
+                System.out.print("- Ingrese el Número de licencia: ");
+                nroLicencia = sc.nextLine().trim();
+                if (nroLicencia.isEmpty()) {
+                    System.out.println("¡Error! El número de licencia no puede estar vacío.");
+                } else if (!nroLicencia.matches("\\d+")) {
+                    System.out.println("¡Error! El número de licencia solo debe contener números.");
+                } else {
+                    break;
+                }
+            }
 
             int d;
             List<ChoferCategoria> categorias = new ArrayList<>();
@@ -209,8 +257,16 @@ public class GestionSistema {
                     continue; 
                 }
 
-                System.out.print("- Ingrese la Fecha de vencimiento (DD/MM/AA): ");
-                String fecha = sc.nextLine();
+                String fecha = "";
+                while (true) {
+                    System.out.print("- Ingrese la Fecha de vencimiento (DD/MM/AA): ");
+                    fecha = sc.nextLine().trim();
+                    if (esFechaValida(fecha)) {
+                        break;
+                    } else {
+                        System.out.println("¡Error! Ingrese una fecha válida en formato DD/MM/AA (por ejemplo: 18/06/25).");
+                    }
+                }
 
                 if (d == 1) {
                     categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.COLECTIVO, null)));
@@ -269,9 +325,22 @@ public class GestionSistema {
             System.out.print("Ingrese la Patente: ");
             String patente = sc.nextLine();
 
-            System.out.print("Ingrese la Capacidad: ");
-            int capacidad = sc.nextInt();
-            sc.nextLine();
+            int capacidad = 0;
+            while (true) {
+                System.out.print("Ingrese la Capacidad: ");
+                String entrada = sc.nextLine().trim();
+
+                if (entrada.matches("\\d+")) {
+                    capacidad = Integer.parseInt(entrada);
+                    if (capacidad > 0) {
+                        break;
+                    } else {
+                        System.out.println("¡Error! La capacidad debe ser un número mayor a cero.");
+                    }
+                } else {
+                    System.out.println("¡Error! Ingrese solo números enteros positivos.");
+                }
+            }
 
             String tipo;
             while (true) {
@@ -485,8 +554,8 @@ public class GestionSistema {
                         tieneLicenciaValida = true;
                         break;
                     }
+                }
             }
-        }
 
 
             if (!tieneLicenciaValida) {
@@ -721,17 +790,17 @@ public class GestionSistema {
     
     //Validaciones de fecha.
     public static boolean esFechaValida(String fecha) {
-    if (!esFormatoFechaValido(fecha)) return false;
+        if (!esFormatoFechaValido(fecha)) return false;
 
-    try {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-        LocalDate.parse(fecha, formatter);
-        return true;
-    } catch (DateTimeParseException e) {
-        return false;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+            LocalDate.parse(fecha, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+            }
         }
-    }
-    public static boolean esFormatoFechaValido(String fecha) {
-    return fecha.matches("\\d{2}/\\d{2}/\\d{2}");
+        public static boolean esFormatoFechaValido(String fecha) {
+        return fecha.matches("\\d{2}/\\d{2}/\\d{2}");
     }
 }

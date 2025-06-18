@@ -56,7 +56,13 @@ public class Chofer extends Persona{
      * @param nroLicencia El nuevo nroLicencia
      */
     public void setNroLicencia(String nroLicencia) {
-        this.nroLicencia = nroLicencia;
+        if (!nroLicencia.isEmpty()){
+            this.nroLicencia = nroLicencia;
+        }
+        else{
+            throw new IllegalArgumentException("Error en el ingreso de argumentos");
+        }
+        
     }
 
     /**
@@ -104,6 +110,6 @@ public class Chofer extends Persona{
      */
     @Override
     public String toString() {
-        return "[" + super.toString() + ", Nº de Licencia: " + nroLicencia + ", Categoría: " + categorias + "Viajes Chofer: " + viajesChofer + "]";
+        return "[" + super.toString() + ", Nº de Licencia: " + nroLicencia + ", Categoría: " + categorias + "Viajes Chofer: " + (!viajesChofer.isEmpty()?viajesChofer:"No tiene viajes asignados") + "]";
     }
 }
