@@ -22,7 +22,7 @@ public class GestionSistema {
     private Scanner sc;
 
     /**
-     * Esta es la fecha actual que usamos para probar.
+     * Esta es la fecha "actual" que usamos para probar.
      * Nos sirve para ver si las licencias están vencidas o si los viajes ya pasaron.
      */
     public static final String FECHA_ACTUAL_SIMULADA = "12/06/25";
@@ -904,9 +904,10 @@ public class GestionSistema {
             return true;
         } catch (DateTimeParseException e) {
             return false;
-            }
         }
-        public static boolean esFormatoFechaValido(String fecha) {
+    }
+
+    public static boolean esFormatoFechaValido(String fecha) {
         return fecha.matches("\\d{2}/\\d{2}/\\d{2}");
     }
 }
