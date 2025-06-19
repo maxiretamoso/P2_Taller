@@ -12,7 +12,7 @@ import com.rutassa.tipoVehiculo.Minibus;
  * @author MaximoRetamoso, MartinZanandrea
  * @version 1.0
  */
-public class Vehiculo {
+public abstract class Vehiculo {
     private String patente;
     private int capacidad;
     private List<Viaje> vehiculoViajes;
