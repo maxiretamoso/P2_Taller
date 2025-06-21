@@ -7,6 +7,7 @@ import com.rutassa.tipoVehiculo.Minibus;
 import java.util.HashMap;
 import java.util.Map;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -112,10 +113,10 @@ public class GestionSistema {
                 case 2:
                     sistema.registrarVehiculos();
                     break;
-                case 4:
+                case 3:
                     sistema.registrarCiudades();
                     break;
-                case 3:
+                case 4:
                     sistema.planificarViajes(); 
                     break;
                 case 5:
@@ -277,29 +278,41 @@ public class GestionSistema {
             //Ingreso de categoria/s
             List<ChoferCategoria> categorias = new ArrayList<>();            
             while (true) {
-                System.out.print("- Ingrese la Categoria (1 colectivo / 2 minibus / 0 cancelar): ");
+                System.out.print("- ¿Desea agregar una categoría? (si/no): ");
+                String respuesta = sc.nextLine().trim().toLowerCase();
+
+                while (!respuesta.equals("si") && !respuesta.equals("no")) {
+                    System.out.print("Opcion invalida. Vuelva a intentarlo.");
+                    respuesta = sc.nextLine().trim().toLowerCase();
+                }
+
+                if (respuesta.equals("no")) {
+                    if (categorias.isEmpty()) {
+                        System.out.println("Debe ingresar al menos una categoria para el chofer.");
+                        continue;  
+                    } else {
+                        break;  
+                    }
+                }
+
+                System.out.print("- Ingrese la Categoria (1 colectivo / 2 minibus): ");
                 String input = sc.nextLine().trim();
 
                 int d;
                 try {
                     d = Integer.parseInt(input);
                 } catch (NumberFormatException e) {
-                    System.out.println("Ingreso invalido. Debe ingresar un numero ('1'/'2'/'0'). Vuelva a intentarlo.");
+                    System.out.println("Ingreso invalido. Debe ingresar un numero ('1'/'2'). Vuelva a intentarlo.");
                     continue;
                 }
 
-                if (d == 0) {
-                    if (categorias.isEmpty()) {
-                        System.out.println("Ingrese al menos una categoria para el chofer.");
-                        continue;
-                    }
-                    else {
-                        break;
-                    }
+                if (d != 1 && d != 2) {
+                    System.out.println("Opcion invalida. Debe ingresar ('1'/'2'). Vuelva a intentarlo.");
+                    continue;
                 }
 
                 if (d != 1 && d != 2) {
-                    System.out.println("Opción invalida. Debe ingresar '1'/'2'/'0'. Vuelva a intentarlo.");
+                    System.out.println("Opcion invalida. Debe ingresar ('1'/'2'/'0'). Vuelva a intentarlo.");
                     continue;
                 }
 
@@ -454,20 +467,20 @@ public class GestionSistema {
                     if (capacidad > 0) {
                         break;
                     } else {
-                        System.out.println("¡Error! La capacidad debe ser un número mayor a cero.");
+                        System.out.println("La capacidad debe ser un numero mayor a cero. Vuelva a intentarlo.");
                     }
                 } else {
-                    System.out.println("¡Error! Ingrese solo números enteros positivos.");
+                    System.out.println("Debe ingresar solo numeros enteros positivos. Vuelva a intentarlo.");
                 }
             }
 
             int tipo = -1;
             while (true) {
-                System.out.print("- Ingrese el Tipo (1 - Colectivo / 2 - Minibus): ");
+                System.out.print("- Ingrese el Tipo (1 Colectivo / 2 Minibus): ");
                 String entrada = sc.nextLine().trim();
 
                 if (!entrada.matches("[12]")) {
-                    System.out.println("Tipo inválido. Debe ingresar '1' para Colectivo o '2' para Minibus.");
+                    System.out.println("Tipo invalido. Debe ingresar ('1'/'2'). Vuelva a intentarlo.");
                     continue;
                 }
 
@@ -540,7 +553,6 @@ public class GestionSistema {
                 minibus.setTieneBodega(tieneBodega);
                 vehiculos.add(minibus);
                 System.out.println("Minibus registrado.");
-
             }
                 
             System.out.print("¿Desea registrar otro vehículo? (si/no): ");
@@ -557,7 +569,6 @@ public class GestionSistema {
         }
     } 
     
-
     /**
      * Metodo para registrar las ciudades
      */
@@ -717,9 +728,58 @@ public class GestionSistema {
             }
         }
 
-        //Solicitar fecha del viaje
-        System.out.print("Ingrese la fecha del viaje (formato DD-MM-AAAA): ");
-        String fecha = sc.nextLine(); // Validación de formato puede hacerse luego
+        String fecha = null;
+
+        while (fecha == null) {
+            System.out.print("Ingrese la fecha del viaje (formato DD/MM/AA): ");
+            String input = sc.nextLine().trim();
+
+            if (input.isEmpty()) {
+                System.out.println("La fecha no puede estar vacía.");
+                continue;
+            }
+
+            if (!esFormatoFechaValido(input)) {
+                System.out.println("Formato incorrecto. Asegúrese de usar el formato DD/MM/AA.");
+                continue;
+            }
+
+            if (!esFechaValida(input)) {
+                System.out.println("Fecha inválida. Verifique que sea una fecha real.");
+                continue;
+            }
+
+            fecha = input; // todo válido
+        }
+        
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        // Solicitar horario de salida
+        LocalTime horarioSalida = null;
+        while (horarioSalida == null) {
+            System.out.print("Ingrese el horario de salida (HH:mm): ");
+            String input = sc.nextLine();
+            try {
+                horarioSalida = LocalTime.parse(input, timeFormatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato inválido. Ingrese el horario en formato HH:mm (por ejemplo, 14:30).");
+            }
+        }
+        // Solicitar horario de llegada
+        LocalTime horarioLlegada = null;
+        while (horarioLlegada == null) {
+            System.out.print("Ingrese el horario de llegada (HH:mm): ");
+            String input = sc.nextLine();
+            try {
+                horarioLlegada = LocalTime.parse(input, timeFormatter);
+                if (horarioLlegada.isBefore(horarioSalida) || horarioLlegada.equals(horarioSalida)) {
+                    System.out.println("El horario de llegada debe ser posterior al de salida.");
+                    horarioLlegada = null;
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato inválido. Ingrese el horario en formato HH:mm (por ejemplo, 17:00).");
+            }
+        }
 
         //Crear viaje sin chofer ni vehículo aún
         Viaje viaje = new Viaje();
