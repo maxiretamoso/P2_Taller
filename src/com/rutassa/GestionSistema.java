@@ -283,6 +283,7 @@ public class GestionSistema {
 
                 while (!respuesta.equals("si") && !respuesta.equals("no")) {
                     System.out.print("Opcion invalida. Vuelva a intentarlo.");
+                    System.out.print("- ¿Desea agregar una categoria? (si/no): ");
                     respuesta = sc.nextLine().trim().toLowerCase();
                 }
 
