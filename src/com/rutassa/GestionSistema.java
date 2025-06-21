@@ -276,61 +276,42 @@ public class GestionSistema {
             }
 
             //Ingreso de categoria/s
-            List<ChoferCategoria> categorias = new ArrayList<>();            
-            while (true) {
-                System.out.print("- ¿Desea agregar una categoría? (si/no): ");
-                String respuesta = sc.nextLine().trim().toLowerCase();
+            List<ChoferCategoria> categorias = new ArrayList<>();
+            while (true) {  
+                int d = -1;
+                while (true) {
+                    System.out.print("- Ingrese la Categoria (1 Colectivo / 2 Minibus): ");
+                    String input = sc.nextLine().trim();
 
-                while (!respuesta.equals("si") && !respuesta.equals("no")) {
-                    System.out.print("Opcion invalida. Vuelva a intentarlo.");
-                    System.out.print("- ¿Desea agregar una categoria? (si/no): ");
-                    respuesta = sc.nextLine().trim().toLowerCase();
-                }
-
-                if (respuesta.equals("no")) {
-                    if (categorias.isEmpty()) {
-                        System.out.println("Debe ingresar al menos una categoria para el chofer.");
-                        continue;  
-                    } else {
-                        break;  
+                    try {
+                        d = Integer.parseInt(input);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Ingreso invalido. Debe ser '1'/'2'. Vuelva a intentarlo.");
+                        continue;
                     }
-                }
 
-                System.out.print("- Ingrese la Categoria (1 colectivo / 2 minibus): ");
-                String input = sc.nextLine().trim();
-
-                int d;
-                try {
-                    d = Integer.parseInt(input);
-                } catch (NumberFormatException e) {
-                    System.out.println("Ingreso invalido. Debe ingresar un numero ('1'/'2'). Vuelva a intentarlo.");
-                    continue;
-                }
-
-                if (d != 1 && d != 2) {
-                    System.out.println("Opcion invalida. Debe ingresar ('1'/'2'). Vuelva a intentarlo.");
-                    continue;
-                }
-
-                if (d != 1 && d != 2) {
-                    System.out.println("Opcion invalida. Debe ingresar ('1'/'2'/'0'). Vuelva a intentarlo.");
-                    continue;
+                    if (d != 1 && d != 2) {
+                        System.out.println("Ingreso invalido. Debe ser '1'/'2'. Vuelva a intentarlo.");
+                        continue;
+                    }
+                    break;
                 }
 
                 boolean categoriaYaIngresada = false;
                 for (ChoferCategoria cat : categorias) {
-                    if ((d == 1 && cat.getCategoria().getTipo() == CategoriaTipo.COLECTIVO) || (d == 2 && cat.getCategoria().getTipo() == CategoriaTipo.MINIBUS)) {
+                    if ((d == 1 && cat.getCategoria().getTipo() == CategoriaTipo.COLECTIVO) || 
+                        (d == 2 && cat.getCategoria().getTipo() == CategoriaTipo.MINIBUS)) {
                         categoriaYaIngresada = true;
                         break;
                     }
                 }
 
                 if (categoriaYaIngresada) {
-                    System.out.println("Ya ingreso esta categoria. Ingrese otra distinta o 0 para salir.");
-                    continue;
+                    System.out.println("Ya ingreso esta categoria. Ingrese otra distinta.");
+                    continue; 
                 }
 
-                //Ingreso de fecha de vencimiento de cada categoria
+                // Ingreso de fecha de vencimiento
                 String fecha = "";
                 LocalDate fechaLic = null;
                 while (true) {
@@ -340,21 +321,22 @@ public class GestionSistema {
                     if (esFechaValida(fecha)) {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
                         fechaLic = LocalDate.parse(fecha, formatter);
+
                         if (fechaLic.isBefore(LocalDate.now())) {
-                            System.out.println("La fecha ingresada esta vencida.");
-                            System.out.print("¿Desea ingresar otra fecha o cancelar esta categoría? ('1'/'0'): ");
+                            System.out.println("La fecha ingresada está vencida.");
+                            System.out.print("¿Desea ingresar otra fecha o cancelar esta categoría? ('1' para nueva fecha / '0' para cancelar): ");
                             String eleccion = sc.nextLine().trim();
                             if (eleccion.equals("1")) {
                                 continue; 
                             } else {
-                                System.out.println("Categoria cancelada.");
+                                System.out.println("Categoría cancelada.");
                                 fechaLic = null;
-                                break;
+                                break; 
                             }
                         }
-                        break;
+                        break; 
                     } else {
-                        System.out.println("Ingrese una fecha valida en formato DD/MM/AA (Ej: 18/06/25).");
+                        System.out.println("Ingrese una fecha válida en formato DD/MM/AA (Ej: 18/06/25).");
                     }
                 }
 
@@ -365,19 +347,39 @@ public class GestionSistema {
                         categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.MINIBUS, null)));
                     }
                 }
+
+                System.out.print("- ¿Desea agregar otra categoria? (si/no): ");
+                String respuesta = sc.nextLine().trim().toLowerCase();
+                while (!respuesta.equals("si") && !respuesta.equals("no")) {
+                    System.out.print("Opción invalida. Ingrese 'si' o 'no': ");
+                    respuesta = sc.nextLine().trim().toLowerCase();
+                }
+                if (respuesta.equals("no")) {
+                    if (categorias.isEmpty()) {
+                        System.out.println("Debe ingresar al menos una categoria para el chofer.");
+                    } else {
+                        break; 
+                    }
+                }
             }
+
             choferes.add(new Chofer(dni, nombre, apellido, nroLicencia, categorias, null));
             System.out.println("Chofer registrado!");
 
-            System.out.print("¿Quiere registrar otro chofer? (si/no): ");
-            String respuesta = sc.nextLine().trim().toUpperCase();
-            
-            while (!respuesta.equalsIgnoreCase("si") && !respuesta.equalsIgnoreCase("no")) {
-                System.out.print("Ingreso incorrecto. Debe ingresar 'si'/'no': ");
-                respuesta = sc.nextLine().trim().toUpperCase();
+            String respuesta;
+            while (true) {
+                System.out.print("¿Quiere registrar otro chofer? (si/no): ");
+                respuesta = sc.nextLine().trim().toLowerCase();
+
+                if (respuesta.equals("si") || respuesta.equals("no")) {
+                    break; 
+                } else {
+                    System.out.println("Ingreso invalido. Debe ingresar 'si'/'no'. Vuelva a intentarlo.");
+                }
             }
-                
-            if (respuesta.equalsIgnoreCase("no")) {
+
+            if (respuesta.equals("no")) {
+                System.out.println("\n" + "-".repeat(45) + "\nSaliendo del registro vehiculo\n" + "-".repeat(45));
                 break;
             }
             i++;
@@ -503,7 +505,7 @@ public class GestionSistema {
                         pisoDoble = false;
                         respuestaValida = true;
                     } else {
-                        System.out.println("Respuesta invalida. Debe ingresar 'si' o 'no'. Vuelva a intentar.");
+                        System.out.println("Respuesta invalida. Debe ingresar 'si'/'no'. Vuelva a intentarlo.");
                     }
                 }
 
@@ -512,7 +514,7 @@ public class GestionSistema {
                 colectivo.setCapacidad(capacidad);
                 colectivo.setPisoDoble(pisoDoble);
                 vehiculos.add(colectivo);
-                System.out.println("Colectivo registrado.");
+                System.out.println("Colectivo registrado!");
 
             } else {
                 boolean tieneBodega = false;
@@ -527,7 +529,7 @@ public class GestionSistema {
                         tieneBodega = false;
                         respuestaValida = true;
                     } else {
-                        System.out.println("Respuesta invalida. Debe ingresar 'si' o 'no'. Vuelva a intentar.");
+                        System.out.println("Respuesta invalida. Debe ingresar 'si'/'no'. Vuelva a intentarlo.");
                     }
                 }
 
@@ -543,7 +545,7 @@ public class GestionSistema {
                         aireAcondicionado = false;
                         respuestaValida = true;
                     } else {
-                        System.out.println("Respuesta invalida. Debe ingresar 'si' o 'no'. Vuelva a intentar.");
+                        System.out.println("Respuesta invalida. Debe ingresar 'si'/'no'. Vuelva a intentarlo.");
                     }
                 }
 
@@ -556,16 +558,22 @@ public class GestionSistema {
                 System.out.println("Minibus registrado.");
             }
                 
-            System.out.print("¿Desea registrar otro vehículo? (si/no): ");
-            String respuesta = sc.nextLine().trim().toLowerCase();
-            while (!respuesta.equals("si") && !respuesta.equals("no")) {
-                System.out.print("Opción inválida. Ingrese 'si' o 'no': ");
+            String respuesta;
+            while (true) {
+                System.out.print("¿Desea registrar otro vehículo? (si/no): ");
                 respuesta = sc.nextLine().trim().toLowerCase();
+
+                if (respuesta.equals("si") || respuesta.equals("no")) {
+                    break; 
+                } else {
+                    System.out.println("Ingreso invalido. Debe ingresar 'si'/'no'. Vuelva a intentarlo.");
+                }
             }
-            
+
             if (respuesta.equals("no")) {
+                System.out.println("\n" + "-".repeat(45) + "\nSaliendo del registro vehiculo\n" + "-".repeat(45));
                 break;
-            }    
+            }
             i++;
         }
     } 

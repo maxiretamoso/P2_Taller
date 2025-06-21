@@ -115,6 +115,6 @@ public class Chofer extends Persona{
      */
     @Override
     public String toString() {
-        return "[" + super.toString() + ", Nº de Licencia: " + nroLicencia + ", Categoría: " + categorias + "Viajes Chofer: " + (!viajesChofer.isEmpty()?viajesChofer:"No tiene viajes asignados") + "]";
+        return "[" + super.toString() + ", Nº de Licencia: " + nroLicencia + ", Categoría: " + categorias + "Viajes Chofer: " + ( viajesChofer==null || viajesChofer.isEmpty()?"No tiene viajes asignados":viajesChofer) + "]";
     }
 }
