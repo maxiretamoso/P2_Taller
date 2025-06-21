@@ -79,18 +79,22 @@ public class GestionSistema {
 
             while (!opcionValida) {
                 System.out.print("Seleccione una opcion: ");
-                if (sistema.sc.hasNextInt()) {
-                    opcion = sistema.sc.nextInt();
-                    sistema.sc.nextLine();
+                String input = sistema.sc.nextLine().trim();
 
+                if (input.isEmpty()) {
+                    System.out.println("Ingreso vacio. Se debe ingresar un numero entre 0 y 8. Vuelva a intentarlo.");
+                    continue;
+                }
+
+                try {
+                    opcion = Integer.parseInt(input);
                     if (opcion >= 0 && opcion <= 8) {
                         opcionValida = true;
                     } else {
-                        System.out.println("Opcion invalida. Por favor ingrese un numero entre 0 y 7. Vuelva a intentar.");
+                        System.out.println("Se debe ingresar un numero entre 0 y 8. Vuelva a intentarlo");
                     }
-                } else {
-                    System.out.println("Ingreso invalido. debe ser un numero.");
-                    sistema.sc.nextLine(); 
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrada invalida. Debe ser un número. Vuelva a intentarlo.");
                 }
             }
 
@@ -138,12 +142,13 @@ public class GestionSistema {
     public void registrarChoferes() {
         System.out.println("\n" + "-".repeat(45) + "\nRegistrar choferes\n" + "-".repeat(45));
 
-        //Verificar si hay choferes registrados. Si es asi se pedira que el usuario decida borrarrlos, añadir mas o volver al menu
+        //Verificar si hay choferes registrados
         if (!choferes.isEmpty()) {
             System.out.println("Ya hay choferes registrados.");
             int opcion = -1;
             while (opcion != 0 && opcion != 1 && opcion != 2) {
                 System.out.print("¿Desea agregar mas choferes (1), limpiar y registrar de 0 (2) o volver al menu (0)? ");
+                
                 if (sc.hasNextInt()) {
                     opcion = sc.nextInt();
                     sc.nextLine(); 
@@ -168,114 +173,200 @@ public class GestionSistema {
             }
         }
 
-        //Ingreso de datos del chofer
-        int c = 0;
+        //Ingreso de chofer/es
+        int i = 1;
         while (true) {
-            System.out.print("Ingrese el numero de choferes a registrar: ");
-            try {
-                c = Integer.parseInt(sc.nextLine());
-                if (c > 0) break;
-                else System.out.println("Debe ingresar un número mayor a 0.");
-            } catch (NumberFormatException e) {
-                System.out.println("¡Error! Ingrese un número entero válido.");
-            }
-        }
+            System.out.println("\nChofer N" + i + ":");
 
-        for (int i = 0; i < c; i++) {
-            System.out.println("\nChofer N°" + (i+1) + "/" + c);
-
+            //Ingreso de DNI
             long dni = 0;
             while (true) {
                 System.out.print("- Ingrese el DNI: ");
-                try {
-                    dni = Long.parseLong(sc.nextLine());
-                    break;
-                } catch (NumberFormatException e) {
-                    System.out.println("¡Error! Ingrese un número válido para el DNI.");
+                String inputDni = sc.nextLine();
+
+                if (inputDni.contains(" ")) {
+                    System.out.println("El dni no debe tener espacios. Vuelva a intentarlo.");
+                    continue;
                 }
+
+                if (!inputDni.matches("\\d+")) {
+                    System.out.println("El dni solo contiene numeros. Vuelva a intentarlo.");
+                    continue;
+                } else if (inputDni.length() < 7 || inputDni.length() > 8) {
+                    System.out.println("El dni debe tener 7 u 8 digitos. Vuelva a intentarlo.");
+                    continue;
+                }
+    
+                dni = Long.parseLong(inputDni);
+
+                boolean dniRepetido = false;
+                for (Chofer chofer : choferes) {
+                    if (chofer.getDni() == dni) {
+                        dniRepetido = true;
+                        break;
+                    }
+                }
+
+                if (dniRepetido) {
+                    System.out.println("Ya existe un chofer con ese DNI. Ingrese otro.");
+                    continue;
+                }
+
+                break;
             }
 
+            //Ingreso de nombre
             String nombre = "";
             while (true) {
                 System.out.print("- Ingrese el Nombre: ");
                 nombre = sc.nextLine().trim();
-                if (!nombre.isEmpty()){
-                    System.out.println("¡Error! El apellido no puede estar vacío.");
-                }
-                else if(!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]+")){
-                    System.out.println("¡Error! El apellido solo debe contener letras y espacios.");
-                }else{
+
+                if (nombre.isEmpty()){
+                    System.out.println("El nombre no puede estar vacio. vuelva a intentarlo.");
+                } else if(!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]+")){
+                    System.out.println("El nombre solo debe contener letras y espacios. vuelva a intentarlo.");
+                } else{
                     break;
                 }
             }
 
+            //Ingreso de apellido
             String apellido = "";
             while (true) {
                 System.out.print("- Ingrese el Apellido: ");
                 apellido = sc.nextLine().trim();
-                if (!apellido.isEmpty()){
-                    System.out.println("¡Error! El apellido no puede estar vacío.");
+
+                if (apellido.isEmpty()){
+                    System.out.println("El apellido no puede estar vacio. Vuelva a intentarlo.");
                 }
                 else if(!apellido.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]+")){
-                    System.out.println("¡Error! El apellido solo debe contener letras y espacios.");
+                    System.out.println("El apellido solo debe contener letras y espacios. Vuelva a intentarlo.");
                 }else{
                     break;
                 }
             }
 
+            //Ingreso de numero de licencia
             String nroLicencia = "";
             while (true) {
-                System.out.print("- Ingrese el Número de licencia: ");
-                nroLicencia = sc.nextLine().trim();
+                System.out.print("- Ingrese el Numero de licencia: ");
+                nroLicencia = sc.nextLine().replaceAll("\\s+", "");;
+
                 if (nroLicencia.isEmpty()) {
-                    System.out.println("¡Error! El número de licencia no puede estar vacío.");
+                    System.out.println("El numero de licencia no puede estar vacio. Vuelva a intentarlo.");
                 } else if (!nroLicencia.matches("\\d+")) {
-                    System.out.println("¡Error! El número de licencia solo debe contener números.");
+                    System.out.println("El numero de licencia solo debe contener numeros. Vuelva a intentarlo.");
+                } else if (nroLicencia.matches("0+")) { 
+                    System.out.println("El numero de licencia no puede ser 0. Vuelva a intentarlo.");
                 } else {
+                    boolean licenciaRepetida = false;
+                    for (Chofer chofer : choferes) {
+                        if (chofer.getNroLicencia().equals(nroLicencia)) {
+                            licenciaRepetida = true;
+                            break;
+                        }
+                    }
+                    if (licenciaRepetida) {
+                        System.out.println("Ya existe un chofer con ese numero de licencia. Ingrese otro.");
+                        continue;
+                    }
                     break;
                 }
             }
 
-            int d;
-            List<ChoferCategoria> categorias = new ArrayList<>();
-            
-            while(true) {
+            //Ingreso de categoria/s
+            List<ChoferCategoria> categorias = new ArrayList<>();            
+            while (true) {
                 System.out.print("- Ingrese la Categoria (1 colectivo / 2 minibus / 0 cancelar): ");
-                d = sc.nextInt();
-                sc.nextLine();
+                String input = sc.nextLine().trim();
+
+                int d;
+                try {
+                    d = Integer.parseInt(input);
+                } catch (NumberFormatException e) {
+                    System.out.println("Ingreso invalido. Debe ingresar un número ('1'/'2'/'0'). Vuelva a intentarlo.");
+                    continue;
+                }
 
                 if (d == 0) {
                     if (categorias.isEmpty()) {
-                        System.out.println("Debe ingresar al menos una categoria para registrar el chofer.");
+                        System.out.println("Ingrese al menos una categoria para el chofer.");
                         continue;
-                    } else {
-                        break; 
+                    }
+                    else {
+                        break;
                     }
                 }
+
                 if (d != 1 && d != 2) {
-                    System.out.println("Opcion invalida. Intente nuevamente.");
-                    continue; 
+                    System.out.println("Opción invalida. Debe ingresar '1'/'2'/'0'. Vuelva a intentarlo.");
+                    continue;
                 }
 
+                boolean categoriaYaIngresada = false;
+                for (ChoferCategoria cat : categorias) {
+                    if ((d == 1 && cat.getCategoria().getTipo() == CategoriaTipo.COLECTIVO) || (d == 2 && cat.getCategoria().getTipo() == CategoriaTipo.MINIBUS)) {
+                        categoriaYaIngresada = true;
+                        break;
+                    }
+                }
+
+                if (categoriaYaIngresada) {
+                    System.out.println("Ya ingreso esta categoria. Ingrese otra distinta o 0 para salir.");
+                    continue;
+                }
+
+                //Ingreso de fecha de vencimiento de cada categoria
                 String fecha = "";
+                LocalDate fechaLic = null;
                 while (true) {
                     System.out.print("- Ingrese la Fecha de vencimiento (DD/MM/AA): ");
                     fecha = sc.nextLine().trim();
+
                     if (esFechaValida(fecha)) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+                        fechaLic = LocalDate.parse(fecha, formatter);
+                        if (fechaLic.isBefore(LocalDate.now())) {
+                            System.out.println("La fecha ingresada ya está vencida.");
+                            System.out.print("¿Desea ingresar otra fecha o cancelar esta categoría? ('1'/'0'): ");
+                            String eleccion = sc.nextLine().trim();
+                            if (eleccion.equals("1")) {
+                                continue; 
+                            } else {
+                                System.out.println("Categoria cancelada.");
+                                fechaLic = null;
+                                break;
+                            }
+                        }
                         break;
                     } else {
-                        System.out.println("¡Error! Ingrese una fecha válida en formato DD/MM/AA (por ejemplo: 18/06/25).");
+                        System.out.println("Ingrese una fecha valida en formato DD/MM/AA (Ej: 18/06/25).");
                     }
                 }
 
-                if (d == 1) {
-                    categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.COLECTIVO, null)));
-                } else {
-                    categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.MINIBUS, null)));
+                if (fechaLic != null) {
+                    if (d == 1) {
+                        categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.COLECTIVO, null)));
+                    } else {
+                        categorias.add(new ChoferCategoria(fecha, new Categoria(CategoriaTipo.MINIBUS, null)));
+                    }
                 }
             }
             choferes.add(new Chofer(dni, nombre, apellido, nroLicencia, categorias, null));
-            System.out.println("Chofer agregado correctamente.");
+            System.out.println("Chofer registrado!");
+
+            System.out.print("¿Quiere registrar otro chofer? (si/no): ");
+            String respuesta = sc.nextLine().trim().toUpperCase();
+            
+            while (!respuesta.equalsIgnoreCase("si") && !respuesta.equalsIgnoreCase("no")) {
+                System.out.print("Ingreso incorrecto. Debe ingresar 'si'/'no': ");
+                respuesta = sc.nextLine().trim().toUpperCase();
+            }
+                
+            if (respuesta.equalsIgnoreCase("no")) {
+                break;
+            }
+            i++;
         }
     }
 
@@ -561,8 +652,7 @@ public class GestionSistema {
                 int indiceDestino = Integer.parseInt(sc.nextLine());
                 if (indiceDestino >= 0 && indiceDestino < ciudades.size()) {
                     Ciudad seleccionada = ciudades.get(indiceDestino);
-                    if (seleccionada.getNombre().equalsIgnoreCase(origen.getNombre()) &&
-                        seleccionada.getProvincia() == origen.getProvincia()) {
+                    if (seleccionada.getNombre().equalsIgnoreCase(origen.getNombre()) && seleccionada.getProvincia() == origen.getProvincia()) {
                         System.out.println("La ciudad destino no puede ser igual a la ciudad origen.");
                     } else {
                         destino = seleccionada;
@@ -893,8 +983,8 @@ public class GestionSistema {
     
     /**
      * Metodo para validar la fecha ingresada
-     * @param fecha
-     * @return true/false si la fecha tiene el formato correcto o no
+     * @param fecha 
+     * @return true/false 
      */
     public static boolean esFechaValida(String fecha) {
         if (!esFormatoFechaValido(fecha)) return false;
