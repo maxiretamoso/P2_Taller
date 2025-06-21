@@ -69,6 +69,9 @@ public class Ciudad {
      * @param provincia La nueva provincia
      */
     public void setProvincia(Provincia provincia) {
+        if(provincia==null){
+            throw new IllegalArgumentException("Error! ingreso de argumentos invalido");
+        }
         this.provincia = provincia;
     }
 
@@ -101,6 +104,9 @@ public class Ciudad {
      * @param destinosViajes Los nuevos destinos de viajes
      */
     public void setDestinosViajes(Viaje destinosViajes) {
+        if (destinosViajes==null){
+            throw  new IllegalArgumentException("Error! argumento invalido");
+        }
         this.destinosViajes.add(destinosViajes);
     }
 

@@ -68,7 +68,7 @@ public class GestionSistema {
             System.out.println("2. Registrar vehiculos");
             System.out.println("3. Registrar ciudades");
             System.out.println("4. Planificar viajes entre ciudades");
-            System.out.println("5. Asociar un vehiculo y un chofer a cada viaje");
+            System.out.println("5. Asociar un vehiculo y un chofer a cada viaje"); 
             System.out.println("6. Mostrar los viajes programados con información detallada");
             System.out.println("7. Informe detallado de viajes que tiene para realizar un colectivo determinado");
             System.out.println("8. Informe de cantidad de viajes ya realizados por cada chofer de colectivos");
@@ -284,7 +284,7 @@ public class GestionSistema {
                 try {
                     d = Integer.parseInt(input);
                 } catch (NumberFormatException e) {
-                    System.out.println("Ingreso invalido. Debe ingresar un número ('1'/'2'/'0'). Vuelva a intentarlo.");
+                    System.out.println("Ingreso invalido. Debe ingresar un numero ('1'/'2'/'0'). Vuelva a intentarlo.");
                     continue;
                 }
 
@@ -327,7 +327,7 @@ public class GestionSistema {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
                         fechaLic = LocalDate.parse(fecha, formatter);
                         if (fechaLic.isBefore(LocalDate.now())) {
-                            System.out.println("La fecha ingresada ya está vencida.");
+                            System.out.println("La fecha ingresada esta vencida.");
                             System.out.print("¿Desea ingresar otra fecha o cancelar esta categoría? ('1'/'0'): ");
                             String eleccion = sc.nextLine().trim();
                             if (eleccion.equals("1")) {
@@ -392,10 +392,10 @@ public class GestionSistema {
                     if (opcion == 1 || opcion == 2) {
                         break;
                     } else {
-                        System.out.println("Opcion invalida. Intente nuevamente.");
+                        System.out.println("Opcion invalida. Vuelva a intentarlo.");
                     }
                 } else {
-                    System.out.println("Ingreso invalido. Debe ser '1'/'2'/'0'. Vuelva a intentar");
+                    System.out.println("Ingreso invalido. Debe ser '1'/'2'/'0'. Vuelva a intentarlo.");
                     sc.nextLine();
                 }
             }
@@ -406,19 +406,47 @@ public class GestionSistema {
         }
 
         //Ingreso de datos del vehiculo
-        System.out.print("Ingrese la cantidad de vehiculos a registrar: ");
-        int a = sc.nextInt();
-        sc.nextLine();
+        int i = 1;
+        while (true) {
+            System.out.println("\nVehiculo N°" + i + ":");
 
-        for (int i = 0; i < a; i++) {
-            System.out.println("\nVehículo N°" + (i+1) + "/" + a);
+            //ingreso de patente
+            String patente = "";
+            while (true) {
+                System.out.print("- Ingrese la Patente: ");
+                patente = sc.nextLine().trim().toUpperCase();
 
-            System.out.print("Ingrese la Patente: ");
-            String patente = sc.nextLine();
+                if (patente.isEmpty()) {
+                    System.out.println("La patente no puede estar vacia. Vuelva a intentarlo.");
+                    continue;
+                }
+                if (patente.contains(" ")) {
+                    System.out.println("La patente no puede contener espacios. Vuelva a intentarlo.");
+                    continue;
+                }
+                if (!patente.matches("^[A-Z]{2}\\d{3}[A-Z]{2}$") && !patente.matches("^[A-Z]{3}\\d{3}$")) {
+                    System.out.println("Patente invalida (Ej: 'AB123CD'). Vuelva a intentarlo.");
+                    continue;
+                }
 
+                // Verificar si ya existe patente registrada
+                boolean patenteRepetida = false;
+                for (Vehiculo v : vehiculos) {
+                    if (v.getPatente().equalsIgnoreCase(patente)) {
+                        patenteRepetida = true;
+                        break;
+                    }
+                }
+                if (patenteRepetida) {
+                    System.out.println("Ya existe un vehiculo con esa patente. Ingrese otra.");
+                    continue;
+                }
+                break;
+            }
+    
             int capacidad = 0;
             while (true) {
-                System.out.print("Ingrese la Capacidad: ");
+                System.out.print("- Ingrese la Capacidad: ");
                 String entrada = sc.nextLine().trim();
 
                 if (entrada.matches("\\d+")) {
@@ -433,15 +461,22 @@ public class GestionSistema {
                 }
             }
 
-            String tipo;
+            int tipo = -1;
             while (true) {
-                System.out.print("Ingrese el Tipo (Colectivo o Minibus): ");
-                tipo = sc.nextLine().trim().toLowerCase();
-                if (tipo.equals("colectivo") || tipo.equals("minibus")) break;
-                    System.out.println("Tipo invalido. Debe ser 'colectivo' o 'minibus'.");
+                System.out.print("- Ingrese el Tipo (1 - Colectivo / 2 - Minibus): ");
+                String entrada = sc.nextLine().trim();
+
+                if (!entrada.matches("[12]")) {
+                    System.out.println("Tipo inválido. Debe ingresar '1' para Colectivo o '2' para Minibus.");
+                    continue;
+                }
+
+                tipo = Integer.parseInt(entrada);
+                break;
             }
 
-            if (tipo.equals("colectivo")) {
+            if (tipo == 1) {
+                // Colectivo
                 boolean pisoDoble = false;
                 boolean respuestaValida = false;
                 while (!respuestaValida) {
@@ -458,12 +493,13 @@ public class GestionSistema {
                     }
                 }
 
-                //ASI SE INSTANCIA Y CREA UN OBJETO PARA LUEGO AGREGARLO A LAS LISTAS Y NO GENERE PROBLEMAS EN LOS CONSTRUCTORES.
                 Colectivo colectivo = new Colectivo();
                 colectivo.setPatente(patente);
                 colectivo.setCapacidad(capacidad);
                 colectivo.setPisoDoble(pisoDoble);
                 vehiculos.add(colectivo);
+                System.out.println("Colectivo registrado.");
+
             } else {
                 boolean tieneBodega = false;
                 boolean respuestaValida = false;
@@ -496,15 +532,31 @@ public class GestionSistema {
                         System.out.println("Respuesta invalida. Debe ingresar 'si' o 'no'. Vuelva a intentar.");
                     }
                 }
+
                 Minibus minibus = new Minibus();
                 minibus.setAireAcondicionado(aireAcondicionado);
                 minibus.setCapacidad(capacidad);
                 minibus.setPatente(patente);
                 minibus.setTieneBodega(tieneBodega);
                 vehiculos.add(minibus);
+                System.out.println("Minibus registrado.");
+
             }
-        } 
-    }
+                
+            System.out.print("¿Desea registrar otro vehículo? (si/no): ");
+            String respuesta = sc.nextLine().trim().toLowerCase();
+            while (!respuesta.equals("si") && !respuesta.equals("no")) {
+                System.out.print("Opción inválida. Ingrese 'si' o 'no': ");
+                respuesta = sc.nextLine().trim().toLowerCase();
+            }
+            
+            if (respuesta.equals("no")) {
+                break;
+            }    
+            i++;
+        }
+    } 
+    
 
     /**
      * Metodo para registrar las ciudades
