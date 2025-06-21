@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Clase Ciudad con atributos nombre, provincia, origenViajes, y destinoViajes.
  * Cada ciudad puede tener de origen o destino de varios {@link Viaje}.
- * @author Martin, Maximo, Paz
+ * @author Gonzalez Paz, Retamoso Maximo, Zanandrea Martin
  * @version 1.0
  */
 public class Ciudad {

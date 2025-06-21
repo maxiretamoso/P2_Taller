@@ -9,7 +9,7 @@ import com.rutassa.tipoVehiculo.Minibus;
  * Clase Vehiculo con atributos patente, capacidad y vehiculoViajes.
  * Es la clase padre de {@link Colectivo} y {@link Minibus}.
  * 1 vehiculo puede tener varios {@link Viaje}.
- * @author Martin, Maximo, Paz
+ * @author Gonzalez Paz, Retamoso Maximo, Zanandrea Martin
  * @version 1.0
  */
 public abstract class Vehiculo {

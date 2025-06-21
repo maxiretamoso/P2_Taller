@@ -14,9 +14,13 @@ import java.time.format.DateTimeParseException;
 /**
  * Clase GestionSistema que lleva a cabo todos los metodos de gestion de rutassa.
  * Tiene como atributos listas de choferes, vehiculos, viajes, ciudades, y el Scanner.
- * @author Martin, Maximo, Paz
+ * @author Gonzalez Paz, Retamoso Maximo, Zanandrea Martin
  */
+
+
 public class GestionSistema {
+
+
     private List<Chofer> choferes;
     private List<Vehiculo> vehiculos;
     private List<Viaje> viajes;
@@ -48,6 +52,64 @@ public class GestionSistema {
         this.ciudades = new ArrayList<>();
         this.sc = new Scanner(System.in);
     }
+
+
+    //////////////////////////////--------------------------------------------
+    private void cargarDatosDePrueba() {
+    // Crear objetos Choferes
+        List<ChoferCategoria> categorias1 = new ArrayList<>();
+        categorias1.add(new ChoferCategoria("15/12/25", new Categoria(CategoriaTipo.COLECTIVO, null)));
+        Chofer chofer1 = new Chofer(12345678L, "Juan", "Perez", "123456", categorias1, null);
+
+        List<ChoferCategoria> categorias2 = new ArrayList<>();
+        categorias2.add(new ChoferCategoria("20/11/26", new Categoria(CategoriaTipo.MINIBUS, null)));
+        Chofer chofer2 = new Chofer(87654321L, "Maria", "Lopez", "654321", categorias2, null);
+
+        // Agregar choferes a la lista
+        choferes.add(chofer1);
+        choferes.add(chofer2);
+
+        // Crear Vehiculos
+        Colectivo colectivo1 = new Colectivo();
+        colectivo1.setPatente("AB123CD");
+        colectivo1.setCapacidad(50);
+        colectivo1.setPisoDoble(true);
+        
+        Minibus minibus1 = new Minibus();
+        minibus1.setPatente("XYZ123");
+        minibus1.setCapacidad(20);
+        minibus1.setTieneBodega(false);
+        minibus1.setAireAcondicionado(true);
+
+        // Agregar vehiculos a la lista
+        vehiculos.add(colectivo1);
+        vehiculos.add(minibus1);
+
+        // Crear Ciudades
+        Ciudad ciudad1 = new Ciudad();
+        ciudad1.setNombre("Buenos Aires");
+        ciudad1.setProvincia(Provincia.BUENOS_AIRES); 
+
+        Ciudad ciudad2 = new Ciudad();
+        ciudad2.setNombre("Cordoba");
+        ciudad2.setProvincia(Provincia.CORDOBA);
+
+        // Agregar a la lista
+        ciudades.add(ciudad1);
+        ciudades.add(ciudad2);
+
+        // Crear viajes
+        Viaje viaje1 = new Viaje("12/06/25", "08:00", "12:00", ciudad1, ciudad2, vehiculos.get(0), choferes.get(0)); 
+        Viaje viaje2 = new Viaje("15/06/25", "14:00", "18:00", ciudad2, ciudad1, vehiculos.get(1), choferes.get(1));
+
+        // Agregar viajes a la lista principal
+        viajes.add(viaje1);
+        viajes.add(viaje2);
+    }
+    /////////////////////////////-------------------------------------
+    
+
+
 
     /** 
      * metodo main para correr el programa rutassa.
@@ -379,7 +441,7 @@ public class GestionSistema {
             }
 
             if (respuesta.equals("no")) {
-                System.out.println("\n" + "-".repeat(45) + "\nSaliendo del registro vehiculo\n" + "-".repeat(45));
+                System.out.println("\n" + "-".repeat(45) + "\nSaliendo del registro chofer\n" + "-".repeat(45));
                 break;
             }
             i++;
@@ -1123,3 +1185,4 @@ public class GestionSistema {
         return fecha.matches("\\d{2}/\\d{2}/\\d{2}");
     }
 }
+

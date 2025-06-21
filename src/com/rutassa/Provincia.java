@@ -2,7 +2,7 @@ package com.rutassa;
 
 /**
  * Enumeracion Provincia con los valores de los nombres de cada provincia de Argentina.
- * @author Martin, Maximo, Paz
+ * @author Gonzalez Paz, Retamoso Maximo, Zanandrea Martin
 */
 public enum Provincia {
     /*

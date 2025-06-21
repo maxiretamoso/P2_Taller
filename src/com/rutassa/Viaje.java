@@ -5,7 +5,7 @@ package com.rutassa;
  * Cada viaje esta a cargo de solo 1 {@link Chofer}.
  * Un viaje tiene 1 {@link Ciudad} de origen y 1 de destino.
  * Cada viaje tiene solo 1 {@link Vehiculo}.
- * @author Martin, Maximo, Paz
+ * @author Gonzalez Paz, Retamoso Maximo, Zanandrea Martin
  * @version 1.0
  */
 public class Viaje {

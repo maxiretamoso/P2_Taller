@@ -7,7 +7,7 @@ import com.rutassa.Viaje;
 /**
  * Clase Minibus con el atributo tieneBodega y aireAcondicionado.
  * Esta clase hereda de {@link Vehiculo}.
- * @author Martin, Maximo, Paz
+ * @author Gonzalez Paz, Retamoso Maximo, Zanandrea Martin
  * @version 1.0
  */
 public class Minibus extends Vehiculo{

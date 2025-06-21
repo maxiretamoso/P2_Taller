@@ -7,7 +7,7 @@ import com.rutassa.Viaje;
 /**
  * Clase Colectivo con el atributo pisoDoble.
  * Esta clase hereda de {@link Vehiculo}.
- * @author Martin, Maximo, Paz
+ * @author Gonzalez Paz, Retamoso Maximo, Zanandrea Martin
  * @version 1.0
  */
 public class Colectivo extends Vehiculo {
