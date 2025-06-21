@@ -13,6 +13,7 @@ import java.time.format.DateTimeParseException;
 /**
  * Clase GestionSistema que lleva a cabo todos los metodos de gestion de rutassa.
  * Tiene como atributos listas de choferes, vehiculos, viajes, ciudades, y el Scanner.
+ * @author Martin, Maximo, Paz
  */
 public class GestionSistema {
     private List<Chofer> choferes;
@@ -57,7 +58,7 @@ public class GestionSistema {
         GestionSistema sistema = new GestionSistema();
 
         /**
-         * Menu para que el usuario pueda eleguir que operacion realizar ingresando por pantalla los numeros indicados.
+         * Menu para que el usuario pueda seleccionar que operacion realizar.
          */
         boolean salir = false;
         while (!salir) {

@@ -2,7 +2,7 @@ package com.rutassa;
 
 /**
  * Enumeracion CategoriaTipo con los valores MICROBUS y COLECTIVO.
- * @author MaximoRetamoso, MartinZanandrea
+ * @author Martin, Maximo, Paz
  */
 public enum CategoriaTipo {
     /**

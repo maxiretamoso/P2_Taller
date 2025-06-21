@@ -3,7 +3,7 @@ package com.rutassa;
 /**
  * Clase ChoferCategoria con el atributo fechaVencimiento y categoria.
  * Cada ChoferCategoria tiene 1 {@link Categoria}.
- * @author MaximoRetamoso, MartinZanandrea
+ * @author Martin, Maximo, Paz
  * @version 1.0
  */
 public class ChoferCategoria {

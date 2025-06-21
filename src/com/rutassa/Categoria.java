@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Clase Categoria con el atributo tipo, y categoriasChoferes .
  * 1 o mas categorias puede tener varios {@link ChoferCategoria}.
- * @author MaximoRetamoso, MartinZanandrea,
+ * @author Martin, Maximo, Paz,
  */
 public class Categoria {
     private CategoriaTipo tipo;

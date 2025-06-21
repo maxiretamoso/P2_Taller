@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * 1 chofer puede tener varios {@link Viaje}.
  * 1 chofer tiene 1 {@link CategoriaTipo}.
  * 1 chofer puede tener varias {@link ChoferCategoria}.
- * @author MaximoRetamoso, MartinZanandrea
+ * @author Martin, Maximo, Paz
  * @version 1.0
  */
 public class Chofer extends Persona{

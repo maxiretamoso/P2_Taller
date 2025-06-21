@@ -3,7 +3,7 @@ package com.rutassa;
 /**
  * Clase abstracta Persona con atributos dni, nombre, y apellido.
  * Es la clase padre de {@link Chofer}.
- * @author MaximoRetamoso, MartinZanandrea
+ * @author Martin, Maximo, Paz
  * @version 1.0
  */
 public abstract class Persona {
