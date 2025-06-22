@@ -957,6 +957,22 @@ public class GestionSistema {
                     System.out.println("Formato invalido. Debe ser en formato HH:mm (por ejemplo, 14:30). Vuelva a intentarlo.");
                 }
             }
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            // Solicitar horario de llegada
+            LocalTime horarioLlegada = null;
+            while (horarioLlegada == null) {
+                System.out.print("Ingrese el horario de llegada (HH:mm): ");
+                String input = sc.nextLine();
+                try {
+                    horarioLlegada = LocalTime.parse(input, timeFormatter);
+                    if (horarioLlegada.isBefore(horarioSalida) || horarioLlegada.equals(horarioSalida)) {
+                        System.out.println("El horario de llegada debe ser posterior al de salida.");
+                        horarioLlegada = null;
+                    }
+                } catch (DateTimeParseException e) {
+                    System.out.println("Formato inválido. Ingrese el horario en formato HH:mm (por ejemplo, 17:00).");
+                }
+            }
 
             // Verificar si la fecha y hora combinadas están en el pasado
             LocalDateTime salida = LocalDateTime.of(fechaViaje, horarioSalida);
