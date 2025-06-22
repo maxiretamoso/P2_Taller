@@ -220,7 +220,7 @@ public class Viaje {
                 Minibus m = (Minibus) vehiculo;
                 tipoVehiculo = "Minibus";
                 vehiculoStr = String.format("%s [Patente: %s, Capacidad: %d, Bodega: %s, Aire acondicionado: %s]",
-                    tipoVehiculo, patente, capacidad, m.getTieneBodega() ? "Sí" : "No", m.getAireAcondicionado() ? "Sí" : "No");
+                    tipoVehiculo, patente, capacidad, m.getTieneBodega() ? "Si" : "No", m.getAireAcondicionado() ? "Sí" : "No");
             } else {
                 vehiculoStr = String.format("%s [Patente: %s, Capacidad: %d]", tipoVehiculo, patente, capacidad);
             }
