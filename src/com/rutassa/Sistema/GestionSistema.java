@@ -1547,7 +1547,7 @@ public class GestionSistema {
     * Metodo para mostrar un informe de cantidad de viajes ya realizados por cada chofer de colectivos
     */
     public void informeViajesRealizadosColectivo() {
-        System.out.println("\n" + "-".repeat(45) + "\nInforme de cantidad de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
+        System.out.println("\n" + "-".repeat(45) + "\nInforme viajes realizados colectivos\n" + "-".repeat(45));
 
         if (viajes.isEmpty()) {
             int opcion = -1;
@@ -1560,7 +1560,7 @@ public class GestionSistema {
                         planificarViajes();
                         continue;
                     } else if (opcion == 0) {
-                        System.out.println("\n" + "-".repeat(45) + "\nSaliendo de informe de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
+                        System.out.println("\n" + "-".repeat(48) + "\nSaliendo de informe viajes realizados colectivos\n" + "-".repeat(48));
                         return;
                     } else {
                         System.out.println("Opcion invalida. Vuelva a intentarlo.");
@@ -1593,7 +1593,7 @@ public class GestionSistema {
                         asociarVehiculoYChofer(); 
                         continue;
                     } else if (opcion == 0) {
-                        System.out.println("\n" + "-".repeat(45) + "\nSaliendo de informe de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
+                        System.out.println("\n" + "-".repeat(48) + "\nSaliendo de informe viajes realizados colectivos\n" + "-".repeat(48));
                         return;
                     } else {
                         System.out.println("Opcion invalida. Debe ser '0'/'1'. Vuelva a intentarlo.");
@@ -1634,10 +1634,10 @@ public class GestionSistema {
             for (Map.Entry<Chofer, Integer> entry : viajesPorChofer.entrySet()) {
                 Chofer chofer = entry.getKey();
                 int cantidad = entry.getValue();
-                System.out.println("Chofer: " + chofer.getNombre()+","+chofer.getApellido() +"\n" + "- Cantidad de viajes: " + cantidad);
+                System.out.println("Chofer: " + chofer.getNombre() + ", " + chofer.getApellido() + " ---> Cantidad de viajes: " + cantidad);
             }
         }
-            
+        System.out.println("\n" + "-".repeat(48) + "\nSaliendo de informe viajes realizados colectivos\n" + "-".repeat(48));
     }
     
     /**
