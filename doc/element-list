@@ -1,2 +1,7 @@
-com.rutassa
-com.rutassa.tipoVehiculo
+com.rutassa.Categoria
+com.rutassa.Chofer
+com.rutassa.Sistema
+com.rutassa.Ubicacion
+com.rutassa.Vehiculo
+com.rutassa.Vehiculo.tipoVehiculo
+com.rutassa.Viaje
