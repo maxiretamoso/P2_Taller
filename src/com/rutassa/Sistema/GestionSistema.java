@@ -167,26 +167,33 @@ public class GestionSistema {
             System.out.println("Ya hay choferes registrados.");
             int opcion = -1;
             while (opcion != 0 && opcion != 1 && opcion != 2) {
-                System.out.print("¿Desea agregar mas choferes (1), limpiar y registrar de 0 (2) o volver al menu (0)? ");
+                System.out.print("¿Desea agregar mas choferes (1), limpiar y registrar de 0 (2), mostrar choferes (3) o volver al menu (0)? ");
                 
                 if (sc.hasNextInt()) {
                     opcion = sc.nextInt();
                     sc.nextLine(); 
                     if (opcion == 0) {
                         break;
-                    } else if (opcion == 1 || opcion == 2) {
+                    } else if (opcion == 1 || opcion == 2 || opcion == 3) {
                         break;
                     } else {
                         System.out.println("Opcion invalida. Vuelva a intentarlo.");
                     }
                 } else {
-                    System.out.println("Ingreso invalido. Debe ser '1'/'2'/'0'. Vuelva a intentarlo.");
+                    System.out.println("Ingreso invalido. Debe ser '1'/'2'/'3'/'0'. Vuelva a intentarlo.");
                     sc.nextLine();
                 }
             }
             if (opcion == 2) {
                 choferes.clear();
                 System.out.println("Choferes anteriores eliminados.");
+            }
+            if (opcion == 3) {
+                System.out.println("\nListado de choferes:");
+                for (Chofer c : choferes) {
+                    System.out.println("- Chofer: [Nombre: " + c.getNombre() + ", Apellido: " + c.getApellido() + "]");
+                }
+                return;
             }
             if (opcion == 0) {
                 System.out.println("\n" + "-".repeat(45) + "\nSaliendo del registro de choferes\n" + "-".repeat(45));
@@ -425,14 +432,14 @@ public class GestionSistema {
             System.out.println("Hay vehiculos registrados.");
             int opcion = -1;
             while (opcion != 0 && opcion != 1 && opcion != 2) {
-                System.out.print("¿Desea agregar mas vehiculos (1), limpiar y registrar de 0 (2) o volver al menu (0)? ");
+                System.out.print("¿Desea agregar mas vehiculos (1), limpiar y registrar de 0 (2), mostrar vehiculos (3) o volver al menu (0)? ");
                 if (sc.hasNextInt()) {
                     opcion = sc.nextInt();
                     sc.nextLine();
                     if (opcion == 0) {
                         break;
                     } 
-                    if (opcion == 1 || opcion == 2) {
+                    if (opcion == 1 || opcion == 2 || opcion == 3) {
                         break;
                     } else {
                         System.out.println("Opcion invalida. Vuelva a intentarlo.");
@@ -445,6 +452,13 @@ public class GestionSistema {
             if (opcion == 2) {
                 vehiculos.clear();
                 System.out.println("Vehiculos anteriores eliminados.");
+            }
+            if (opcion == 3) {
+                System.out.println("\nListado de vehiculos:");
+                for (Vehiculo v : vehiculos) {
+                    System.out.println("- Vehiculo: " + v);
+                }
+                return;
             }
             if (opcion == 0) {
                 System.out.println("\n" + "-".repeat(45) + "\nSaliendo del registro de vehiculos\n" + "-".repeat(45));
@@ -623,14 +637,14 @@ public class GestionSistema {
             System.out.println("Ya hay ciudades registradas.");
             int opcion = -1;
             while (opcion != 0 && opcion != 1 && opcion != 2) {
-                System.out.print("¿Desea agregar mas ciudades (1), limpiar y registrar de 0 (2) o volver al menu (0)? ");
+                System.out.print("¿Desea agregar mas ciudades (1), limpiar y registrar de 0 (2), mostrar ciudades (3) o volver al menu (0)? ");
                 
                 if (sc.hasNextInt()) {
                     opcion = sc.nextInt();
                     sc.nextLine(); 
                     if (opcion == 0) {
                         break;
-                    } else if (opcion == 1 || opcion == 2) {
+                    } else if (opcion == 1 || opcion == 2 || opcion == 3) {
                         break;
                     } else {
                         System.out.println("Opcion invalida. Vuelva a intentarlo.");
@@ -643,6 +657,13 @@ public class GestionSistema {
             if (opcion == 2) {
                 ciudades.clear();
                 System.out.println("ciudades anteriores eliminadas.");
+            }
+            if (opcion == 3) {
+                System.out.println("\nListado de ciudades:");
+                for (Ciudad c : ciudades) {
+                    System.out.println("- Ciudad: " + c);
+                }
+                return;
             }
             if (opcion == 0) {
                 System.out.println("\n" + "-".repeat(45) + "\nSaliendo del registro de ciudades\n" + "-".repeat(45));
@@ -735,7 +756,7 @@ public class GestionSistema {
             int opcion = -1;
             System.out.println("No hay choferes registrados.");
             while (opcion != 0 && opcion != 1) {
-                System.out.print("Registrar choferes (1) o volver al menú (0): ");
+                System.out.print("Registrar choferes (1) o volver al menu (0): ");
                 if (sc.hasNextInt()) {
                     opcion = sc.nextInt();
                     sc.nextLine();
@@ -814,14 +835,14 @@ public class GestionSistema {
             System.out.println("Ya hay viajes planificados.");
             int opcion = -1;
             while (opcion != 0 && opcion != 1 && opcion != 2) {
-                System.out.print("¿Desea agregar mas viajes (1), limpiar y registrar de 0 (2) o volver al menu (0)? ");
+                System.out.print("¿Desea agregar mas viajes (1), limpiar y registrar de 0 (2), mostrar viajes planificados (3) o volver al menu (0)? ");
                 
                 if (sc.hasNextInt()) {
                     opcion = sc.nextInt();
                     sc.nextLine(); 
                     if (opcion == 0) {
                         break;
-                    } else if (opcion == 1 || opcion == 2) {
+                    } else if (opcion == 1 || opcion == 2 || opcion == 3) {
                         break;
                     } else {
                         System.out.println("Opcion invalida. Vuelva a intentarlo.");
@@ -835,23 +856,28 @@ public class GestionSistema {
                 viajes.clear();
                 System.out.println("Viajes anteriores eliminados.");
             }
+            if (opcion == 3) {
+                System.out.println("\nListado de viajes planificados:");
+                for (Viaje v : viajes) {
+                    System.out.println("Viaje: [Fecha: " + v.getFecha() + ", Origen: " + v.getOrigen() + ", Destino: " + v.getDestino());
+                }
+                return;
+            }
             if (opcion == 0) {
                 System.out.println("\n" + "-".repeat(45) + "\nSaliendo de planificar Viajes\n" + "-".repeat(45));
                 return; 
             }
         }
 
-        //ingreso planificar viajes
-        while(true) {
-
-            //Mostrar ciudades disponibles
+        while (true) {
+            // Mostrar ciudades
             System.out.println("\nCiudades registradas:");
             for (int i = 0; i < ciudades.size(); i++) {
                 Ciudad c = ciudades.get(i);
                 System.out.println(i + " - " + c.getNombre() + " (" + c.getProvincia() + ")");
             }
 
-            //ingresar ciudad origen
+            // Seleccionar ciudad origen
             Ciudad origen = null;
             while (origen == null) {
                 System.out.print("Seleccione el numero de la ciudad de origen: ");
@@ -867,7 +893,7 @@ public class GestionSistema {
                 }
             }
 
-            //ingresar ciudad destino
+            // Seleccionar ciudad destino
             Ciudad destino = null;
             while (destino == null) {
                 System.out.print("Seleccione el numero de la ciudad de destino: ");
@@ -894,78 +920,85 @@ public class GestionSistema {
 
             LocalDate fechaViaje = null;
             LocalTime horarioSalida = null;
-            String fechaStr = "";
+            LocalTime horarioLlegada = null;
 
             //ingreso fecha
             while (true) {
-                System.out.print("Ingrese la fecha del viaje (formato DD/MM/AA): ");
-                fechaStr = sc.nextLine().trim().replaceAll("\\s+", " ");
-
-                if (fechaStr.isEmpty()) {
-                    System.out.println("La fecha no puede estar vacia. Vuelva a intentarlo.");
-                    continue;
-                }
-
-                if (!esFormatoFechaValido(fechaStr)) {
-                    System.out.println("Formato incorrecto. Debe usar formato DD/MM/AA. Vuelva a intentarlo.");
-                    continue;
-                }
-
-                if (!esFechaValida(fechaStr)) {
-                    System.out.println("Fecha invalida. Debe ser una fecha real. Vuelva a intentarlo.");
-                    continue;
-                }
-
-                fechaViaje = LocalDate.parse(fechaStr, formatterFecha);
-                break;
-            }
-
-            // Ingreso de horario de salida
-            while (horarioSalida == null) {
-                System.out.print("Ingrese el horario de salida (HH:mm): ");
-                String inputHora = sc.nextLine().trim();
-                try {
-                    horarioSalida = LocalTime.parse(inputHora, formatterHora);
-                } catch (DateTimeParseException e) {
-                    System.out.println("Formato inválido. Debe ser en formato HH:mm (por ejemplo, 14:30). Vuelva a intentarlo.");
-                }
-            }
-
-            // Ingreso de horario de llegada
-            LocalTime horarioLlegada = null;
-            while (horarioLlegada == null) {
-                System.out.print("Ingrese el horario de llegada (HH:mm): ");
-                String input = sc.nextLine().trim();
-                try {
-                    horarioLlegada = LocalTime.parse(input, formatterHora);
-                    if (!horarioLlegada.isAfter(horarioSalida)) {
-                        System.out.println("El horario de llegada debe ser posterior al de salida. Vuelva a intentarlo.");
-                        horarioLlegada = null;
-                    }
-                } catch (DateTimeParseException e) {
-                    System.out.println("Formato invalido. Debe ser en formato HH:mm (Ej: 17:00). Vuelva a intentarlo.");
-                }
-            }
-
-            // Verificar si la fecha y hora de salida están en el pasado
-            LocalDateTime salida = LocalDateTime.of(fechaViaje, horarioSalida);
-            if (salida.isBefore(LocalDateTime.now())) {
-                System.out.println("La fecha y hora de salida ya pasaron.");
                 while (true) {
-                    System.out.print("¿Desea ingresar otra fecha y hora? ('1' Si / '0' cancelar): ");
-                    String eleccion = sc.nextLine().trim();
-                    if (eleccion.equals("1")) {
-                        planificarViajes(); 
-                        return;
-                    } else if (eleccion.equals("0")) {
-                        System.out.println("Planificación cancelada.");
-                        return;
-                    } else {
-                        System.out.println("Opcion invalida. Debe ser '1'/'0'. Vuelva a intentarlo.");
+                    System.out.print("Ingrese la fecha del viaje (formato DD/MM/AA): ");
+                    String fechaStr = sc.nextLine().trim();
+
+                    if (fechaStr.isEmpty()) {
+                        System.out.println("La fecha no puede estar vacia. Vuelva a intentarlo.");
+                        continue;
+                    }
+
+                    if (!esFormatoFechaValido(fechaStr)) {
+                        System.out.println("Formato incorrecto. Debe ser formato DD/MM/AA. Vuelva a intentarlo.");
+                        continue;
+                    }
+
+                    if (!esFechaValida(fechaStr)) {
+                        System.out.println("Fecha invalida. Vuelva a intentarlo.");
+                        continue;
+                    }
+
+                    fechaViaje = LocalDate.parse(fechaStr, formatterFecha);
+                    break;
+                }
+
+                // Ingreso horario salida
+                while (true) {
+                    System.out.print("Ingrese el horario de salida (HH:mm): ");
+                    String salidaStr = sc.nextLine().trim();
+
+                    try {
+                        horarioSalida = LocalTime.parse(salidaStr, formatterHora);
+                        break;
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Formato invalido. Debe ser formato HH:mm (Ej: 14:30). Vuelva a intentarlo.");
                     }
                 }
+
+                // Ingreso horario llegada
+                while (true) {
+                    System.out.print("Ingrese el horario de llegada (HH:mm): ");
+                    String llegadaStr = sc.nextLine().trim();
+
+                    try {
+                        horarioLlegada = LocalTime.parse(llegadaStr, formatterHora);
+                        if (!horarioLlegada.isAfter(horarioSalida)) {
+                            System.out.println("El horario de llegada tiene que ser mayor al de salida. Vuelva a intentarlo.");
+                            continue;
+                        }
+                        break;
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Formato invalido. Debe ser formato HH:mm (Ej: 16:00). Vuelva a intentarlo.");
+                    }
+                }
+
+                // Validar que fecha y hora salida no estén en el pasado
+                LocalDateTime fechaHoraSalida = LocalDateTime.of(fechaViaje, horarioSalida);
+                if (fechaHoraSalida.isBefore(LocalDateTime.now())) {
+                    System.out.println("La fecha y hora de salida ya pasaron.");
+                    while (true) {
+                        System.out.print("¿Desea ingresar otra fecha y hora? ('1' Sí / '0' Cancelar): ");
+                        String eleccion = sc.nextLine().trim();
+                        if (eleccion.equals("1")) {
+                            break;
+                        } else if (eleccion.equals("0")) {
+                            System.out.println("Planificacion cancelada.");
+                            return; 
+                        } else {
+                            System.out.println("Opcion invalida. Debe ingresar '1'/'0'. Vuelva a intentarlo.");
+                        }
+                    }
+                    continue;  
+                }
+                break;  
             }
 
+            // Crear viaje con los datos
             Viaje viaje = new Viaje();
             viaje.setOrigen(origen);
             viaje.setDestino(destino);
@@ -975,23 +1008,19 @@ public class GestionSistema {
             origen.setOrigenesViajes(viaje);
             destino.setDestinosViajes(viaje);
             viajes.add(viaje);
+            System.out.println("Viaje planificado:\n" + viaje);
 
-            System.out.println("Viaje planificado: [Origen: " + origen + ", Destino: " + destino + "]");
-
-            String respuesta = "";
             while (true) {
                 System.out.print("¿Desea planificar otro viaje? (si/no): ");
-                respuesta = sc.nextLine().trim().toLowerCase();
-                if (respuesta.equals("si") || respuesta.equals("no")) {
-                    break;
+                String respuesta = sc.nextLine().trim().toLowerCase();
+                if (respuesta.equals("si")) {
+                    break; 
+                } else if (respuesta.equals("no")) {
+                    System.out.println("\n" + "-".repeat(45) + "\nSaliendo de planificar Viajes\n" + "-".repeat(45));
+                    return;  
                 } else {
-                    System.out.println("Ingreso invalido. Debe ingresar 'si'/'no'. Vuelva a intentarlo.");
+                    System.out.println("Ingreso invalido. Debe ser 'si'/'no'. Vuelva a intentarlo.");
                 }
-            }
-
-            if (respuesta.equals("no")) {
-                System.out.println("\n" + "-".repeat(45) + "\nSaliendo de planificar Viajes\n" + "-".repeat(45));
-                break; 
             }
         }
     }
@@ -1337,7 +1366,7 @@ public class GestionSistema {
                 continue; 
             }
 
-            System.out.println("\nViaje:");
+            System.out.println("\n- Viaje:");
             System.out.println(viaje);
         }
 

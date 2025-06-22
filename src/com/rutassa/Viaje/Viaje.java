@@ -3,6 +3,8 @@ package com.rutassa.Viaje;
 import com.rutassa.Chofer.Chofer;
 import com.rutassa.Ubicacion.Ciudad;
 import com.rutassa.Vehiculo.Vehiculo;
+import com.rutassa.Vehiculo.tipoVehiculo.Colectivo;
+import com.rutassa.Vehiculo.tipoVehiculo.Minibus;
 
 /**
  * Clase Viaje con atributos fecha, horarioSalida, horarioLlegada, origen, destino, vehiculo, y chofer.
@@ -183,12 +185,52 @@ public class Viaje {
      */
     @Override
     public String toString() {
-        return 
-           "  • Fecha: " + fecha + "\n" +
-           "  • Horario de salida y llegada: " + horarioSalida + " - " + horarioLlegada + "\n" +
-           "  • Origen y Destino: " + origen.getNombre() + " - " + destino.getNombre()  + "\n" +
-           "  • Chofer: " + chofer.getNombre() + " " + chofer.getApellido() + "\n" +
-           "  • Vehiculo(patente): " + vehiculo.getPatente();
+        String fechaStr = (fecha != null) ? fecha : "No asignada";
+        String horarioSalidaStr = (horarioSalida != null) ? horarioSalida : "No asignado";
+        String horarioLlegadaStr = (horarioLlegada != null) ? horarioLlegada : "No asignado";
+
+        String origenStr = (origen != null && origen.getNombre() != null) ? origen.getNombre() : "No asignado";
+        String destinoStr = (destino != null && destino.getNombre() != null) ? destino.getNombre() : "No asignado";
+
+        String choferStr = "No asignado";
+        if (chofer != null) {
+            String nombre = (chofer.getNombre() != null) ? chofer.getNombre() : "";
+            String apellido = (chofer.getApellido() != null) ? chofer.getApellido() : "";
+            String dni = (chofer.getDni() != 0) ? String.valueOf(chofer.getDni()) : "DNI no asignado";
+            choferStr = (nombre + " " + apellido).trim();
+            if (!choferStr.isEmpty()) {
+                choferStr += ", Dni: " + dni;
+            } else {
+                choferStr = "No asignado";
+            }
+        }
+
+        String vehiculoStr = "No asignado";
+        if (vehiculo != null) {
+            String patente = (vehiculo.getPatente() != null) ? vehiculo.getPatente() : "Sin patente";
+            int capacidad = vehiculo.getCapacidad();
+            String tipoVehiculo = "Vehículo desconocido";
+
+            if (vehiculo instanceof Colectivo) {
+                Colectivo c = (Colectivo) vehiculo;
+                tipoVehiculo = "Colectivo";
+                vehiculoStr = String.format("%s [Patente: %s, Capacidad: %d, Piso doble: %s]",
+                    tipoVehiculo, patente, capacidad, c.getPisoDoble() ? "Sí" : "No");
+            } else if (vehiculo instanceof Minibus) {
+                Minibus m = (Minibus) vehiculo;
+                tipoVehiculo = "Minibus";
+                vehiculoStr = String.format("%s [Patente: %s, Capacidad: %d, Bodega: %s, Aire acondicionado: %s]",
+                    tipoVehiculo, patente, capacidad, m.getTieneBodega() ? "Sí" : "No", m.getAireAcondicionado() ? "Sí" : "No");
+            } else {
+                vehiculoStr = String.format("%s [Patente: %s, Capacidad: %d]", tipoVehiculo, patente, capacidad);
+            }
+        }
+
+        return
+            "Fecha: [" + fechaStr + ", Horario salida: " + horarioSalidaStr + ", Horario llegada: " + horarioLlegadaStr + "]" + "\n" +
+            "Origen y Destino: [" + origenStr + " - " + destinoStr + "]" + "\n" +
+            "Chofer: [Nombre: " + choferStr + "]" + "\n" + 
+            "Vehiculo: [" + vehiculoStr + "]";
     }
 
     /**

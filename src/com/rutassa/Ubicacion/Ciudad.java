@@ -118,6 +118,6 @@ public class Ciudad {
      */
     @Override
     public String toString() {
-        return "[Nombre: " + nombre + ", Provincia: " + provincia + ", Origenes viajes: " + origenesViajes + "Destinos viajes: " + destinosViajes + "]";
+        return "[Nombre: " + nombre + ", Provincia: " + provincia + "]";
     }
 }

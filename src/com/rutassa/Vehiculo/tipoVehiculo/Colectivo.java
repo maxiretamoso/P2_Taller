@@ -51,6 +51,6 @@ public class Colectivo extends Vehiculo {
 
     @Override
     public String toString() {
-        return "[Piso doble: " + pisoDoble + "]";
+        return "Colectivo [Patente: " + getPatente() + ", Capacidad: " + getCapacidad() + ", Piso doble: " + pisoDoble + "]";
     }
 }

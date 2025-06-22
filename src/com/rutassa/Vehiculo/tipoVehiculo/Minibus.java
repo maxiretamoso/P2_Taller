@@ -72,6 +72,6 @@ public class Minibus extends Vehiculo{
 
     @Override
     public String toString() {
-        return "[Tiene bodega: " + tieneBodega + ", Aire condicionado: " + aireAcondicionado + "]";
+        return "Minibus [Patente: " + getPatente() + ", Capacidad: " + getCapacidad() + ", Tiene bodega: " + tieneBodega + ", Aire acondicionado: " + aireAcondicionado + "]";
     }   
 }
