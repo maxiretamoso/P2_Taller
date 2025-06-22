@@ -37,7 +37,7 @@ public abstract class Vehiculo {
     public Vehiculo(String patente, int capacidad, List<Viaje> vehiculoViajes) {
         this.patente = patente;
         this.capacidad = capacidad;
-        this.vehiculoViajes = vehiculoViajes;
+        this.vehiculoViajes = (vehiculoViajes != null) ? vehiculoViajes : new ArrayList<>();
     }
 
     /**
@@ -84,8 +84,11 @@ public abstract class Vehiculo {
      * Setter que establece el vehiculo del viaje/s.
      * @param vehiculo El nuevo vehiculoViajes
      */
-    public void setVehiculoViajes(Viaje vehiculo) {
-        this.vehiculoViajes.add(vehiculo);
+    public void setVehiculoViajes(Viaje viaje) {
+        if (vehiculoViajes == null) {
+            vehiculoViajes = new ArrayList<>();
+        }
+        this.vehiculoViajes.add(viaje);
     }
 
     /**

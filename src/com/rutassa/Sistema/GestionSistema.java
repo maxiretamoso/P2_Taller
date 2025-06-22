@@ -353,9 +353,18 @@ public class GestionSistema {
                         fechaLic = LocalDate.parse(fecha, formatter);
 
                         if (fechaLic.isBefore(LocalDate.now())) {
-                            System.out.println("La fecha ingresada está vencida.");
-                            System.out.print("¿Desea ingresar otra fecha o cancelar esta categoría? ('1' para nueva fecha / '0' para cancelar): ");
-                            String eleccion = sc.nextLine().trim();
+                            System.out.println("La fecha ingresada esta vencida.");
+                            
+                            String eleccion = "";
+                            while (!eleccion.equals("1") && !eleccion.equals("0")) {
+                                System.out.print("¿Desea ingresar otra fecha o cancelar esta categoria? ('1'/ '0'): ");
+                                eleccion = sc.nextLine().trim();
+
+                                if (!eleccion.equals("1") && !eleccion.equals("0")) {
+                                    System.out.println("Opción invalida. Debe ingresar '1'/'0'. Vuelva a intentarlo.");
+                                }
+                            }
+
                             if (eleccion.equals("1")) {
                                 continue; 
                             } else {
@@ -363,10 +372,11 @@ public class GestionSistema {
                                 fechaLic = null;
                                 break; 
                             }
+                        } else {
+                            break; 
                         }
-                        break; 
                     } else {
-                        System.out.println("Ingrese una fecha válida en formato DD/MM/AA (Ej: 18/06/25).");
+                        System.out.println("Ingrese una fecha valida en formato DD/MM/AA (Ej: 18/06/25). Vuelva a intentarlo.");
                     }
                 }
 
@@ -515,10 +525,10 @@ public class GestionSistema {
 
                 if (entrada.matches("\\d+")) {
                     capacidad = Integer.parseInt(entrada);
-                    if (capacidad > 0 && capacidad < 200) {
+                    if (capacidad > 0 && capacidad <= 100) {
                         break;
                     } else {
-                        System.out.println("La capacidad debe ser un número mayor a cero y menor a 200. Vuelva a intentarlo.");
+                        System.out.println("La capacidad debe ser un número mayor a cero y menor o igual a 100. Vuelva a intentarlo.");
                     }
                 } else {
                     System.out.println("Debe ingresar solo numeros enteros positivos. Vuelva a intentarlo.");
@@ -762,7 +772,7 @@ public class GestionSistema {
                     sc.nextLine();
                     if (opcion == 1) {
                         registrarChoferes();
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(45) + "\nSaliendo de planificar Viajes\n" + "-".repeat(45));
                         return; 
@@ -787,7 +797,7 @@ public class GestionSistema {
                     sc.nextLine();
                     if (opcion == 1) {
                         registrarVehiculos();
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(45) + "\nSaliendo de planificar Viajes\n" + "-".repeat(45));
                         return; 
@@ -816,7 +826,7 @@ public class GestionSistema {
                     sc.nextLine(); 
                     if (opcion == 1) {
                         registrarCiudades();
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(45) + "\nSaliendo de planificar Viajes\n" + "-".repeat(45));
                         return;  
@@ -982,20 +992,54 @@ public class GestionSistema {
                 if (fechaHoraSalida.isBefore(LocalDateTime.now())) {
                     System.out.println("La fecha y hora de salida ya pasaron.");
                     while (true) {
-                        System.out.print("¿Desea ingresar otra fecha y hora? ('1' Sí / '0' Cancelar): ");
+                        System.out.print("¿Desea ingresar otra fecha y hora? ('1' Si / '2' No / 0 Cancelar): ");
                         String eleccion = sc.nextLine().trim();
                         if (eleccion.equals("1")) {
                             break;
-                        } else if (eleccion.equals("0")) {
+                        } else if (eleccion.equals("2")) {
+                            continue;
+                        }else if (eleccion.equals("0")) {
                             System.out.println("Planificacion cancelada.");
                             return; 
                         } else {
-                            System.out.println("Opcion invalida. Debe ingresar '1'/'0'. Vuelva a intentarlo.");
+                            System.out.println("Opcion invalida. Debe ingresar '1'/'2'/'0'. Vuelva a intentarlo.");
                         }
                     }
                     continue;  
                 }
                 break;  
+            }
+
+            boolean viajeDuplicado = false;
+            for (Viaje v : viajes) {
+                if (
+                    v.getOrigen().getNombre().equalsIgnoreCase(origen.getNombre()) &&
+                    v.getOrigen().getProvincia() == origen.getProvincia() &&
+                    v.getDestino().getNombre().equalsIgnoreCase(destino.getNombre()) &&
+                    v.getDestino().getProvincia() == destino.getProvincia() &&
+                    v.getFecha().equals(fechaViaje.format(formatterFecha)) &&
+                    v.getHorarioSalida().equals(horarioSalida.format(formatterHora)) &&
+                    v.getHorarioLlegada().equals(horarioLlegada.format(formatterHora))
+                ) {
+                    viajeDuplicado = true;
+                    break;
+                }
+            }
+
+            if (viajeDuplicado) {
+                System.out.println("\nYa existe un viaje con esos datos.");
+                while (true) {
+                    System.out.print("¿Desea intentar con otro viaje (1) o volver al menu (0)?: ");
+                    String eleccion = sc.nextLine().trim();
+                    if (eleccion.equals("1")) {
+                        continue; 
+                    } else if (eleccion.equals("0")) {
+                        System.out.println("\n" + "-".repeat(45) + "\nSaliendo de planificar Viajes\n" + "-".repeat(45));
+                        return;
+                    } else {
+                        System.out.println("Opcion invalida. Debe Ingresar '1'/'0'. Vuelve a intentarlo.");
+                    }
+                }
             }
 
             // Crear viaje con los datos
@@ -1029,7 +1073,7 @@ public class GestionSistema {
      * Metodo para asociar un vehiculo y un chofer a cada viaje.
      */
     public void asociarVehiculoYChofer() {
-        System.out.println("\n" + "-".repeat(45) + "\nAsociar vehículo y chofer a cada viaje\n" + "-".repeat(45));
+        System.out.println("\n" + "-".repeat(45) + "\nAsociar vehiculo y chofer a cada viaje\n" + "-".repeat(45));
 
         if (choferes.isEmpty()) {
             int opcion = -1;
@@ -1040,7 +1084,7 @@ public class GestionSistema {
                     sc.nextLine();
                     if (opcion == 1) {
                         registrarChoferes();
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(45) + "\nSaliendo de asociacion choferes y vehiculos a cada viaje\n" + "-".repeat(45));
                         return;
@@ -1063,7 +1107,7 @@ public class GestionSistema {
                     sc.nextLine();
                     if (opcion == 1) {
                         registrarVehiculos();
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(45) + "\nSaliendo de asociacion choferes y vehiculos a cada viaje\n" + "-".repeat(45));
                         return;
@@ -1086,7 +1130,7 @@ public class GestionSistema {
                     sc.nextLine();
                     if (opcion == 1) {
                         planificarViajes();
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(45) + "\nSaliendo de asociacion choferes y vehiculos a cada viaje\n" + "-".repeat(45));
                         return;
@@ -1306,7 +1350,7 @@ public class GestionSistema {
                         break;
                     } else if (opcion == 1) {
                         planificarViajes();
-                        continue;
+                        return;
                     } else {
                         System.out.println("Opcion invalida. Vuelva a intentarlo.");
                     }
@@ -1340,7 +1384,7 @@ public class GestionSistema {
                     sc.nextLine();
                     if (opcion == 1) {
                         asociarVehiculoYChofer(); 
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(45) + "\nSaliendo de viajes programados\n" + "-".repeat(45));
                         return;
@@ -1412,7 +1456,7 @@ public class GestionSistema {
                     sc.nextLine();
                     if (opcion == 1) {
                         planificarViajes();
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(45) + "\nSaliendo de informe de viajes pendientes del colectivo\n" + "-".repeat(45));
                         return;
@@ -1445,7 +1489,7 @@ public class GestionSistema {
                     sc.nextLine();
                     if (opcion == 1) {
                         asociarVehiculoYChofer(); 
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(45) + "\nSaliendo de informe de viajes realizados por cada chofer de colectivos\n" + "-".repeat(45));
                         return;
@@ -1558,7 +1602,7 @@ public class GestionSistema {
                     sc.nextLine();
                     if (opcion == 1) {
                         planificarViajes();
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(48) + "\nSaliendo de informe viajes realizados colectivos\n" + "-".repeat(48));
                         return;
@@ -1591,7 +1635,7 @@ public class GestionSistema {
                     sc.nextLine();
                     if (opcion == 1) {
                         asociarVehiculoYChofer(); 
-                        continue;
+                        return;
                     } else if (opcion == 0) {
                         System.out.println("\n" + "-".repeat(48) + "\nSaliendo de informe viajes realizados colectivos\n" + "-".repeat(48));
                         return;
@@ -1661,4 +1705,3 @@ public class GestionSistema {
         return fecha.matches("\\d{2}/\\d{2}/\\d{2}");
     }
 }
-
