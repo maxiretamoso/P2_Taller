@@ -1476,7 +1476,7 @@ public class GestionSistema {
                 System.out.println("No se encontro un colectivo con esa patente.");
                 int opcion = -1;
                 while (opcion != 0 && opcion != 1) {
-                    System.out.print("¿Quiere ingresar con otra patente (1) o volver al menu (0)? ");
+                    System.out.print("\n¿Quiere ingresar con otra patente (1) o volver al menu (0)? ");
                     if (sc.hasNextInt()) {
                         opcion = sc.nextInt();
                         sc.nextLine();
