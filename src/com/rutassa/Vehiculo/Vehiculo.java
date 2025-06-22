@@ -82,7 +82,7 @@ public abstract class Vehiculo {
 
     /**
      * Setter que establece el vehiculo del viaje/s.
-     * @param vehiculoViajes El nuevo vehiculoViajes
+     * @param vehiculo El nuevo vehiculoViajes
      */
     public void setVehiculoViajes(Viaje vehiculo) {
         this.vehiculoViajes.add(vehiculo);
