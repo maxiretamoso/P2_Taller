@@ -1,4 +1,7 @@
-package com.rutassa;
+package com.rutassa.Chofer;
+
+import com.rutassa.Categoria.Categoria;
+import com.rutassa.Sistema.GestionSistema;
 
 /**
  * Clase ChoferCategoria con el atributo fechaVencimiento y categoria.

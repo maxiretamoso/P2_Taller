@@ -1,4 +1,8 @@
-package com.rutassa;
+package com.rutassa.Viaje;
+
+import com.rutassa.Chofer.Chofer;
+import com.rutassa.Ubicacion.Ciudad;
+import com.rutassa.Vehiculo.Vehiculo;
 
 /**
  * Clase Viaje con atributos fecha, horarioSalida, horarioLlegada, origen, destino, vehiculo, y chofer.
@@ -181,12 +185,10 @@ public class Viaje {
     public String toString() {
         return 
            "  • Fecha: " + fecha + "\n" +
-           "  • Horario de salida: " + horarioSalida + "\n" +
-           "  • Horario de llegada: " + horarioLlegada + "\n" +
-           "  • Origen: " + origen.getNombre() + "\n" +
-           "  • Destino: " + destino.getNombre() + "\n" +
-           "  • Vehiculo(patente): " + vehiculo.getPatente() + "\n" +
-           "  • Chofer: " + chofer.getNombre();
+           "  • Horario de salida y llegada: " + horarioSalida + " - " + horarioLlegada + "\n" +
+           "  • Origen y Destino: " + origen.getNombre() + " - " + destino.getNombre()  + "\n" +
+           "  • Chofer: " + chofer.getNombre() + " " + chofer.getApellido() + "\n" +
+           "  • Vehiculo(patente): " + vehiculo.getPatente();
     }
 
     /**

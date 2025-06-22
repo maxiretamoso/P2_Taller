@@ -1,5 +1,9 @@
-package com.rutassa;
+package com.rutassa.Chofer;
 import java.util.List;
+
+import com.rutassa.Categoria.CategoriaTipo;
+import com.rutassa.Viaje.Viaje;
+
 import java.util.ArrayList;
 
 /**

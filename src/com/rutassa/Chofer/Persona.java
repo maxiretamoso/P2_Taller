@@ -1,4 +1,4 @@
-package com.rutassa;
+package com.rutassa.Chofer;
 
 /**
  * Clase abstracta Persona con atributos dni, nombre, y apellido.

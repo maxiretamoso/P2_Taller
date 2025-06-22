@@ -1,7 +1,9 @@
-package com.rutassa;
+package com.rutassa.Ubicacion;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.rutassa.Viaje.Viaje;
 
 /**
  * Clase Ciudad con atributos nombre, provincia, origenViajes, y destinoViajes.

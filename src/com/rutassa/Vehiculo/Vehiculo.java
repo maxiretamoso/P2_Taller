@@ -1,9 +1,10 @@
-package com.rutassa;
+package com.rutassa.Vehiculo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rutassa.tipoVehiculo.Colectivo;
-import com.rutassa.tipoVehiculo.Minibus;
+import com.rutassa.Vehiculo.tipoVehiculo.Colectivo;
+import com.rutassa.Vehiculo.tipoVehiculo.Minibus;
+import com.rutassa.Viaje.Viaje;
 
 /**
  * Clase Vehiculo con atributos patente, capacidad y vehiculoViajes.

@@ -1,4 +1,4 @@
-package com.rutassa;
+package com.rutassa.Ubicacion;
 
 /**
  * Enumeracion Provincia con los valores de los nombres de cada provincia de Argentina.

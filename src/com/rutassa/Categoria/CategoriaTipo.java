@@ -1,4 +1,4 @@
-package com.rutassa;
+package com.rutassa.Categoria;
 
 /**
  * Enumeracion CategoriaTipo con los valores MICROBUS y COLECTIVO.

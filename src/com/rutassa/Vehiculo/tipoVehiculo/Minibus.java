@@ -1,8 +1,8 @@
-package com.rutassa.tipoVehiculo;
+package com.rutassa.Vehiculo.tipoVehiculo;
 import java.util.List;
 
-import com.rutassa.Vehiculo;
-import com.rutassa.Viaje;
+import com.rutassa.Vehiculo.Vehiculo;
+import com.rutassa.Viaje.Viaje;
 
 /**
  * Clase Minibus con el atributo tieneBodega y aireAcondicionado.

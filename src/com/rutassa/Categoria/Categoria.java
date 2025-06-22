@@ -1,6 +1,9 @@
-package com.rutassa;
+package com.rutassa.Categoria;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.rutassa.Chofer.Chofer;
+import com.rutassa.Chofer.ChoferCategoria;
 
 /**
  * Clase Categoria con el atributo tipo, y categoriasChoferes .
