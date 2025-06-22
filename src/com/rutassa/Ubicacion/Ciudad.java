@@ -103,7 +103,7 @@ public class Ciudad {
 
     /**
      * Setter que establece el destino de los viajes.
-     * @param destinosViajes Los nuevos destinos de viajes
+     * @param destinosViajes Los nuevos destinosviajes
      */
     public void setDestinosViajes(Viaje destinosViajes) {
         if (destinosViajes==null){

@@ -79,7 +79,7 @@ public class Chofer extends Persona{
     
     /**
      * Setter que establece la categoria del chofer.
-     * @param categorias Las nuevas categorias
+     * @param categoria Las nuevas categorias
      */
     public void setCategorias(ChoferCategoria categoria) {
         if (this.categorias==null) {
@@ -102,7 +102,7 @@ public class Chofer extends Persona{
 
     /**
      * Setter que establece los viajes del chofer.
-     * @param viajesChofer Los nuevos viajesChofer
+     * @param viaje Los nuevos viajesChofer
      */
     public void setViajeChofer(Viaje viaje) {
         if(viaje==null){
