@@ -1367,7 +1367,7 @@ public class GestionSistema {
             }
 
             System.out.println("\n- Viaje:");
-            System.out.println(viaje);
+            System.out.println(viaje+"\n");
         }
 
         if (hayViajesIncompletos) {
