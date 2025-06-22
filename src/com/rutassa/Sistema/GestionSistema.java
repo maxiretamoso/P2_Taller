@@ -66,16 +66,16 @@ public class GestionSistema {
         GestionSistema sistema = new GestionSistema();
         
         //Creacion de listas de pruebas
-        List<Ciudad> ciudades = DatosPrueba.crearCiudades();
-        List<Vehiculo> vehiculos = DatosPrueba.crearVehiculos();
-        List<Chofer> choferes = DatosPrueba.crearChoferes();
-        List<Viaje> viajes = DatosPrueba.crearViajes(ciudades, vehiculos, choferes);
+        List<Ciudad> ciudades = ObjetosPrueba.crearCiudades();
+        List<Vehiculo> vehiculos = ObjetosPrueba.crearVehiculos();
+        List<Chofer> choferes = ObjetosPrueba.crearChoferes();
+        List<Viaje> viajes = ObjetosPrueba.crearViajes(ciudades, vehiculos, choferes);
 
         //Asignacion de las listas a los atributos del objeto sistema
-        sistema.ciudades = DatosPrueba.crearCiudades();
-        sistema.vehiculos = DatosPrueba.crearVehiculos();
-        sistema.choferes = DatosPrueba.crearChoferes();
-        sistema.viajes = DatosPrueba.crearViajes(sistema.ciudades, sistema.vehiculos, sistema.choferes);
+        sistema.ciudades = ObjetosPrueba.crearCiudades();
+        sistema.vehiculos = ObjetosPrueba.crearVehiculos();
+        sistema.choferes = ObjetosPrueba.crearChoferes();
+        sistema.viajes = ObjetosPrueba.crearViajes(sistema.ciudades, sistema.vehiculos, sistema.choferes);
         
         /**
          * Menu 

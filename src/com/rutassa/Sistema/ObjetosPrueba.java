@@ -8,7 +8,7 @@ import com.rutassa.Vehiculo.*;
 import com.rutassa.Vehiculo.tipoVehiculo.*;
 import com.rutassa.Viaje.*;
 
-public class DatosPrueba {
+public class ObjetosPrueba {
 
     public static List<Ciudad> crearCiudades() {
         Ciudad c1 = new Ciudad("Rosario", Provincia.SANTA_FE, new ArrayList<>(), new ArrayList<>());
