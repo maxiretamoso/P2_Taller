@@ -947,26 +947,26 @@ public class GestionSistema {
                 break;
             }
 
-            //ingreso horario salida
+            // Ingreso de horario de salida
             while (horarioSalida == null) {
                 System.out.print("Ingrese el horario de salida (HH:mm): ");
                 String inputHora = sc.nextLine().trim();
                 try {
                     horarioSalida = LocalTime.parse(inputHora, formatterHora);
                 } catch (DateTimeParseException e) {
-                    System.out.println("Formato invalido. Debe ser en formato HH:mm (por ejemplo, 14:30). Vuelva a intentarlo.");
+                    System.out.println("Formato inválido. Debe ser en formato HH:mm (por ejemplo, 14:30). Vuelva a intentarlo.");
                 }
             }
-            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-            // Solicitar horario de llegada
+
+            // Ingreso de horario de llegada
             LocalTime horarioLlegada = null;
             while (horarioLlegada == null) {
                 System.out.print("Ingrese el horario de llegada (HH:mm): ");
-                String input = sc.nextLine();
+                String input = sc.nextLine().trim();
                 try {
-                    horarioLlegada = LocalTime.parse(input, timeFormatter);
-                    if (horarioLlegada.isBefore(horarioSalida) || horarioLlegada.equals(horarioSalida)) {
-                        System.out.println("El horario de llegada debe ser posterior al de salida.");
+                    horarioLlegada = LocalTime.parse(input, formatterHora);
+                    if (!horarioLlegada.isAfter(horarioSalida)) {
+                        System.out.println("El horario de llegada debe ser posterior al de salida. Inténtelo nuevamente.");
                         horarioLlegada = null;
                     }
                 } catch (DateTimeParseException e) {
@@ -974,9 +974,8 @@ public class GestionSistema {
                 }
             }
 
-            // Verificar si la fecha y hora combinadas están en el pasado
+            // Verificar si la fecha y hora de salida están en el pasado
             LocalDateTime salida = LocalDateTime.of(fechaViaje, horarioSalida);
-
             if (salida.isBefore(LocalDateTime.now())) {
                 System.out.println("La fecha y hora de salida ya pasaron.");
                 while (true) {
@@ -986,20 +985,22 @@ public class GestionSistema {
                         planificarViajes(); 
                         return;
                     } else if (eleccion.equals("0")) {
-                        System.out.println("Planificacion cancelada.");
+                        System.out.println("Planificación cancelada.");
                         return;
                     } else {
-                        System.out.println("Opcion inválida. Ingrese '1'/'0'. Vuelva a intentarlo.");
+                        System.out.println("Opción inválida. Ingrese '1' o '0'.");
                     }
                 }
             }
 
-            //Crear viaje sin chofer ni vehículo aún
+            // Crear viaje sin chofer ni vehículo aún
             Viaje viaje = new Viaje();
             viaje.setOrigen(origen);
             viaje.setDestino(destino);
             viaje.setFecha(fechaViaje.format(formatterFecha));
             viaje.setHorarioSalida(horarioSalida.format(formatterHora));
+            viaje.setHorarioLlegada(horarioLlegada.format(formatterHora));  // <- CORREGIDO
+
             
             //Agregar a listas correspondientes
             origen.setOrigenesViajes(viaje);
