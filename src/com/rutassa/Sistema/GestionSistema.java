@@ -1364,7 +1364,7 @@ public class GestionSistema {
             int opcion = -1;
             
             while (opcion != 0 && opcion != 1) {
-                System.out.println("¿Desea asignar chofer y vehiculo (1) o volver al menu (0)? ");
+                System.out.print("¿Desea asignar chofer y vehiculo (1) o volver al menu (0)? ");
                 if (sc.hasNextInt()) {
                     opcion = sc.nextInt();
                     sc.nextLine();
