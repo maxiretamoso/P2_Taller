@@ -27,8 +27,8 @@ public class Chofer extends Persona{
     public Chofer() {
         super(0, "", "");
         this.nroLicencia = "";
-        categorias = new ArrayList<>();
-        viajesChofer = new ArrayList<>();
+        this.categorias = (categorias != null) ? categorias : new ArrayList<>();
+        this.viajesChofer = (viajesChofer != null) ? viajesChofer : new ArrayList<>();
     }
 
     /**
@@ -94,8 +94,8 @@ public class Chofer extends Persona{
      * @return viajesChofer
      */
     public List<Viaje> getViajesChofer() {
-        if(this.categorias==null){
-            return new ArrayList<>();
+        if (this.viajesChofer == null) {
+            this.viajesChofer = new ArrayList<>();
         }
         return viajesChofer;
     }

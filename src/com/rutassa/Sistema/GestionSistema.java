@@ -707,7 +707,7 @@ public class GestionSistema {
             //ingreso de provincia
             Provincia provincia = null;
             while (provincia == null) {
-                System.out.print("Ingrese el nombre exacto de la provincia (mayusculas y guiones bajos como se muestra): ");
+                System.out.print("Ingrese el nombre exacto de la provincia (con guiones bajos como se muestra): ");
                 String nombreProvincia = sc.nextLine().trim().toUpperCase();
                 try {
                     provincia = Provincia.valueOf(nombreProvincia);
@@ -989,21 +989,25 @@ public class GestionSistema {
 
                 // Validar que fecha y hora salida no estén en el pasado
                 LocalDateTime fechaHoraSalida = LocalDateTime.of(fechaViaje, horarioSalida);
+                String eleccion = "";
                 if (fechaHoraSalida.isBefore(LocalDateTime.now())) {
                     System.out.println("La fecha y hora de salida ya pasaron.");
                     while (true) {
                         System.out.print("¿Desea ingresar otra fecha y hora? ('1' Si / '2' No / 0 Cancelar): ");
-                        String eleccion = sc.nextLine().trim();
+                        eleccion = sc.nextLine().trim();
                         if (eleccion.equals("1")) {
                             break;
                         } else if (eleccion.equals("2")) {
-                            continue;
+                            break;
                         }else if (eleccion.equals("0")) {
                             System.out.println("Planificacion cancelada.");
                             return; 
                         } else {
                             System.out.println("Opcion invalida. Debe ingresar '1'/'2'/'0'. Vuelva a intentarlo.");
                         }
+                    }
+                    if (!eleccion.equals("1")) {
+                        break; 
                     }
                     continue;  
                 }
@@ -1215,7 +1219,7 @@ public class GestionSistema {
             }
 
             //mostrar vehiculos disponibles
-            System.out.println("Vehículos disponibles para el viaje " + viaje + ":");
+            System.out.println("\nVehiculos disponibles para el viaje:\n" + viaje + "\n");
             for (int i = 0; i < vehiculosDisponibles.size(); i++) {
                 System.out.println((i + 1) + ". " + vehiculosDisponibles.get(i));
             }
@@ -1269,9 +1273,10 @@ public class GestionSistema {
                 continue;
             }
             
-            System.out.println("Choferes disponibles para el viaje " + viaje + ":");
+            System.out.println("\nChoferes disponibles para el viaje:\n" + viaje + "\n");
             for (int i = 0; i < choferesDisponibles.size(); i++) {
-                System.out.println((i + 1) + ". " + choferesDisponibles.get(i));
+                Chofer c = choferesDisponibles.get(i);
+                System.out.println((i + 1) + ". [Nombre: " + c.getNombre() + ", Apellido: " + c.getApellido() + ", Licencia: " + c.getNroLicencia() + "]");
             }
 
             //seleccionar chofer
@@ -1311,7 +1316,7 @@ public class GestionSistema {
             vehiculoSeleccionado.setVehiculoViajes(viaje);
             choferSeleccionado.getViajesChofer().add(viaje);
 
-            System.out.println("Vehiculo y chofer asociados para el viaje: " + viaje);
+            System.out.println("\nVehiculo y chofer asociados para el viaje:\n" + viaje);
 
             // Preguntar si seguir con siguiente viaje o salir
             String respuesta = "";
@@ -1405,7 +1410,7 @@ public class GestionSistema {
             boolean datosCompletos = !viaje.atributosNulos() && esFechaValida(viaje.getFecha());
 
             if (!datosCompletos) {
-                System.out.println("Viaje con datos incompletos o fecha invalida: " + viaje.getFecha());
+                System.out.println("\nViaje con fecha invalida: " + viaje.getFecha());
                 hayViajesIncompletos = true;
                 continue; 
             }
@@ -1419,9 +1424,9 @@ public class GestionSistema {
             
             int opcion;
             do {
-                System.out.println("¿Desea Volver al menu (1) o planificar un nuevo viaje (2): ");
+                System.out.print("¿Desea planificar un nuevo viaje (1) o Volver al menu (0): ");
                 while (!sc.hasNextInt()) {
-                    System.out.print("Ingrese un número válido: ");
+                    System.out.print("Ingrese un numero valido: ");
                     sc.next();
                 }
                 opcion = sc.nextInt();
@@ -1546,10 +1551,10 @@ public class GestionSistema {
                 if (viaje.getVehiculo() != null && viaje.getVehiculo().equals(vehiculoEncontrado)) {
                     if (!esFechaValida(viaje.getFecha())) {
                         if (viaje.getOrigen() == null || viaje.getDestino() == null || viaje.getChofer() == null) {
-                            System.out.println("Viaje con datos incompletos. No se puede mostrar.");
+                            System.out.println("\n¡Viaje con datos incompletos! No se puede mostrar.");
                             continue;
                         }
-                        System.out.println("Viaje con fecha invalida: " + viaje.getFecha());
+                        System.out.println("\nViaje con fecha invalida:\n" + viaje);
                         continue;
                     }
 
