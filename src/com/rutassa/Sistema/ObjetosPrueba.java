@@ -8,8 +8,16 @@ import com.rutassa.Vehiculo.*;
 import com.rutassa.Vehiculo.tipoVehiculo.*;
 import com.rutassa.Viaje.*;
 
+/**
+ * Clase ObjetosPrueba que permite generar listas predefinidas de ciudades, choferes,
+ * vehículos y viajes con datos de ejemplo para pruebas dentro de {@link GestionSistema}.
+ */
 public class ObjetosPrueba {
 
+    /**
+     * Metodo crearCiudades que crea una lista de ciudades con nombres y provincias.
+     * @return lista de ciudad
+     */
     public static List<Ciudad> crearCiudades() {
         Ciudad c1 = new Ciudad("Rosario", Provincia.SANTA_FE, new ArrayList<>(), new ArrayList<>());
         Ciudad c2 = new Ciudad("Cordoba", Provincia.CORDOBA, new ArrayList<>(), new ArrayList<>());
@@ -25,6 +33,10 @@ public class ObjetosPrueba {
         return ciudades;
     }
 
+    /**
+     * Metodo crearVehiculos que crea una lista de vehículos (colectivos y minibuses).
+     * @return lista de vehiculo
+     */
     public static List<Vehiculo> crearVehiculos() {
         Colectivo colectivo1 = new Colectivo("AB123CD", 50, new ArrayList<>(), false);
         Colectivo colectivo2 = new Colectivo("EF456GH", 80, new ArrayList<>(), true);
@@ -41,6 +53,10 @@ public class ObjetosPrueba {
         return vehiculos;
     }
 
+    /**
+     * Metodo crearChoferes que crea una lista de choferes con categorías y fechas de vencimiento.
+     * @return lista de chofer con categorias
+     */
     public static List<Chofer> crearChoferes() {
         Categoria catColectivo = new Categoria(CategoriaTipo.COLECTIVO, new ArrayList<>());
         Categoria catMinibus = new Categoria(CategoriaTipo.MINIBUS, new ArrayList<>());
@@ -71,6 +87,13 @@ public class ObjetosPrueba {
         return choferes;
     }
 
+    /**
+     * Metodo crearViajes que crea una lista de viajes entre las ciudades usando los choferes y vehiculos indicados.
+     * @param ciudades  Lista de ciudades previamente generadas.
+     * @param vehiculos Lista de vehiculos previamente generados.
+     * @param choferes  Lista de choferes previamente generados.
+     * @return lista de viaje
+     */
     public static List<Viaje> crearViajes(List<Ciudad> ciudades, List<Vehiculo> vehiculos, List<Chofer> choferes) {
         Ciudad c1 = ciudades.get(0);
         Ciudad c2 = ciudades.get(1);

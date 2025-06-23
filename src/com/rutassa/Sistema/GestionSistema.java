@@ -20,9 +20,7 @@ import com.rutassa.Viaje.*;
  * Clase GestionSistema que lleva a cabo todos los metodos de gestion de rutassa.
  * Tiene como atributos listas de choferes, vehiculos, viajes, ciudades, y el Scanner.
  * @author Gonzalez Paz, Retamoso Maximo, Zanandrea Martin
- */
-
-
+*/
 public class GestionSistema {
     private List<Chofer> choferes;
     private List<Vehiculo> vehiculos;
@@ -30,14 +28,12 @@ public class GestionSistema {
     private List<Ciudad> ciudades;
     private Scanner sc;
 
-    /**
-     * Esta es la fecha "actual" que usamos para probar.
-     * Nos sirve para ver si las licencias están vencidas o si los viajes ya pasaron.
-     */
+    //Esta es la fecha "actual" que usamos para probar.
+    //Nos sirve para ver si las licencias están vencidas o si los viajes ya pasaron.
     public static final String FECHA_ACTUAL_SIMULADA = "12/06/25";
 
     /**
-     * Metodo getter que devuelve la fecha de "hoy" que utilizamos para simular.
+     * Metodo getter que devuelve la fecha 'actual' que utilizamos para simular.
      * @return FECHA_ACTUAL_SIMULADA
      */
     public static String getFechaActualSimulada() {
@@ -46,7 +42,7 @@ public class GestionSistema {
     
     /**
      * Constructor por defecto de GestionSistema.
-     * inicializamos las listas de choferes, vehiculos, viajes, ciudades y, el Scanner para el ingreso por pantalla 
+     * inicializamos las listas de choferes, vehiculos, viajes, ciudades y, el Scanner para el ingreso por pantalla. 
      */
     public GestionSistema() {
         this.choferes = new ArrayList<>();
@@ -58,11 +54,9 @@ public class GestionSistema {
     
     /** 
      * metodo main para correr el programa rutassa.
+     * En el mismo el usuario puede interactuar por un menu para realizar las operaciones que se muestran.
      */
     public static void main(String[] args) {
-        /**
-         * Inicializamos un objeto de tipo GestionSistema para poder crear objetos y llamar a los metodos de la clase.
-         */
         GestionSistema sistema = new GestionSistema();
         
         //Creacion de listas de pruebas
@@ -77,9 +71,7 @@ public class GestionSistema {
         sistema.choferes = ObjetosPrueba.crearChoferes();
         sistema.viajes = ObjetosPrueba.crearViajes(sistema.ciudades, sistema.vehiculos, sistema.choferes);
         
-        /**
-         * Menu 
-         */
+        //menu
         boolean salir = false;
         while (!salir) {
             System.out.println("\n" + "-".repeat(45) + "\n\tSistema de gestion Rutas S.A.\n" + "-".repeat(45));           
@@ -118,9 +110,7 @@ public class GestionSistema {
                 }
             }
 
-            /**
-             * Switch para salir del programa o ingresar a los metodos dependiendo del ingreso del usuario.
-             */
+            //Switch para salir del programa o ingresar a los metodos dependiendo del ingreso del usuario.
             switch (opcion) {
                 case 0: 
                     salir = true;
@@ -638,7 +628,8 @@ public class GestionSistema {
     } 
     
     /**
-     * Metodo para registrar las ciudades
+     * Metodo para registrar las ciudades.
+     * El usuario ingresa los datos de cada ciudad para ser añadida.
      */
     public  void registrarCiudades(){
         System.out.println("\n" + "-".repeat(45) + "\nRegistro de Ciudades\n" + "-".repeat(45));
@@ -1075,6 +1066,7 @@ public class GestionSistema {
 
     /**
      * Metodo para asociar un vehiculo y un chofer a cada viaje.
+     * El usuario asocia un vehiculo y chofer a cada viaje planificado.
      */
     public void asociarVehiculoYChofer() {
         System.out.println("\n" + "-".repeat(45) + "\nAsociar vehiculo y chofer a cada viaje\n" + "-".repeat(45));
@@ -1338,6 +1330,7 @@ public class GestionSistema {
 
     /**
     * Metodo para mostrar los viajes planificados con informacion detallada.
+    * Se muestra la informacion de cada viaje que incluye la informacion del chofer y vehiculo.
     */
     public void viajesProgramados() {
         System.out.println("\n" + "-".repeat(45) + "\nViajes programados\n" + "-".repeat(45));
@@ -1448,6 +1441,7 @@ public class GestionSistema {
 
     /**
     * Metodo para mostrar un informe detallado de viajes que tiene para realizar un colectivo determinado.
+    * Se muestra la informacion del viaje que va a realizar cierto colectivo que se busca por su patente.
     */
     public void informeViajesARealizarColectivo() {
         System.out.println("\n" + "-".repeat(45) + "\nInforme de viajes pendientes del colectivo\n" + "-".repeat(45));
@@ -1594,6 +1588,7 @@ public class GestionSistema {
 
     /**
     * Metodo para mostrar un informe de cantidad de viajes ya realizados por cada chofer de colectivos
+    * Se muestra la informacion de los viajes ya realizados por colectivo.
     */
     public void informeViajesRealizadosColectivo() {
         System.out.println("\n" + "-".repeat(45) + "\nInforme viajes realizados colectivos\n" + "-".repeat(45));
@@ -1690,9 +1685,9 @@ public class GestionSistema {
     }
     
     /**
-     * Metodo para validar la fecha ingresada
+     * Metodo esFechaValida para validar si una cadena es una fecha real y tiene el formato valido dd/mm/aa
      * @param fecha 
-     * @return true/false 
+     * @return true/false si es una fecha real y valida
      */
     public static boolean esFechaValida(String fecha) {
         if (!esFormatoFechaValido(fecha)) return false;
@@ -1706,6 +1701,10 @@ public class GestionSistema {
         }
     }
 
+    /**
+     * Metodo esFormatoFechaValido para verificar si una cadena cumple con el formato de fecha dd/mm/aa
+     * @return true/false si la fecha coincide con el formato
+     */
     public static boolean esFormatoFechaValido(String fecha) {
         return fecha.matches("\\d{2}/\\d{2}/\\d{2}");
     }

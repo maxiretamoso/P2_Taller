@@ -82,7 +82,7 @@ public abstract class Vehiculo {
 
     /**
      * Setter que establece el vehiculo del viaje/s.
-     * @param vehiculo El nuevo vehiculoViajes
+     * @param viaje El nuevo vehiculoViajes
      */
     public void setVehiculoViajes(Viaje viaje) {
         if (vehiculoViajes == null) {
