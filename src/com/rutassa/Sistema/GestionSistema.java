@@ -45,10 +45,10 @@ public class GestionSistema {
      * inicializamos las listas de choferes, vehiculos, viajes, ciudades y, el Scanner para el ingreso por pantalla. 
      */
     public GestionSistema() {
-        this.choferes = new ArrayList<>();
-        this.vehiculos = new ArrayList<>();
-        this.viajes = new ArrayList<>();
-        this.ciudades = new ArrayList<>();
+        this.ciudades = ObjetosPrueba.crearCiudades();
+        this.choferes = ObjetosPrueba.crearChoferes();
+        this.vehiculos = ObjetosPrueba.crearVehiculos();
+        this.viajes = ObjetosPrueba.crearViajes(ciudades, vehiculos, choferes);
         this.sc = new Scanner(System.in);
     }
     
@@ -58,18 +58,6 @@ public class GestionSistema {
      */
     public static void main(String[] args) {
         GestionSistema sistema = new GestionSistema();
-        
-        //Creacion de listas de pruebas
-        List<Ciudad> ciudades = ObjetosPrueba.crearCiudades();
-        List<Vehiculo> vehiculos = ObjetosPrueba.crearVehiculos();
-        List<Chofer> choferes = ObjetosPrueba.crearChoferes();
-        List<Viaje> viajes = ObjetosPrueba.crearViajes(ciudades, vehiculos, choferes);
-
-        //Asignacion de las listas a los atributos del objeto sistema
-        sistema.ciudades = ObjetosPrueba.crearCiudades();
-        sistema.vehiculos = ObjetosPrueba.crearVehiculos();
-        sistema.choferes = ObjetosPrueba.crearChoferes();
-        sistema.viajes = ObjetosPrueba.crearViajes(sistema.ciudades, sistema.vehiculos, sistema.choferes);
         
         //menu
         boolean salir = false;
@@ -1396,7 +1384,6 @@ public class GestionSistema {
             }
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
         boolean hayViajesIncompletos = false;
 
         for (Viaje viaje : viajes) {
@@ -1426,10 +1413,10 @@ public class GestionSistema {
                 sc.nextLine(); 
 
                 switch (opcion) {
-                    case 1:
+                    case 0:
                         System.out.println("\n" + "-".repeat(45) + "\nSaliendo de viajes programados\n" + "-".repeat(45));
                         return;
-                    case 2:
+                    case 1:
                         this.planificarViajes();
                         return;
                     default:
