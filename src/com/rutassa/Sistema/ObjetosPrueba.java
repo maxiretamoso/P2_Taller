@@ -136,7 +136,7 @@ public class ObjetosPrueba {
         Viaje viaje3 = new Viaje();
         viaje3.setOrigen(c3);
         viaje3.setDestino(c4);
-        viaje3.setFecha("12/04/25");
+        viaje3.setFecha("12/08/25");
         viaje3.setHorarioSalida("10:00");
         viaje3.setHorarioLlegada("20:00");
         viaje3.setChofer(chofer3);
@@ -145,7 +145,7 @@ public class ObjetosPrueba {
         Viaje viaje4 = new Viaje();
         viaje4.setOrigen(c1);
         viaje4.setDestino(c3);
-        viaje4.setFecha("12/04/24");
+        viaje4.setFecha("12/04/26");
         viaje4.setHorarioSalida("05:00");
         viaje4.setHorarioLlegada("12:00");
         viaje4.setChofer(chofer3);
